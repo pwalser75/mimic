@@ -1,9 +1,8 @@
 package ch.frostnova.mimic.servlet;
 
-import ch.frostnova.mimic.api.RuleEngine;
 import ch.frostnova.mimic.api.WebRequest;
 import ch.frostnova.mimic.api.WebResponse;
-import ch.frostnova.mimic.api.type.RequestMethod;
+import ch.frostnova.mimic.engine.RuleEngine;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,7 +19,7 @@ import java.nio.charset.StandardCharsets;
 @WebServlet(urlPatterns = "/*")
 public class MimicDispatcherServlet extends HttpServlet {
 
-    private void dispatch(RequestMethod method, HttpServletRequest req, HttpServletResponse resp)
+    private void dispatch(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
         WebRequest webRequest = new ServletWebRequest(req);
@@ -44,36 +43,36 @@ public class MimicDispatcherServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        dispatch(RequestMethod.GET, req, resp);
+        dispatch(req, resp);
     }
 
     @Override
     protected void doHead(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        dispatch(RequestMethod.HEAD, req, resp);
+        dispatch(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        dispatch(RequestMethod.POST, req, resp);
+        dispatch(req, resp);
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        dispatch(RequestMethod.PUT, req, resp);
+        dispatch(req, resp);
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        dispatch(RequestMethod.DELETE, req, resp);
+        dispatch(req, resp);
     }
 
     @Override
     protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        dispatch(RequestMethod.OPTIONS, req, resp);
+        dispatch(req, resp);
     }
 
     @Override
     protected void doTrace(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        dispatch(RequestMethod.TRACE, req, resp);
+        dispatch(req, resp);
     }
 }

@@ -1,4 +1,4 @@
-package ch.frostnova.mimic.rule;
+package ch.frostnova.mimic.api;
 
 import ch.frostnova.mimic.api.type.RequestMethod;
 import ch.frostnova.util.check.Check;

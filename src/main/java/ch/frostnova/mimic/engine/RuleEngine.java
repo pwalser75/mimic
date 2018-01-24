@@ -1,6 +1,9 @@
-package ch.frostnova.mimic.api;
+package ch.frostnova.mimic.engine;
 
-import ch.frostnova.mimic.rule.MimicRule;
+import ch.frostnova.mimic.api.MimicRule;
+import ch.frostnova.mimic.api.WebRequest;
+import ch.frostnova.mimic.api.WebResponse;
+import ch.frostnova.mimic.util.JSONUtil;
 import ch.frostnova.util.check.Check;
 
 import javax.script.ScriptEngine;
@@ -51,13 +54,15 @@ public class RuleEngine {
         try {
             WebResponse response = new WebResponse();
             ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
-            engine.put("request", request);
+            engine.eval("var request = JSON.parse('" + JSONUtil.stringify(request) + "');");
             engine.put("response", response);
             engine.eval(rule.getCode());
             return response;
         } catch (ScriptException ex) {
             //TODO: log error
             return WebResponse.error(500, "MIMIC: script evaluation failed:\n" + ex.getColumnNumber() + ":" + ex.getLineNumber() + ": " + ex.getMessage());
+        } catch (Exception ex) {
+            return WebResponse.error(500, "MIMIC: internal error (" + ex.getClass().getName() + ": " + ex.getMessage() + ")");
         }
     }
 
@@ -65,11 +70,17 @@ public class RuleEngine {
 
         //TODO: using mock rule
 
+        if (request.getPath().startsWith("/debug")) {
+            return new MimicRule(request.getMethod(), "/debug", "response.setStatus(200);" +
+                    "response.setContentType('application/json');\n" +
+                    "response.setBody(JSON.stringify(request));");
+        }
+
         return new MimicRule(request.getMethod(), "/hello", "response.setStatus(200);\n" +
-                "response.setContentType('application.xml');\n" +
+                "response.setContentType('application/xml');\n" +
                 "response.setBody('<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
                 "<test>" +
-                "<request path=\"'+request.getPath()+'\"/>" +
+                "<request path=\"'+request.path+'\"/>" +
                 "<message from=\"Mimic\">Mimic greets you!</message>" +
                 "</test>" +
                 "');");

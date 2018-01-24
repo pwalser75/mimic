@@ -2,7 +2,7 @@ server:
   port: 443
   ssl:
     enabled: true
-    key-alias: "test-server"
+    key-alias: "mimic-local-dev"
     key-store: "classpath:server-keystore.jks"
     key-store-password: "keystore"
     key-password: "keystore"

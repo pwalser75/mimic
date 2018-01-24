@@ -10,6 +10,14 @@ import java.util.Map;
  */
 public interface WebRequest {
 
+    /**
+     * Binds a path mapping to the request (defines placeholders for path parameters, such as
+     * <code>/{tenant}/resource/{id}</code>
+     *
+     * @param pathMapping path mapping, optional (if not set, no path parameters will be extracted).
+     */
+    void bind(String pathMapping);
+
     RequestMethod getMethod();
 
     String getPath();
