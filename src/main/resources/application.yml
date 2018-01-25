@@ -6,3 +6,6 @@ server:
     key-store: "classpath:server-keystore.jks"
     key-store-password: "keystore"
     key-password: "keystore"
+plain:
+  server:
+    port: 80

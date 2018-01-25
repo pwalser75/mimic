@@ -29,7 +29,7 @@ and can therefore represent arbitrary web resources. Scripts can get and set res
 
 ## HTTPS (TLS) configuration
 
-The Mimic Server is configured to run on **HTTPS only** (_seriously: forget about ever using HTTP without TLS again - no excuses accepted_).
+The Mimic Server is configured **redirect HTTP to HTTPS** (_seriously: forget about ever using HTTP without TLS again - no excuses accepted_).
 
 It ships with a **server certificate** for local development (bound to `localhost/127.0.0.1`), which you can find
 in `src/main/resources` (`server-keystore.jks` + configuration in `application.yml`). This certificate is signed by a test CA
