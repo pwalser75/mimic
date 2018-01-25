@@ -67,7 +67,7 @@ _Planned for later: store scripts in a DB and provide REST services to upload an
 
 ## HTTPS (TLS) configuration
 
-The Mimic Server is configured **redirect HTTP to HTTPS** (_seriously: forget about ever using HTTP without TLS again - no excuses accepted_).
+The Mimic Server is configured to **redirect HTTP to HTTPS** (_seriously: forget about ever using HTTP without TLS again - no excuses accepted_).
 
 It ships with a **server certificate** for local development (bound to `localhost/127.0.0.1`), which you can find
 in `src/main/resources` (`server-keystore.jks` + configuration in `application.yml`). This certificate is signed by a test CA
