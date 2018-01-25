@@ -3,6 +3,8 @@ package ch.frostnova.mimic.servlet;
 import ch.frostnova.mimic.api.WebRequest;
 import ch.frostnova.mimic.api.WebResponse;
 import ch.frostnova.mimic.engine.RuleEngine;
+import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,8 +23,13 @@ import java.nio.charset.StandardCharsets;
 @WebServlet(urlPatterns = "/*")
 public class MimicDispatcherServlet extends HttpServlet {
 
+    @Autowired
+    private Logger logger;
+
     private void dispatch(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+
+        logger.info("dispatch: " + req.getRequestURI());
 
         WebRequest webRequest = new ServletWebRequest(req);
         RuleEngine ruleEngine = new RuleEngine();

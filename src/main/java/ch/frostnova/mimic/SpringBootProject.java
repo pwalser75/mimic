@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Spring boot application main class
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.Bean;
  */
 @SpringBootApplication
 @ServletComponentScan
+@ComponentScan
 public class SpringBootProject {
 
     public static void main(String[] args) {
