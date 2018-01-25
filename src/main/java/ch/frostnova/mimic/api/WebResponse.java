@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Model for a web response (HTTP)
+ *
  * @author pwalser
  * @since 23.01.2018.
  */

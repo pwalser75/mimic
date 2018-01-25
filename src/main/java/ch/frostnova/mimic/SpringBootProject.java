@@ -9,6 +9,9 @@ import org.springframework.context.annotation.Bean;
 
 /**
  * Spring boot application main class
+ *
+ * @author pwalser
+ * @since 23.01.2018.
  */
 @SpringBootApplication
 @ServletComponentScan

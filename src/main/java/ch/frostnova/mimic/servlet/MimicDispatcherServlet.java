@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 /**
+ * Mimic dispatcher servlet, dispatches requests to matching mimic rules.
+ *
  * @author pwalser
  * @since 23.01.2018.
  */

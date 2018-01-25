@@ -4,6 +4,8 @@ import ch.frostnova.mimic.api.type.RequestMethod;
 import ch.frostnova.util.check.Check;
 
 /**
+ * A mimic rule, with method/path mapping and javascript code (ECMASCRIPT 5.1) for processing requests.
+ *
  * @author pwalser
  * @since 23.01.2018.
  */

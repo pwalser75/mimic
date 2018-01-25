@@ -5,6 +5,8 @@ import ch.frostnova.mimic.api.type.RequestMethod;
 import java.util.Map;
 
 /**
+ * Model for a web request (HTTP)
+ *
  * @author pwalser
  * @since 23.01.2018.
  */

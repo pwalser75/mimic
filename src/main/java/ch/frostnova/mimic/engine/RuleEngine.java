@@ -3,7 +3,7 @@ package ch.frostnova.mimic.engine;
 import ch.frostnova.mimic.api.MimicRule;
 import ch.frostnova.mimic.api.WebRequest;
 import ch.frostnova.mimic.api.WebResponse;
-import ch.frostnova.mimic.util.JSONUtil;
+import ch.frostnova.mimic.util.JsonUtil;
 import ch.frostnova.util.check.Check;
 
 import javax.script.ScriptEngine;
@@ -14,6 +14,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * Rule engine for processing requests.
+ *
  * @author pwalser
  * @since 23.01.2018.
  */
@@ -54,7 +56,7 @@ public class RuleEngine {
         try {
             WebResponse response = new WebResponse();
             ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
-            engine.eval("var request = JSON.parse('" + JSONUtil.stringify(request) + "');");
+            engine.eval("var request = JSON.parse('" + JsonUtil.stringify(request) + "');");
             engine.put("response", response);
             engine.eval(rule.getCode());
             return response;

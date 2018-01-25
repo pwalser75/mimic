@@ -2,7 +2,7 @@ package ch.frostnova.mimic.servlet;
 
 import ch.frostnova.mimic.api.WebRequest;
 import ch.frostnova.mimic.api.type.RequestMethod;
-import ch.frostnova.mimic.util.PlaceholderUtil;
+import ch.frostnova.mimic.api.type.TemplateExpression;
 import ch.frostnova.util.check.Check;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,7 +56,7 @@ public class ServletWebRequest implements WebRequest {
 
     @Override
     public Map<String, String> getPathParams() {
-        return PlaceholderUtil.getPlaceholderValues(pathMapping, getPath());
+        return new TemplateExpression(pathMapping).getPlaceholderValues(getPath());
     }
 
     @Override

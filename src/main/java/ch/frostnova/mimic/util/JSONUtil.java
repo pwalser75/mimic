@@ -11,10 +11,13 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * JSON utility functions
+ *
+ * @author pwalser
+ * @since 23.01.2018.
  */
-public final class JSONUtil {
+public final class JsonUtil {
 
-    private JSONUtil() {
+    private JsonUtil() {
 
     }
 
