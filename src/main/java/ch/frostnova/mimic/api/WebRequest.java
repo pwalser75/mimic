@@ -1,6 +1,7 @@
 package ch.frostnova.mimic.api;
 
 import ch.frostnova.mimic.api.type.RequestMethod;
+import ch.frostnova.mimic.api.type.TemplateExpression;
 
 import java.util.Map;
 
@@ -18,7 +19,7 @@ public interface WebRequest {
      *
      * @param pathMapping path mapping, optional (if not set, no path parameters will be extracted).
      */
-    void bind(String pathMapping);
+    void bind(TemplateExpression pathMapping);
 
     RequestMethod getMethod();
 

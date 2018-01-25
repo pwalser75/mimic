@@ -27,6 +27,44 @@ Scripts can access environments by name (or lazy-create them).
 * Allow resources to be preconfigured on environments as well. Resources have an id, content type and blob content, 
 and can therefore represent arbitrary web resources. Scripts can get and set resources.
 
+## Configuring request mappings
+
+HTTP requests are dispatched to request mappings. Right now, these mappings are loaded from the **script directory**
+configured in the `application.yml`:
+```
+mimic:
+  scripts:
+    dir: ./scripts
+```
+
+Creating scripts is simple: the first line is a comment that defines the path mapping as
+ 
+    // {METHOD} {PATH-TEMPLATE}
+
+The lines that follow are Javascript (ECMAScript 5.1) code that has access to the `request` and `response` context variables.
+Responses are configured by setting the `status`, `contentType` and `body` of the request.
+The request exposes all the information about the request (path, headers, path/form/query parameters, ...).
+
+Example:
+
+    // GET /hello
+    response.setStatus(200);
+    response.setContentType('text/plain');
+    response.setBody('Hello World ' + new Date()
+        + ', you requested: ' + request.path
+        + ' using ' + request.headers["user-agent"]);
+
+When requesting https://localhost/hello using this mapping, the Mimic server will dispatch the request to this mapping.
+
+Some example scripts are already included in the script directory.
+
+Note: scripts are currently loaded on startup - adding/changing/removing scripts require the server to be restarted before then changes become effective.
+
+- When no matching mapping was found, the Mimic server will respond with a **404** error.
+- On script errors, the server will responed with a **500** error, which includes details on the error.
+
+_Planned for later: store scripts in a DB and provide REST services to upload and manage them at runtme._
+
 ## HTTPS (TLS) configuration
 
 The Mimic Server is configured **redirect HTTP to HTTPS** (_seriously: forget about ever using HTTP without TLS again - no excuses accepted_).
@@ -39,11 +77,11 @@ purpose. You find the CA cert in `src/main/resources` as well (`test-ca-001.cer`
 ## Build / Run
 
 **Build** using *Gradle* (default targets: `clean,build`):
-```
-gradle
-```
+
+    gradle
+
 **Run** (Spring Boot, `HTTPS` only, base URL: `https://localhost`)
-```
-gradle bootRun
-```
+
+    gradle bootRun
+
 Once the server is started, you can start doing **HTTPS** requests (if the path or method is not mapped, you will at least get a 404 with a meaningful message).

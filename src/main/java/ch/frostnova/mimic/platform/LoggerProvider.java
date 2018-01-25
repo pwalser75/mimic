@@ -1,4 +1,4 @@
-package ch.frostnova.mimic;
+package ch.frostnova.mimic.platform;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package ch.frostnova.mimic;
+package ch.frostnova.mimic.platform;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties
 public class TomcatSettings {
 
-    @Value("${plain.server.port}")
+    @Value("${http.server.port}")
     private int serverPortHttp;
 
     @Value("${server.port}")

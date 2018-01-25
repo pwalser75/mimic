@@ -6,6 +6,9 @@ server:
     key-store: "classpath:server-keystore.jks"
     key-store-password: "keystore"
     key-password: "keystore"
-plain:
+http:
   server:
     port: 80
+mimic:
+  scripts:
+    dir: ./scripts

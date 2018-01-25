@@ -23,10 +23,10 @@ import java.util.stream.Collectors;
 public class ServletWebRequest implements WebRequest {
 
     private final HttpServletRequest request;
-    private String pathMapping;
+    private TemplateExpression pathMapping;
 
     @Override
-    public void bind(String pathMapping) {
+    public void bind(TemplateExpression pathMapping) {
         this.pathMapping = pathMapping;
     }
 
@@ -56,7 +56,11 @@ public class ServletWebRequest implements WebRequest {
 
     @Override
     public Map<String, String> getPathParams() {
-        return new TemplateExpression(pathMapping).getPlaceholderValues(getPath());
+        if (pathMapping == null) {
+            return Collections.emptyMap();
+        }
+        Map<String, String> pathParams = pathMapping.getPlaceholderValues(getPath());
+        return pathParams != null ? pathParams : Collections.emptyMap();
     }
 
     @Override

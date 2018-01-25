@@ -2,7 +2,7 @@ package ch.frostnova.mimic.servlet;
 
 import ch.frostnova.mimic.api.WebRequest;
 import ch.frostnova.mimic.api.WebResponse;
-import ch.frostnova.mimic.engine.RuleEngine;
+import ch.frostnova.mimic.engine.MimicEngine;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,20 +20,22 @@ import java.nio.charset.StandardCharsets;
  * @author pwalser
  * @since 23.01.2018.
  */
-@WebServlet(urlPatterns = "/*")
+@WebServlet(urlPatterns = "/*", loadOnStartup = 1)
 public class MimicDispatcherServlet extends HttpServlet {
 
     @Autowired
     private Logger logger;
 
+    @Autowired
+    private MimicEngine mimicEngine;
+
     private void dispatch(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        logger.info("dispatch: " + req.getRequestURI());
+        logger.debug("dispatch: " + req.getRequestURI());
 
         WebRequest webRequest = new ServletWebRequest(req);
-        RuleEngine ruleEngine = new RuleEngine();
-        WebResponse webResponse = ruleEngine.eval(webRequest);
+        WebResponse webResponse = mimicEngine.eval(webRequest);
 
         //TODO: validate webResponse (Status codes, content type format)
         //TODO: interpret redirects
