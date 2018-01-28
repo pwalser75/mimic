@@ -1,4 +1,4 @@
-package ch.frostnova.mimic.servlet;
+package ch.frostnova.mimic.impl;
 
 import ch.frostnova.mimic.api.WebRequest;
 import ch.frostnova.mimic.api.type.RequestMethod;

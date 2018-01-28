@@ -77,3 +77,7 @@ dependencies {
     testCompile libs.springBootTest
     runtime libs.hsqldb
 }
+
+task run(dependsOn: bootRun) {
+}
+

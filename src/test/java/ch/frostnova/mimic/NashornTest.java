@@ -7,6 +7,7 @@ import org.junit.Test;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import java.util.Arrays;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Tests for interacting with the Nashorn Javascript engine.
@@ -125,5 +126,24 @@ public class NashornTest {
         Assert.assertEquals(2, movie.getRatings().size());
         Assert.assertEquals(7.8, movie.getRatings().get("IMDB").doubleValue(), Double.MIN_VALUE);
         Assert.assertEquals(71, movie.getRatings().get("Metacritic").doubleValue(), Double.MIN_VALUE);
+    }
+
+    @Test
+    public void testPutGetBinaryData() throws Exception {
+
+        byte[] data = new byte[12345];
+        ThreadLocalRandom.current().nextBytes(data);
+
+        ScriptEngine engine = createEngine();
+        engine.put("data", data);
+        engine.eval("var a=JSON.stringify(data);\n" +
+                "var len=data.length;\n" +
+                "var result={" +
+                "bin: data, len: data.length" +
+                "}");
+
+        Assert.assertEquals(12345, engine.get("len"));
+        Assert.assertArrayEquals(data, (byte[]) engine.eval("result.bin"));
+        Assert.assertEquals(12345, engine.eval("result.len"));
     }
 }
