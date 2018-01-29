@@ -4,7 +4,6 @@ import ch.frostnova.mimic.api.MimicMapping;
 import ch.frostnova.mimic.api.WebRequest;
 import ch.frostnova.mimic.api.WebResponse;
 import ch.frostnova.mimic.io.ScriptsLoader;
-import ch.frostnova.mimic.util.JsonUtil;
 import ch.frostnova.util.check.Check;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,6 @@ public class MimicEngine {
 
     @Autowired
     private Logger logger;
-
 
     @Autowired
     private ScriptsLoader mappingsLoader;
@@ -77,7 +75,7 @@ public class MimicEngine {
         try {
             WebResponse response = new WebResponse();
             ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
-            engine.eval("var request = JSON.parse('" + JsonUtil.stringify(request) + "');");
+            engine.put("request", request);
             engine.put("response", response);
             engine.eval(rule.getCode());
             return response;

@@ -1,8 +1,13 @@
 package ch.frostnova.mimic.api;
 
+import ch.frostnova.mimic.api.converter.KeyValueStoreConverter;
 import ch.frostnova.mimic.api.type.RequestMethod;
 import ch.frostnova.mimic.api.type.TemplateExpression;
+import ch.frostnova.mimic.util.JsonUtil;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.Map;
 
 /**
@@ -11,6 +16,7 @@ import java.util.Map;
  * @author pwalser
  * @since 23.01.2018.
  */
+@XmlRootElement
 public interface WebRequest {
 
     /**
@@ -21,17 +27,32 @@ public interface WebRequest {
      */
     void bind(TemplateExpression pathMapping);
 
+    @XmlElement(name = "session")
+    @XmlJavaTypeAdapter(KeyValueStoreConverter.class)
+    KeyValueStore getSession();
+
+    @XmlElement(name = "method")
     RequestMethod getMethod();
 
+    @XmlElement(name = "path")
     String getPath();
 
+    @XmlElement(name = "headers")
     Map<String, String> getHeaders();
 
+    @XmlElement(name = "pathParams")
     Map<String, String> getPathParams();
 
+    @XmlElement(name = "queryParams")
     Map<String, String> getQueryParams();
 
+    @XmlElement(name = "formParams")
     Map<String, String> getFormParams();
 
+    @XmlElement(name = "body")
     String getBody();
+
+    default String toJSON() {
+        return JsonUtil.stringify(this);
+    }
 }

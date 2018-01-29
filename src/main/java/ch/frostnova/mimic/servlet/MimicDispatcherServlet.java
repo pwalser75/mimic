@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 
 /**
  * Mimic dispatcher servlet, dispatches requests to matching mimic rules.
@@ -32,6 +33,8 @@ public class MimicDispatcherServlet extends HttpServlet {
 
     private void dispatch(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+
+        req.getSession().setAttribute("time", LocalDateTime.now());
 
         logger.debug("dispatch: " + req.getRequestURI());
 

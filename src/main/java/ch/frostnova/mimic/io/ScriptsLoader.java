@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -28,7 +29,7 @@ import java.util.regex.Pattern;
 @Component
 public class ScriptsLoader {
 
-    private final static Pattern PATH_MAPPING = Pattern.compile("//\\s*(GET|HEAD|PUT|POST|DELETE|OPTIONS|TRACE)\\s+(.+)");
+    private final static Pattern PATH_MAPPING = Pattern.compile("//\\s*(GET|HEAD|PUT|POST|DELETE|OPTIONS|TRACE)\\s+(.+)", Pattern.CASE_INSENSITIVE);
 
     @Autowired
     private Logger logger;
@@ -72,32 +73,46 @@ public class ScriptsLoader {
 
         // read mapping: first line is the mapping, the rest of the lines are the script (ECMAScript 5.1)
 
-
         try (BufferedReader reader = Files.newBufferedReader(path)) {
-            RequestMethod requestMethod = null;
-            String pathMapping = null;
-            StringBuilder script = new StringBuilder();
+            return load(reader);
+        } catch (IOException ex) {
+            throw new IOException(path.getFileName() + " does not contain a mimic mapping");
+        }
+    }
 
-            String line;
-            while ((line = reader.readLine()) != null) {
-                if (requestMethod == null) {
-                    line = line.trim();
-                    if (line.length() > 0) {
-                        Matcher matcher = PATH_MAPPING.matcher(line);
-                        if (!matcher.matches()) {
-                            throw new IOException("Invalid path mapping: " + line);
-                        }
-                        requestMethod = RequestMethod.resolve(matcher.group(1));
-                        pathMapping = matcher.group(2);
+    public MimicMapping load(Reader reader) throws IOException {
+        Check.required(reader, "reader");
+        return load(new BufferedReader(reader));
+    }
+
+    public MimicMapping load(BufferedReader reader) throws IOException {
+        Check.required(reader, "reader");
+
+        // read mapping: first line is the mapping, the rest of the lines are the script (ECMAScript 5.1)
+
+        RequestMethod requestMethod = null;
+        String pathMapping = null;
+        StringBuilder script = new StringBuilder();
+
+        String line;
+        while ((line = reader.readLine()) != null) {
+            if (requestMethod == null) {
+                line = line.trim();
+                if (line.length() > 0) {
+                    Matcher matcher = PATH_MAPPING.matcher(line);
+                    if (!matcher.matches()) {
+                        throw new IOException("Invalid path mapping: " + line);
                     }
-                } else {
-                    script.append(line).append("\n");
+                    requestMethod = RequestMethod.resolve(matcher.group(1));
+                    pathMapping = matcher.group(2);
                 }
-            }
-            if (requestMethod != null) {
-                return new MimicMapping(requestMethod, pathMapping, script.toString());
+            } else {
+                script.append(line).append("\n");
             }
         }
-        throw new IOException(path.getFileName() + " does not contain a mimic mapping");
+        if (requestMethod != null) {
+            return new MimicMapping(requestMethod, pathMapping, script.toString());
+        }
+        throw new IOException("No valid request method found in mapping");
     }
 }

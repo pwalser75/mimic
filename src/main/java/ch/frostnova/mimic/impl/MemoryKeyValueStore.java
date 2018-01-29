@@ -5,6 +5,7 @@ import ch.frostnova.util.check.Check;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * In-memory key/value store, stores runtime-scoped values (valid until restart).
@@ -29,12 +30,22 @@ public class MemoryKeyValueStore implements KeyValueStore {
     @Override
     public String get(String key) {
         Check.required("key", key);
-        return String.valueOf(store.get(key));
+        return store.get(key);
     }
 
     @Override
-    public void clear(String key) {
+    public void remove(String key) {
         Check.required("key", key);
         store.remove(key);
+    }
+
+    @Override
+    public Set<String> getKeys() {
+        return store.keySet();
+    }
+
+    @Override
+    public void clear() {
+        store.clear();
     }
 }

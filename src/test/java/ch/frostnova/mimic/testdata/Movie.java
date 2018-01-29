@@ -1,4 +1,4 @@
-package ch.frostnova.mimic;
+package ch.frostnova.mimic.testdata;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -26,7 +26,7 @@ public class Movie {
     }
 
     public void setTitle(String name) {
-        this.title = name;
+        title = name;
     }
 
     public int getYear() {

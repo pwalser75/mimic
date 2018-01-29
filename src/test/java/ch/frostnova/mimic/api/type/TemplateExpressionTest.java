@@ -1,16 +1,9 @@
-package ch.frostnova.mimic;
+package ch.frostnova.mimic.api.type;
 
-import ch.frostnova.mimic.api.type.TemplateExpression;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 

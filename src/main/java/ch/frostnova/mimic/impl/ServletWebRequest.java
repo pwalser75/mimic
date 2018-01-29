@@ -1,5 +1,6 @@
 package ch.frostnova.mimic.impl;
 
+import ch.frostnova.mimic.api.KeyValueStore;
 import ch.frostnova.mimic.api.WebRequest;
 import ch.frostnova.mimic.api.type.RequestMethod;
 import ch.frostnova.mimic.api.type.TemplateExpression;
@@ -24,14 +25,21 @@ public class ServletWebRequest implements WebRequest {
 
     private final HttpServletRequest request;
     private TemplateExpression pathMapping;
+    private final KeyValueStore sessionKeyValueStore;
+
+    public ServletWebRequest(HttpServletRequest request) {
+        this.request = Check.required(request, "request");
+        sessionKeyValueStore = new HttpSessionKeyValueStore(request.getSession());
+    }
 
     @Override
     public void bind(TemplateExpression pathMapping) {
         this.pathMapping = pathMapping;
     }
 
-    public ServletWebRequest(HttpServletRequest request) {
-        this.request = Check.required(request, "request");
+    @Override
+    public KeyValueStore getSession() {
+        return sessionKeyValueStore;
     }
 
     @Override

@@ -4,6 +4,9 @@ import ch.frostnova.mimic.api.KeyValueStore;
 import ch.frostnova.util.check.Check;
 
 import javax.servlet.http.HttpSession;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Key/value store adapter for the HTTPSession, stores value in session scope.
@@ -24,7 +27,7 @@ public class HttpSessionKeyValueStore implements KeyValueStore {
     public void put(String key, String value) {
         Check.required("key", key);
         if (value == null) {
-            clear(key);
+            remove(key);
         } else {
             session.setAttribute(key, value);
         }
@@ -33,12 +36,25 @@ public class HttpSessionKeyValueStore implements KeyValueStore {
     @Override
     public String get(String key) {
         Check.required("key", key);
-        return String.valueOf(session.getAttribute(key));
+        Object attribute = session.getAttribute(key);
+        return attribute != null ? attribute.toString() : null;
     }
 
     @Override
-    public void clear(String key) {
+    public void remove(String key) {
         Check.required("key", key);
         session.removeAttribute(key);
+    }
+
+    @Override
+    public Set<String> getKeys() {
+        return new HashSet<>(Collections.list(session.getAttributeNames()));
+    }
+
+    @Override
+    public void clear() {
+        for (String key : getKeys()) {
+            remove(key);
+        }
     }
 }
