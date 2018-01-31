@@ -56,14 +56,12 @@ Example:
 
 When requesting https://localhost/hello using this mapping, the Mimic server will dispatch the request to this mapping.
 
-Some example scripts are already included in the script directory.
-
-Note: scripts are currently loaded on startup - adding/changing/removing scripts require the server to be restarted before then changes become effective.
+Some example scripts are already included in the script directory. Script files can be added/removed/modified anytime, the server will detect these changes and automatically reload the scripts.
 
 - When no matching mapping was found, the Mimic server will respond with a **404** error.
 - On script errors, the server will responed with a **500** error, which includes details on the error.
 
-_Planned for later: store scripts in a DB and provide REST services to upload and manage them at runtme._
+_Planned for later: store scripts in a DB and provide REST services to upload and manage them at runtime._
 
 ## HTTPS (TLS) configuration
 
