@@ -4,6 +4,7 @@ import ch.frostnova.mimic.api.MappingProvider;
 import ch.frostnova.mimic.api.MimicMapping;
 import ch.frostnova.mimic.api.WebRequest;
 import ch.frostnova.mimic.api.WebResponse;
+import ch.frostnova.mimic.api.type.TemplateExpression;
 import ch.frostnova.util.check.Check;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
@@ -52,14 +53,14 @@ public class MimicEngine implements InitializingBean {
         if (rule == null) {
             return WebResponse.error(404, "MIMIC: no matching rule found for " + request.getMethod() + " " + request.getPath());
         }
-        request.bind(rule.getPathTemplate());
+        request.bind(new TemplateExpression(rule.getPath()));
 
         try {
             WebResponse response = new WebResponse();
             ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
             engine.put("request", request);
             engine.put("response", response);
-            engine.eval(rule.getCode());
+            engine.eval(rule.getScript());
             return response;
         } catch (ScriptException ex) {
             String errorMessage = "MIMIC: script evaluation failed:\n" + ex.getColumnNumber() + ":" + ex.getLineNumber() + ": " + ex.getMessage();
@@ -81,8 +82,8 @@ public class MimicEngine implements InitializingBean {
 
         return mimicMappings.stream()
                 .filter(m -> request.getMethod() == m.getMethod())
-                .filter(m -> m.getPathTemplate().matches(request.getPath()))
-                .sorted(Comparator.comparing(m -> m.getPathTemplate())).findFirst().orElse(null);
+                .filter(m -> new TemplateExpression(m.getPath()).matches(request.getPath()))
+                .sorted(Comparator.comparing(m -> new TemplateExpression(m.getPath()))).findFirst().orElse(null);
 
     }
 }

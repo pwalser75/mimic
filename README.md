@@ -16,7 +16,7 @@ which delegates arbitrary requests to **configurable mappings**.
 The mappings consist of:
 - a **request method** (GET, HEAD, POST, PUT, DELETE, OPTIONS or TRACE)
 - a **request path** (can contain placeholders for path parameters)
-- **JavaScript (ECMASCRIPT 5.1) code** which evaluates requests and returns responses.
+- **JavaScript (ECMASCRIPT 5.1) script** which evaluates requests and returns responses.
 
 Mappings are configurable at runtime. Rules are evaluated using the *Nashorn JavaScript Engine*, 
 and have access to the *request* and *response* on evaluation.
@@ -41,7 +41,7 @@ Creating scripts is simple: the first line is a comment that defines the path ma
  
     // {METHOD} {PATH-TEMPLATE}
 
-The lines that follow are Javascript (ECMAScript 5.1) code that has access to the `request` and `response` context variables.
+The lines that follow are Javascript (ECMAScript 5.1) script that has access to the `request` and `response` context variables.
 Responses are configured by setting the `status`, `contentType` and `body` of the request.
 The request exposes all the information about the request (path, headers, path/form/query parameters, ...).
 

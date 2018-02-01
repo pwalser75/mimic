@@ -48,8 +48,8 @@ public class ScriptsLoaderTest {
         MimicMapping mapping = loader.load(new StringReader(builder.toString()));
         Assert.assertTrue(mapping.getMethod().name().equalsIgnoreCase(requestMethod));
         Assert.assertEquals(path, mapping.getPath());
-        Assert.assertEquals(new TemplateExpression(path), mapping.getPathTemplate());
-        Assert.assertEquals(script, mapping.getCode().trim());
+        Assert.assertEquals(new TemplateExpression(path), new TemplateExpression(mapping.getPath()));
+        Assert.assertEquals(script, mapping.getScript().trim());
     }
 
     @Test(expected = IOException.class)

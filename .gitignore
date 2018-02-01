@@ -3,6 +3,7 @@
 /out/
 
 # Ignore IDE files
+.idea
 *.iml
 
 # Ignore Gradle GUI config

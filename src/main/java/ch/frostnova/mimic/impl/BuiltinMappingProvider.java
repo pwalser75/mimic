@@ -30,9 +30,13 @@ public class BuiltinMappingProvider implements MappingProvider, InitializingBean
 
         String banner = getBanner().replace("\\", "\\\\").replace("'", "\\'").replace("\n", "\\n");
 
-        mappings.add(new MimicMapping(RequestMethod.GET, "/", "response.setStatus(200);\n" +
+        MimicMapping mapping = new MimicMapping();
+        mapping.setMethod(RequestMethod.GET);
+        mapping.setPath("/");
+        mapping.setScript("response.setStatus(200);\n" +
                 "response.setContentType('text/plain');\n" +
-                "response.setBody('" + banner + "');"));
+                "response.setBody('" + banner + "');");
+        mappings.add(mapping);
     }
 
     private String getBanner() throws IOException {

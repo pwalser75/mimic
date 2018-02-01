@@ -70,7 +70,11 @@ public class ScriptsLoader {
             }
         }
         if (requestMethod != null) {
-            return new MimicMapping(requestMethod, pathMapping, script.toString());
+            MimicMapping mapping = new MimicMapping();
+            mapping.setMethod(requestMethod);
+            mapping.setPath(pathMapping);
+            mapping.setScript(script.toString());
+            return mapping;
         }
         throw new IOException("No valid request method found in mapping");
     }
