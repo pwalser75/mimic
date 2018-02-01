@@ -1,12 +1,11 @@
-package org.test.spring.boot.project.ws;
+package ch.frostnova.mimic.ws;
 
-import ch.frostnova.mimic.ws.MappingsEndpoint;
+import ch.frostnova.mimic.ws.provider.CORSFilter;
+import ch.frostnova.mimic.ws.provider.NoSuchElementExceptionMapper;
 import io.swagger.jaxrs.config.BeanConfig;
 import io.swagger.jaxrs.listing.ApiListingResource;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.context.annotation.Configuration;
-import org.test.spring.boot.project.ws.provider.CORSFilter;
-import org.test.spring.boot.project.ws.provider.NoSuchElementExceptionMapper;
 
 import javax.ws.rs.ApplicationPath;
 
@@ -32,10 +31,10 @@ public class JerseyConfig extends ResourceConfig {
         register(ApiListingResource.class);
         BeanConfig beanConfig = new BeanConfig();
         beanConfig.setVersion("1.0.2");
-        beanConfig.setSchemes(new String[]{"http"});
-        beanConfig.setHost("localhost:8080");
+        beanConfig.setSchemes(new String[]{"https"});
+        beanConfig.setHost("localhost");
         beanConfig.setBasePath("/");
-        beanConfig.setResourcePackage("org.test.spring.boot.project.ws");
+        beanConfig.setResourcePackage(getClass().getPackage().getName());
         beanConfig.setPrettyPrint(true);
         beanConfig.setScan(true);
     }

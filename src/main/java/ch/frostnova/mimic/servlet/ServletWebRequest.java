@@ -1,9 +1,10 @@
-package ch.frostnova.mimic.impl;
+package ch.frostnova.mimic.servlet;
 
 import ch.frostnova.mimic.api.KeyValueStore;
 import ch.frostnova.mimic.api.WebRequest;
 import ch.frostnova.mimic.api.type.RequestMethod;
 import ch.frostnova.mimic.api.type.TemplateExpression;
+import ch.frostnova.mimic.impl.HttpSessionKeyValueStore;
 import ch.frostnova.util.check.Check;
 
 import javax.servlet.http.HttpServletRequest;

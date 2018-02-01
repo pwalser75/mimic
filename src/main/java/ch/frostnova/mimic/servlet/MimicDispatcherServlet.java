@@ -3,7 +3,6 @@ package ch.frostnova.mimic.servlet;
 import ch.frostnova.mimic.api.WebRequest;
 import ch.frostnova.mimic.api.WebResponse;
 import ch.frostnova.mimic.engine.MimicEngine;
-import ch.frostnova.mimic.impl.ServletWebRequest;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 

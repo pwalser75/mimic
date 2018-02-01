@@ -1,4 +1,4 @@
-package org.test.spring.boot.project.ws.provider;
+package ch.frostnova.mimic.ws.provider;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;

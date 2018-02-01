@@ -1,4 +1,4 @@
-package ch.frostnova.mimic.platform;
+package ch.frostnova.mimic;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
