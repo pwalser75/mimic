@@ -6,14 +6,19 @@ import ch.frostnova.mimic.api.type.RequestMethod;
 import ch.frostnova.mimic.api.type.TemplateExpression;
 import ch.frostnova.mimic.impl.HttpSessionKeyValueStore;
 import ch.frostnova.util.check.Check;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -24,9 +29,13 @@ import java.util.stream.Collectors;
  */
 public class ServletWebRequest implements WebRequest {
 
+    private static final Logger logger = LoggerFactory.getLogger(ServletWebRequest.class);
+
     private final HttpServletRequest request;
     private TemplateExpression pathMapping;
     private final KeyValueStore sessionKeyValueStore;
+
+    private List<RequestPart> parts;
 
     public ServletWebRequest(HttpServletRequest request) {
         this.request = Check.required(request, "request");
@@ -54,6 +63,11 @@ public class ServletWebRequest implements WebRequest {
     }
 
     @Override
+    public String getContentType() {
+        return getHeaders().get("content-type");
+    }
+
+    @Override
     public Map<String, String> getHeaders() {
 
         Map<String, String> result = new HashMap<>();
@@ -75,11 +89,14 @@ public class ServletWebRequest implements WebRequest {
     @Override
     public Map<String, String> getQueryParams() {
         Map<String, String> result = new HashMap<>();
-        request.getParameterMap().forEach((k, v) -> {
-            if (isQueryParam(k) && v.length > 0) {
-                result.put(k, v[0]);
-            }
-        });
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        if (parameterMap != null) {
+            parameterMap.forEach((k, v) -> {
+                if (isQueryParam(k) && v.length > 0) {
+                    result.put(k, v[0]);
+                }
+            });
+        }
         return result;
     }
 
@@ -87,7 +104,6 @@ public class ServletWebRequest implements WebRequest {
         String queryString = request.getQueryString();
         try {
             String encodedKey = URLEncoder.encode(paramName, StandardCharsets.UTF_8.displayName());
-            System.out.println(queryString + "     " + encodedKey);
             return (queryString.startsWith(encodedKey + "=") || queryString.contains("&" + encodedKey + "="));
         } catch (UnsupportedEncodingException utf8unsupported) {
             // UTF-8 unsupported, really?
@@ -98,19 +114,87 @@ public class ServletWebRequest implements WebRequest {
     @Override
     public Map<String, String> getFormParams() {
         Map<String, String> result = new HashMap<>();
-        request.getParameterMap().forEach((k, v) -> {
-            if (!isQueryParam(k) && v.length > 0) {
-                result.put(k, v[0]);
-            }
-        });
+
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        if (parameterMap != null) {
+            parameterMap.forEach((k, v) -> {
+                if (!isQueryParam(k) && v.length > 0) {
+                    result.put(k, v[0]);
+                }
+            });
+        }
         return result;
     }
 
     @Override
-    public String getBody() {
-        //TODO: implement
+    public List<RequestPart> getParts() {
+        if (parts == null) {
+            parts = new ArrayList<>();
+            try {
+                for (Part part : request.getParts()) {
+                    parts.add(new ServletRequestPart(part));
+                }
+            } catch (IOException | ServletException ex) {
+                logger.error("Could not read parts", ex);
+                throw new RuntimeException("Could not read parts: " + ex.getClass().getName() + ": " + ex.getMessage());
+            }
+        }
+        return parts;
+    }
 
-        return null;
-//        throw new UnsupportedOperationException();
+    public static class ServletRequestPart implements RequestPart {
+
+        private String contentType;
+        private String name;
+        private long size;
+        private Map<String, String> headers = new HashMap<>();
+        private byte[] content;
+
+        public ServletRequestPart(Part part) {
+            contentType = part.getContentType();
+            name = part.getName();
+            size = part.getSize();
+
+            part.getHeaderNames().forEach(header -> {
+                headers.put(header, part.getHeader(header));
+            });
+
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            try (BufferedInputStream in = new BufferedInputStream(part.getInputStream())) {
+                int read;
+                while ((read = in.read()) > 0) {
+                    buffer.write(read);
+                }
+            } catch (IOException ex) {
+                logger.error("Could not read part data", ex);
+                throw new RuntimeException("Could not read part data: " + ex.getClass().getName() + ": " + ex.getMessage());
+            }
+            content = buffer.toByteArray();
+        }
+
+        @Override
+        public String getContentType() {
+            return contentType;
+        }
+
+        @Override
+        public Map<String, String> getHeaders() {
+            return headers;
+        }
+
+        @Override
+        public String getName() {
+            return name;
+        }
+
+        @Override
+        public long getSize() {
+            return size;
+        }
+
+        @Override
+        public byte[] getContent() {
+            return content;
+        }
     }
 }

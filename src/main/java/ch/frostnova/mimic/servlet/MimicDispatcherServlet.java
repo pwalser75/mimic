@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import java.time.LocalDateTime;
  * @since 23.01.2018.
  */
 @WebServlet(urlPatterns = "/*", loadOnStartup = 1)
+@MultipartConfig
 public class MimicDispatcherServlet extends HttpServlet {
 
     @Autowired

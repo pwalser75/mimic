@@ -8,6 +8,7 @@ import ch.frostnova.mimic.util.JsonUtil;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,6 +41,9 @@ public interface WebRequest {
     @XmlElement(name = "headers")
     Map<String, String> getHeaders();
 
+    @XmlElement(name = "contentType")
+    String getContentType();
+
     @XmlElement(name = "pathParams")
     Map<String, String> getPathParams();
 
@@ -49,10 +53,29 @@ public interface WebRequest {
     @XmlElement(name = "formParams")
     Map<String, String> getFormParams();
 
-    @XmlElement(name = "body")
-    String getBody();
+    @XmlElement(name = "parts")
+    List<RequestPart> getParts();
 
     default String toJSON() {
         return JsonUtil.stringify(this);
+    }
+
+    @XmlRootElement
+    interface RequestPart {
+
+        @XmlElement(name = "contentType")
+        String getContentType();
+
+        @XmlElement(name = "headers")
+        Map<String, String> getHeaders();
+
+        @XmlElement(name = "name")
+        String getName();
+
+        @XmlElement(name = "size")
+        long getSize();
+
+        @XmlElement(name = "content")
+        byte[] getContent();
     }
 }
