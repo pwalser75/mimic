@@ -29,6 +29,9 @@ import java.util.stream.Collectors;
  */
 public class ServletWebRequest implements WebRequest {
 
+    private final static String CONTENT_TYPE_MULTIPART = "multipart/form-data";
+    private final static String CONTENT_TYPE_FORM_URLENCODED = "application/x-www-form-urlencoded";
+
     private static final Logger logger = LoggerFactory.getLogger(ServletWebRequest.class);
 
     private final HttpServletRequest request;
@@ -36,6 +39,7 @@ public class ServletWebRequest implements WebRequest {
     private final KeyValueStore sessionKeyValueStore;
 
     private List<RequestPart> parts;
+    private byte[] body;
 
     public ServletWebRequest(HttpServletRequest request) {
         this.request = Check.required(request, "request");
@@ -102,6 +106,9 @@ public class ServletWebRequest implements WebRequest {
 
     private boolean isQueryParam(String paramName) {
         String queryString = request.getQueryString();
+        if (queryString == null) {
+            return false;
+        }
         try {
             String encodedKey = URLEncoder.encode(paramName, StandardCharsets.UTF_8.displayName());
             return (queryString.startsWith(encodedKey + "=") || queryString.contains("&" + encodedKey + "="));
@@ -126,8 +133,40 @@ public class ServletWebRequest implements WebRequest {
         return result;
     }
 
+    private boolean isMultiPart() {
+        return getContentType().startsWith(CONTENT_TYPE_MULTIPART);
+    }
+
+    @Override
+    public byte[] getBody() {
+        if (isMultiPart() || getContentType().equals(CONTENT_TYPE_FORM_URLENCODED)) {
+            return null;
+        }
+        if (body == null) {
+            try (BufferedInputStream in = new BufferedInputStream(request.getInputStream())) {
+
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                byte[] buffer = new byte[0xFFF];
+                int read;
+                while ((read = in.read(buffer)) >= 0) {
+                    out.write(buffer, 0, read);
+                }
+                return out.toByteArray();
+
+            } catch (IOException ex) {
+                logger.error("Could not body", ex);
+                throw new RuntimeException("Could not body: " + ex.getClass().getName() + ": " + ex.getMessage());
+            }
+        }
+        return body;
+    }
+
     @Override
     public List<RequestPart> getParts() {
+
+        if (!isMultiPart()) {
+            return Collections.emptyList();
+        }
         if (parts == null) {
             parts = new ArrayList<>();
             try {

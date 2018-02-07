@@ -56,6 +56,9 @@ public interface WebRequest {
     @XmlElement(name = "parts")
     List<RequestPart> getParts();
 
+    @XmlElement(name = "body")
+    byte[] getBody();
+
     default String toJSON() {
         return JsonUtil.stringify(this);
     }
