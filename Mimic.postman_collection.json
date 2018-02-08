@@ -1,7 +1,7 @@
 {
 	"info": {
 		"name": "Mimic",
-		"_postman_id": "337234e6-0d19-3d86-873e-16589cf20e0a",
+		"_postman_id": "038bea89-f045-c227-eb99-f69c5b682a1a",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -30,7 +30,10 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "https://localhost/hello",
 					"protocol": "https",
@@ -40,8 +43,63 @@
 					"path": [
 						"hello"
 					]
-				},
-				"description": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Debug",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0110754b-e55e-4d3d-b145-645ff7850223",
+						"type": "text/javascript",
+						"exec": [
+							"// test if request was successful",
+							"var expectedStatus=200;",
+							"tests[\"Expecting response code \"+expectedStatus+\", got: \"+responseCode.code] = responseCode.code === expectedStatus;",
+							"",
+							"if (responseCode.code === expectedStatus){",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    tests['correct method'] = jsonData.method == \"GET\";",
+							"    tests['correct path'] = jsonData.path == \"/debug\";",
+							"    tests['empty contentType'] = jsonData.contentType == null;",
+							"    tests['query param foo correct'] = jsonData.queryParams.foo === 'bla' ;",
+							"    tests['query param argh correct'] = jsonData.queryParams.argh === 'narp 123' ;",
+							"}",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://localhost/debug?foo=bla&argh=narp%20123",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"debug"
+					],
+					"query": [
+						{
+							"key": "foo",
+							"value": "bla",
+							"equals": true
+						},
+						{
+							"key": "argh",
+							"value": "narp%20123",
+							"equals": true
+						}
+					]
+				}
 			},
 			"response": []
 		},
@@ -86,13 +144,11 @@
 						{
 							"key": "firstName",
 							"value": "Peter",
-							"description": "",
 							"type": "text"
 						},
 						{
 							"key": "lastName",
 							"value": "Walser",
-							"description": "",
 							"type": "text"
 						}
 					]
@@ -106,8 +162,7 @@
 					"path": [
 						"register"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -155,13 +210,11 @@
 						{
 							"key": "firstName",
 							"value": "Peter",
-							"description": "",
 							"type": "text"
 						},
 						{
 							"key": "lastName",
 							"value": "Walser",
-							"description": "",
 							"type": "text"
 						}
 					]
@@ -175,8 +228,7 @@
 					"path": [
 						"register"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -235,8 +287,7 @@
 					"path": [
 						"register"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		}

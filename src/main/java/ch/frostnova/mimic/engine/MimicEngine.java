@@ -68,7 +68,7 @@ public class MimicEngine implements InitializingBean {
             return WebResponse.error(500, errorMessage);
         } catch (Exception ex) {
             String errorMessage = "MIMIC: internal error (" + ex.getClass().getName() + ": " + ex.getMessage() + ")";
-            logger.error(errorMessage);
+            logger.error(errorMessage, ex);
             return WebResponse.error(500, errorMessage);
         }
     }

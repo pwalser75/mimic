@@ -4,6 +4,7 @@ import ch.frostnova.mimic.api.converter.KeyValueStoreConverter;
 import ch.frostnova.mimic.api.type.RequestMethod;
 import ch.frostnova.mimic.api.type.TemplateExpression;
 import ch.frostnova.mimic.util.JsonUtil;
+import ch.frostnova.mimic.util.UserAgent;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -58,6 +59,12 @@ public interface WebRequest {
 
     @XmlElement(name = "body")
     byte[] getBody();
+
+    @XmlElement(name = "userAgent")
+    default UserAgent getUserAgent() {
+        String userAgentHeader = getHeaders().get("user-agent");
+        return userAgentHeader != null ? new UserAgent(userAgentHeader) : null;
+    }
 
     default String toJSON() {
         return JsonUtil.stringify(this);

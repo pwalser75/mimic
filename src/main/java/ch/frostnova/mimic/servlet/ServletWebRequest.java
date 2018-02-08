@@ -134,12 +134,21 @@ public class ServletWebRequest implements WebRequest {
     }
 
     private boolean isMultiPart() {
-        return getContentType().startsWith(CONTENT_TYPE_MULTIPART);
+        String contentType = getContentType();
+        return contentType != null && contentType.startsWith(CONTENT_TYPE_MULTIPART);
+    }
+
+    private boolean isFormURLEncoded() {
+        String contentType = getContentType();
+        return contentType != null && contentType.startsWith(CONTENT_TYPE_FORM_URLENCODED);
     }
 
     @Override
     public byte[] getBody() {
-        if (isMultiPart() || getContentType().equals(CONTENT_TYPE_FORM_URLENCODED)) {
+        if (getContentType() == null) {
+            return null;
+        }
+        if (isMultiPart() || isFormURLEncoded()) {
             return null;
         }
         if (body == null) {
