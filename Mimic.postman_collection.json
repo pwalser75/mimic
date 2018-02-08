@@ -1,0 +1,244 @@
+{
+	"info": {
+		"name": "Mimic",
+		"_postman_id": "337234e6-0d19-3d86-873e-16589cf20e0a",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Hello",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4c1a01c8-49a5-41bf-8a48-ce272f401a86",
+						"type": "text/javascript",
+						"exec": [
+							"// test if request was successful",
+							"var expectedStatus=200;",
+							"tests[\"Expecting response code \"+expectedStatus+\", got: \"+responseCode.code] = responseCode.code === expectedStatus;",
+							"",
+							"if (responseCode.code === expectedStatus){",
+							"    tests['content'] = responseBody && responseBody.startsWith('Hello World');",
+							"}",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://localhost/hello",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"hello"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Register (form-data)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0e033a94-aa4f-430e-8edf-3b43e2cacd91",
+						"type": "text/javascript",
+						"exec": [
+							"// test if request was successful",
+							"var expectedStatus=200;",
+							"tests[\"Expecting response code \"+expectedStatus+\", got: \"+responseCode.code] = responseCode.code === expectedStatus;",
+							"",
+							"if (responseCode.code === expectedStatus){",
+							"    ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    tests['contentType'] = jsonData.contentType.startsWith('multipart/form-data');",
+							"    ",
+							"    tests['no path params'] = Object.keys(jsonData.pathParams).length === 0;",
+							"    tests['2 form params'] = Object.keys(jsonData.formParams).length === 2;",
+							"    tests['no query params'] = Object.keys(jsonData.queryParams).length === 0;",
+							"    ",
+							"    tests['multipart: 2 parts'] = jsonData.parts.length === 2;",
+							"    ",
+							"    tests['param: firstName'] = jsonData.formParams.firstName === 'Peter';",
+							"    tests['param: lastName'] = jsonData.formParams.lastName === 'Walser';",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "firstName",
+							"value": "Peter",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "lastName",
+							"value": "Walser",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://localhost/register",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"register"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Register (form url-encoded)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c69c3ee4-e2c9-495c-88bf-3150177430e3",
+						"type": "text/javascript",
+						"exec": [
+							"// test if request was successful",
+							"var expectedStatus=200;",
+							"tests[\"Expecting response code \"+expectedStatus+\", got: \"+responseCode.code] = responseCode.code === expectedStatus;",
+							"",
+							"if (responseCode.code === expectedStatus){",
+							"    ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    tests['contentType'] = jsonData.contentType.startsWith('application/x-www-form-urlencoded');",
+							"    ",
+							"    tests['no path params'] = Object.keys(jsonData.pathParams).length === 0;",
+							"    tests['2 form params'] = Object.keys(jsonData.formParams).length === 2;",
+							"    tests['no query params'] = Object.keys(jsonData.queryParams).length === 0;",
+							"    ",
+							"    tests['param: firstName'] = jsonData.formParams.firstName === 'Peter';",
+							"    tests['param: lastName'] = jsonData.formParams.lastName === 'Walser';",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "firstName",
+							"value": "Peter",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "lastName",
+							"value": "Walser",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://localhost/register",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"register"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Register (json body)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5275d82a-0e86-4cfe-a3ff-a9badf9866b0",
+						"type": "text/javascript",
+						"exec": [
+							"// test if request was successful",
+							"var expectedStatus=200;",
+							"tests[\"Expecting response code \"+expectedStatus+\", got: \"+responseCode.code] = responseCode.code === expectedStatus;",
+							"",
+							"if (responseCode.code === expectedStatus){",
+							"    ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    tests['contentType'] = jsonData.contentType.startsWith('application/json');",
+							"    tests['no path params'] = Object.keys(jsonData.pathParams).length === 0;",
+							"    tests['no form params'] = Object.keys(jsonData.formParams).length === 0;",
+							"    tests['no query params'] = Object.keys(jsonData.queryParams).length === 0;",
+							"    ",
+							"    ",
+							"    tests['body'] = jsonData.body === 'ewoJImZpcnN0TmFtZSI6ICJQZXRlciIsCgkibGFzdE5hbWUiOiAiV2Fsc2VyIgp9';",
+							"    ",
+							"    var jsonBody=JSON.parse(atob(jsonData.body));",
+							"    ",
+							"    tests['body: firstName'] = jsonBody.firstName === 'Peter';",
+							"    tests['body: lastName'] = jsonBody.lastName === 'Walser';",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"Peter\",\n\t\"lastName\": \"Walser\"\n}"
+				},
+				"url": {
+					"raw": "https://localhost/register",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"register"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
