@@ -17,22 +17,22 @@ import java.util.stream.StreamSupport;
 
 @Service
 @EnableTransactionManagement
-@Transactional(readOnly = true)
 /**
  * Implementation of the MappingService
  */
+@Transactional
 public class MappingServiceImpl implements MappingService {
 
     @Autowired
     private MimicMappingRepository repository;
 
     @Override
-    public MimicMapping get(long id) {
+    @Transactional(readOnly = true)
+    public MimicMapping get(String id) {
         return convert(repository.findOne(id));
     }
 
     @Override
-    @Transactional(readOnly = false)
     public MimicMapping save(MimicMapping mapping) {
         MimicMappingEntity entity = new MimicMappingEntity();
         if (mapping.getId() != null) {
@@ -42,6 +42,7 @@ public class MappingServiceImpl implements MappingService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<MimicMapping> list() {
         Spliterator<MimicMappingEntity> spliterator = repository.findAll().spliterator();
         Stream<MimicMappingEntity> stream = StreamSupport.stream(spliterator, false);
@@ -49,8 +50,7 @@ public class MappingServiceImpl implements MappingService {
     }
 
     @Override
-    @Transactional(readOnly = false)
-    public void delete(long id) {
+    public void delete(String id) {
         if (repository.exists(id)) {
             repository.delete(id);
         }
@@ -62,7 +62,9 @@ public class MappingServiceImpl implements MappingService {
         }
         MimicMapping dto = new MimicMapping();
         dto.setId(entity.getId());
+        dto.setMethod(entity.getRequestMethod());
         dto.setPath(entity.getPath());
+        dto.setScript(entity.getScript());
         return dto;
     }
 
@@ -70,7 +72,6 @@ public class MappingServiceImpl implements MappingService {
         if (dto == null) {
             return null;
         }
-        entity.setId(dto.getId());
         entity.setPath(dto.getPath());
         entity.setRequestMethod(dto.getMethod());
         entity.setScript(dto.getScript());

@@ -9,12 +9,12 @@ import java.util.List;
  */
 public interface MappingService {
 
-    MimicMapping get(long id);
+    MimicMapping get(String id);
 
     MimicMapping save(MimicMapping mapping);
 
     List<MimicMapping> list();
 
-    void delete(long id);
+    void delete(String id);
 
 }

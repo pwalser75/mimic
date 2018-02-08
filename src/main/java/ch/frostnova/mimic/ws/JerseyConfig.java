@@ -13,7 +13,7 @@ import javax.ws.rs.ApplicationPath;
  * JAX-RS configuration
  */
 @Configuration
-@ApplicationPath("api")
+@ApplicationPath("mimic")
 public class JerseyConfig extends ResourceConfig {
 
     public JerseyConfig() {
@@ -30,7 +30,7 @@ public class JerseyConfig extends ResourceConfig {
     private void configureSwagger() {
         register(ApiListingResource.class);
         BeanConfig beanConfig = new BeanConfig();
-        beanConfig.setVersion("1.0.2");
+        beanConfig.setVersion("2.0.0");
         beanConfig.setSchemes(new String[]{"https"});
         beanConfig.setHost("localhost");
         beanConfig.setBasePath("/");

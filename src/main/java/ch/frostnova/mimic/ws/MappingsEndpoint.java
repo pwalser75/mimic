@@ -9,14 +9,7 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -49,7 +42,8 @@ public class MappingsEndpoint {
     }
 
     /**
-     * Get a record by id. If the record was not found, a NoSuchElementException will be thrown (resulting in a 404 NOT FOUND).
+     * Get a record by id. If the record was not found, a NoSuchElementException will be thrown (resulting in a 404 NOT
+     * FOUND).
      *
      * @param id id of the record
      * @return record
@@ -57,7 +51,7 @@ public class MappingsEndpoint {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public MimicMapping get(@PathParam("id") long id) {
+    public MimicMapping get(@PathParam("id") String id) {
         MimicMapping result = mappingService.get(id);
         if (result != null) {
             return result;
@@ -87,7 +81,7 @@ public class MappingsEndpoint {
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void update(@PathParam("id") long id, MimicMapping mapping) {
+    public void update(@PathParam("id") String id, MimicMapping mapping) {
         mapping.setId(id);
         mappingService.save(mapping);
     }
@@ -99,7 +93,7 @@ public class MappingsEndpoint {
      */
     @DELETE
     @Path("/{id}")
-    public void delete(@PathParam("id") long id) {
+    public void delete(@PathParam("id") String id) {
         mappingService.delete(id);
     }
 }

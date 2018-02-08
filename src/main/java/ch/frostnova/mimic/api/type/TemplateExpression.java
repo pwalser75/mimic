@@ -1,18 +1,13 @@
 package ch.frostnova.mimic.api.type;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
- * Template expression with literals and placeholders (format: {placeholder-name}), example: <code>Hello {name}, nice to {action} you</code>
+ * Template expression with literals and placeholders (format: {placeholder-name}), example: <code>Hello {name}, nice to
+ * {action} you</code>
  *
  * @author pwalser
  * @since 25.01.2018.
@@ -75,7 +70,8 @@ public class TemplateExpression implements Comparable<TemplateExpression> {
     }
 
     /**
-     * Match the template against the provided string and find and return the key/values for the template placeholders.<br>
+     * Match the template against the provided string and find and return the key/values for the template
+     * placeholders.<br>
      * Example: for <code>The {what} today is {how}</code> and <code>The weather today is terrific</code>, return
      * <code>what=weather,how=terrific</code>
      *
