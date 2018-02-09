@@ -12,6 +12,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Mimic scripts loader, loads all scripts from a predefined path
@@ -22,7 +24,8 @@ import java.util.regex.Pattern;
 @Component
 public class ScriptsLoader {
 
-    private final static Pattern PATH_MAPPING = Pattern.compile("//\\s*(GET|HEAD|PUT|POST|DELETE|OPTIONS|TRACE)\\s+(.+)", Pattern.CASE_INSENSITIVE);
+    private final static String ALLOWED_METHODS_PATTERN = Stream.of(RequestMethod.values()).map(RequestMethod::name).collect(Collectors.joining("|"));
+    private final static Pattern PATH_MAPPING = Pattern.compile("//\\s*(" + ALLOWED_METHODS_PATTERN + ")\\s+(.+)", Pattern.CASE_INSENSITIVE);
 
     public MimicMapping load(Path path) throws IOException {
         Check.required(path, "path", Files::exists);
@@ -62,7 +65,7 @@ public class ScriptsLoader {
                     if (!matcher.matches()) {
                         throw new IOException("Invalid path mapping: " + line);
                     }
-                    requestMethod = RequestMethod.resolve(matcher.group(1));
+                    requestMethod = RequestMethod.checked(matcher.group(1));
                     pathMapping = matcher.group(2);
                 }
             } else {

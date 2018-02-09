@@ -14,7 +14,7 @@ It runs as a *Spring Boot* application and contains a generic *root dispatcher s
 which delegates arbitrary requests to **configurable mappings**.
 
 The mappings consist of:
-- a **request method** (GET, HEAD, POST, PUT, DELETE, OPTIONS or TRACE)
+- a **request method** (GET, HEAD, POST, PUT, DELETE, OPTIONS, TRACE, PATCH, COPY, LINK, UNLINK, PURGE, LOCK, UNLOCK, DEBUG, or VIEW)
 - a **request path** (can contain placeholders for path parameters)
 - **JavaScript (ECMASCRIPT 5.1) script** which evaluates requests and returns responses.
 

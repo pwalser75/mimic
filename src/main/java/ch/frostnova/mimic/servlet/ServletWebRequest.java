@@ -18,7 +18,11 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -58,7 +62,7 @@ public class ServletWebRequest implements WebRequest {
 
     @Override
     public RequestMethod getMethod() {
-        return RequestMethod.resolve(request.getMethod());
+        return RequestMethod.checked(request.getMethod());
     }
 
     @Override

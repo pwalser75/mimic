@@ -2,6 +2,7 @@ package ch.frostnova.mimic.servlet;
 
 import ch.frostnova.mimic.api.WebRequest;
 import ch.frostnova.mimic.api.WebResponse;
+import ch.frostnova.mimic.api.type.RequestMethod;
 import ch.frostnova.mimic.engine.MimicEngine;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class MimicDispatcherServlet extends HttpServlet {
 
         req.getSession().setAttribute("time", LocalDateTime.now());
 
-        logger.debug("dispatch: " + req.getRequestURI());
+        logger.debug("dispatch: " + req.getMethod() + " " + req.getRequestURI());
 
         WebRequest webRequest = new ServletWebRequest(req);
         WebResponse webResponse = mimicEngine.eval(webRequest);
@@ -65,6 +66,23 @@ public class MimicDispatcherServlet extends HttpServlet {
     }
 
     @Override
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        if (req.getMethod().equalsIgnoreCase("GET") || req.getMethod().equalsIgnoreCase("HEAD")) {
+            // dispatch over HttpServlet (sets last modified stuff, which we don't want to reimplement)
+            super.service(req, resp);
+        } else {
+            boolean supportedRequestMethod = RequestMethod.resolve(req.getMethod()).isPresent();
+            if (supportedRequestMethod) {
+                dispatch(req, resp);
+            } else {
+                resp.setStatus(405);
+                resp.getWriter().print("Unsupported method: " + req.getMethod());
+            }
+        }
+    }
+
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         dispatch(req, resp);
@@ -72,31 +90,6 @@ public class MimicDispatcherServlet extends HttpServlet {
 
     @Override
     protected void doHead(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        dispatch(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        dispatch(req, resp);
-    }
-
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        dispatch(req, resp);
-    }
-
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        dispatch(req, resp);
-    }
-
-    @Override
-    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        dispatch(req, resp);
-    }
-
-    @Override
-    protected void doTrace(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         dispatch(req, resp);
     }
 }
