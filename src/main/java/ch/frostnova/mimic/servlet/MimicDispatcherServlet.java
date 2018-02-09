@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.util.Map;
 
 /**
  * Mimic dispatcher servlet, dispatches requests to matching mimic rules.
@@ -45,8 +46,15 @@ public class MimicDispatcherServlet extends HttpServlet {
         //TODO: validate webResponse (Status codes, content type format)
         //TODO: interpret redirects
 
+        resp.setStatus(webResponse.getStatus());
         resp.setContentType(webResponse.getContentType());
         resp.setCharacterEncoding(StandardCharsets.UTF_8.displayName());
+
+        Map<String, String> headers = webResponse.getHeaders();
+        if (headers != null) {
+            headers.forEach((k, v) -> resp.setHeader(k, v));
+        }
+
         byte[] body = webResponse.getBody();
         if (body != null) {
             resp.setContentLength(body.length);
