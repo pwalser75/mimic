@@ -61,11 +61,9 @@ Some example scripts are already included in the script directory. Script files 
 - When no matching mapping was found, the Mimic server will respond with a **404** error.
 - On script errors, the server will responed with a **500** error, which includes details on the error.
 
-_Planned for later: store scripts in a DB and provide REST services to upload and manage them at runtime._
-
 ## HTTPS (TLS) configuration
 
-The Mimic Server is configured to **redirect HTTP to HTTPS** (_seriously: forget about ever using HTTP without TLS again - no excuses accepted_).
+The Mimic Server is configured to **redirect HTTP to HTTPS**.
 
 It ships with a **server certificate** for local development (bound to `localhost/127.0.0.1`), which you can find
 in `src/main/resources` (`server-keystore.jks` + configuration in `application.yml`). This certificate is signed by a test CA
@@ -81,5 +79,14 @@ purpose. You find the CA cert in `src/main/resources` as well (`test-ca-001.cer`
 **Run** (Spring Boot, `HTTPS` only, base URL: `https://localhost`)
 
     gradle bootRun
+	
+or just execute the JAR once you built it:
 
-Once the server is started, you can start doing **HTTPS** requests (if the path or method is not mapped, you will at least get a 404 with a meaningful message).
+	java -jar build/libs/mimic-1.0.0-SNAPSHOT.jar
+	
+By default, Mimic uses port 80 for HTTP (redirect to HTTPS) and port 443 for HTTPS (standard ports for both protocols).
+If you want to **reconfigure the ports**, you can pass the specific ports using arguments:
+
+	java -jar build/libs/mimic-1.0.0-SNAPSHOT.jar --server.port=8000 --http.server.port=7000
+
+Once the server is started, you can start executing requests (if the path or method is not mapped, you will at least get a 404 with a meaningful message).

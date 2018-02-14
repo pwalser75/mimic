@@ -1,7 +1,7 @@
 {
 	"info": {
 		"name": "Mimic",
-		"_postman_id": "038bea89-f045-c227-eb99-f69c5b682a1a",
+		"_postman_id": "9b9dd8d9-8d0b-0aaa-27c1-0ec9f875f3e9",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -35,10 +35,9 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://localhost/hello",
-					"protocol": "https",
+					"raw": "{{base-url}}/hello",
 					"host": [
-						"localhost"
+						"{{base-url}}"
 					],
 					"path": [
 						"hello"
@@ -53,21 +52,22 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "0110754b-e55e-4d3d-b145-645ff7850223",
+						"id": "7ab9593a-68ae-46e7-a4a2-475cf9f7284f",
 						"type": "text/javascript",
 						"exec": [
 							"// test if request was successful",
-							"var expectedStatus=200;",
+							"var expectedStatus=777;",
 							"tests[\"Expecting response code \"+expectedStatus+\", got: \"+responseCode.code] = responseCode.code === expectedStatus;",
 							"",
 							"if (responseCode.code === expectedStatus){",
 							"    var jsonData = pm.response.json();",
 							"    ",
-							"    tests['correct method'] = jsonData.method == \"GET\";",
-							"    tests['correct path'] = jsonData.path == \"/debug\";",
+							"    tests['correct method'] = jsonData.method == \"OPTIONS\";",
+							"    tests['correct path'] = jsonData.path == \"/some/arbitrary/path\";",
 							"    tests['empty contentType'] = jsonData.contentType == null;",
 							"    tests['query param foo correct'] = jsonData.queryParams.foo === 'bla' ;",
 							"    tests['query param argh correct'] = jsonData.queryParams.argh === 'narp 123' ;",
+							"    tests['path param'] = jsonData.pathParams.requestedPath == \"/some/arbitrary/path\";",
 							"}",
 							""
 						]
@@ -75,17 +75,18 @@
 				}
 			],
 			"request": {
-				"method": "GET",
+				"method": "OPTIONS",
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "https://localhost/debug?foo=bla&argh=narp%20123",
-					"protocol": "https",
+					"raw": "{{base-url}}/some/arbitrary/path?foo=bla&argh=narp%20123",
 					"host": [
-						"localhost"
+						"{{base-url}}"
 					],
 					"path": [
-						"debug"
+						"some",
+						"arbitrary",
+						"path"
 					],
 					"query": [
 						{
@@ -154,10 +155,9 @@
 					]
 				},
 				"url": {
-					"raw": "https://localhost/register",
-					"protocol": "https",
+					"raw": "{{base-url}}/register",
 					"host": [
-						"localhost"
+						"{{base-url}}"
 					],
 					"path": [
 						"register"
@@ -220,10 +220,9 @@
 					]
 				},
 				"url": {
-					"raw": "https://localhost/register",
-					"protocol": "https",
+					"raw": "{{base-url}}/register",
 					"host": [
-						"localhost"
+						"{{base-url}}"
 					],
 					"path": [
 						"register"
@@ -279,10 +278,9 @@
 					"raw": "{\n\t\"firstName\": \"Peter\",\n\t\"lastName\": \"Walser\"\n}"
 				},
 				"url": {
-					"raw": "https://localhost/register",
-					"protocol": "https",
+					"raw": "{{base-url}}/register",
 					"host": [
-						"localhost"
+						"{{base-url}}"
 					],
 					"path": [
 						"register"
