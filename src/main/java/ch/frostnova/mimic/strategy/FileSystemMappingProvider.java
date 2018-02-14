@@ -3,7 +3,6 @@ package ch.frostnova.mimic.impl;
 import ch.frostnova.mimic.api.MappingProvider;
 import ch.frostnova.mimic.api.MimicMapping;
 import ch.frostnova.mimic.io.ScriptsLoader;
-import ch.frostnova.util.check.Check;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -12,7 +11,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardWatchEventKinds;
+import java.nio.file.WatchKey;
+import java.nio.file.WatchService;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -40,13 +45,7 @@ public class FileSystemMappingProvider implements MappingProvider, InitializingB
 
     @Autowired
     public FileSystemMappingProvider(@Value("${mimic.scripts.dir}") String scriptsDir) {
-
-        if (scriptsDir != null) {
-            Path path = Paths.get(scriptsDir);
-            this.path = Check.required(path, "scriptsDir", Files::exists, Files::isDirectory, Files::isReadable);
-        } else {
-            path = null;
-        }
+        path = scriptsDir != null ? Paths.get(scriptsDir) : null;
     }
 
     @Override
@@ -56,7 +55,15 @@ public class FileSystemMappingProvider implements MappingProvider, InitializingB
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        if (path != null) {
+
+
+        if (path == null || !Files.exists(path)) {
+            logger.error("Path does not exist: " + path);
+        } else if (!Files.isDirectory(path)) {
+            logger.error("Cannot load scripts, path is not a directory: " + path);
+        } else if (!Files.isReadable(path)) {
+            logger.error("Cannot load scripts, path is not readable: " + path);
+        } else {
             loadScripts();
             WatchService watchService = FileSystems.getDefault().newWatchService();
             watch = path.register(watchService, StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_DELETE, StandardWatchEventKinds.ENTRY_MODIFY);
@@ -87,18 +94,21 @@ public class FileSystemMappingProvider implements MappingProvider, InitializingB
     }
 
     private void loadScripts() throws IOException {
-        logger.debug("Loading scripts from: " + path);
 
-        mappings.clear();
-        Files.list(path).filter(Files::isRegularFile).filter(f -> f.getFileName().toString().endsWith(".mimic.js")).forEach(file -> {
-            try {
-                MimicMapping mapping = scriptsLoader.load(file);
-                logger.debug("Loaded mapping | " + mapping.getMethod() + " " + mapping.getPath() + " [" + file.getFileName() + "]");
-                mappings.add(mapping);
-            } catch (IOException ex) {
-                logger.error("Could not load mapping file " + file.getFileName() + ": " + ex.getMessage());
-            }
-        });
+        if (path != null || Files.exists(path) && Files.isDirectory(path) && Files.isReadable(path)) {
+            logger.debug("Loading scripts from: " + path);
+
+            mappings.clear();
+            Files.list(path).filter(Files::isRegularFile).filter(f -> f.getFileName().toString().endsWith(".mimic.js")).forEach(file -> {
+                try {
+                    MimicMapping mapping = scriptsLoader.load(file);
+                    logger.debug("Loaded mapping | " + mapping.getMethod() + " " + mapping.getPath() + " [" + file.getFileName() + "]");
+                    mappings.add(mapping);
+                } catch (IOException ex) {
+                    logger.error("Could not load mapping file " + file.getFileName() + ": " + ex.getMessage());
+                }
+            });
+        }
     }
 
     @Override

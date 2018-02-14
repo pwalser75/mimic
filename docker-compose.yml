@@ -1,0 +1,11 @@
+version: '2'
+services:
+  mimic:
+    container_name: "mimic"
+    build: '.'
+    restart: always
+    ports:
+     - "443:443"
+     - "80:80"
+    volumes:
+      - ./scripts:/opt/mimic/scripts

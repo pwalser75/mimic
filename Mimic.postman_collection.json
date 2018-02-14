@@ -7,6 +7,46 @@
 	},
 	"item": [
 		{
+			"name": "Mimic Root",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4789946c-850f-435b-a58c-8282419134ff",
+						"type": "text/javascript",
+						"exec": [
+							"// test if request was successful",
+							"var expectedStatus=200;",
+							"tests[\"Expecting response code \"+expectedStatus+\", got: \"+responseCode.code] = responseCode.code === expectedStatus;",
+							"",
+							"if (responseCode.code === expectedStatus){",
+							"    tests['content'] = responseBody && responseBody.indexOf('MIMIC WEB SERVER')>=0;",
+							"}",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{base-url}}/",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Hello",
 			"event": [
 				{
