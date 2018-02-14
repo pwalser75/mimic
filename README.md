@@ -74,11 +74,11 @@ purpose. You find the CA cert in `src/main/resources` as well (`test-ca-001.cer`
 
 **Build** using *Gradle* (default targets: `clean,build`):
 
-    gradle
+    gradlew
 
 **Run** (Spring Boot, `HTTPS` only, base URL: `https://localhost`)
 
-    gradle bootRun
+    gradlew bootRun
 	
 or just execute the JAR once you built it:
 
@@ -90,3 +90,15 @@ If you want to **reconfigure the ports**, you can pass the specific ports using 
 	java -jar build/libs/mimic-1.0.0-SNAPSHOT.jar --server.port=8000 --http.server.port=7000
 
 Once the server is started, you can start executing requests (if the path or method is not mapped, you will at least get a 404 with a meaningful message).
+
+## Docker
+
+Mimic includes a Docker build file (`Dockerfile`) as well as a Docker Compose configuration (`docker-compose.yml`) for running Mimic as a container.
+
+**Run Mimic with Docker Compose** (optionally use the `-d` flag to run it in detached/background mode):
+
+	docker-compose up
+		
+**Stop the docker container** (optionally use the `--rmi local` option to remove the local image afterwards):
+
+	docker-compose down
