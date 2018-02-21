@@ -8,4 +8,4 @@ services:
      - "443:443"
      - "80:80"
     volumes:
-      - ./scripts:/opt/mimic/scripts
+      - ./mimic-web/scripts:/opt/mimic/scripts

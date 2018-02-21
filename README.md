@@ -96,6 +96,9 @@ Once the server is started, you can start executing requests (if the path or met
 
 Mimic includes a Docker build file (`Dockerfile`) as well as a Docker Compose configuration (`docker-compose.yml`) for running Mimic as a container.
 
+**Preparation**: before building the image, you need to build Mimic (using `gradlew`)
+
+
 **Run Mimic with Docker Compose** (optionally use the `-d` flag to run it in detached/background mode):
 
 	docker-compose up
