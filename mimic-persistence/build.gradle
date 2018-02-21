@@ -1,0 +1,12 @@
+description = 'Mimic Persistence'
+
+dependencies {
+    compile project(':mimic-api')
+
+    compile libs.springBoot
+	
+    testCompile libs.testbase
+    testCompile libs.springBootTest
+
+    runtime libs.hsqldb
+}

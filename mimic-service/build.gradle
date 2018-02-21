@@ -1,0 +1,12 @@
+description = 'Mimic Service'
+
+dependencies {
+    compile project(':mimic-api')
+    compile project(':mimic-persistence')
+
+    compile libs.frostnova.check
+	
+    testCompile libs.testbase
+    testCompile libs.springBootTest
+    runtime libs.hsqldb
+}

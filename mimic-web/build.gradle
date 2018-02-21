@@ -1,0 +1,17 @@
+apply plugin: 'org.springframework.boot'
+
+description = 'Mimic Web (Spring Boot)'
+
+dependencies {
+    compile project(':mimic-api')
+    compile project(':mimic-service')
+
+    compile libs.jee
+    compile libs.springBoot
+    compile libs.swagger
+    compile libs.frostnova.check
+	
+    testCompile libs.testbase
+    testCompile libs.springBootTest
+    compile libs.hsqldb
+}

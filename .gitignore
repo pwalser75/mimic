@@ -1,6 +1,8 @@
 .gradle
 /build/
 /out/
+*/build/
+*/out/
 
 # Ignore IDE files
 .idea
@@ -19,4 +21,4 @@ gradle-app.setting
 # gradle/wrapper/gradle-wrapper.properties
 
 # ignore script files starting with underscore (_)
-scripts/_*
+*/scripts/_*

@@ -1,5 +1,3 @@
-defaultTasks 'clean', 'build', 'install'
-
 buildscript {
     repositories {
         jcenter()
@@ -8,52 +6,84 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.8.RELEASE")
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
+        classpath 'com.netflix.nebula:gradle-aggregate-javadocs-plugin:2.2.+'
     }
 }
 
 apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'org.springframework.boot'
 apply plugin: 'com.github.ben-manes.versions'
+apply plugin: 'nebula-aggregate-javadocs'
 
-description = 'Mimic Server'
-group = 'ch.frostnova'
-version = '1.0.0-SNAPSHOT'
+defaultTasks 'clean', 'build'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+def appTitle = 'Mimic'
+def appVendor = 'frostnova.ch'
 
-repositories {
-    jcenter()
-}
-jar { duplicatesStrategy = 'exclude' }
-
-compileJava.options.encoding = 'UTF-8'
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
+allprojects {
 }
 
-def dateTimeFormat = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-def buildDate = java.time.LocalDateTime.now()
+subprojects {
+    apply plugin: 'java'
 
-jar {
-    manifest {
-        attributes(
-                "Name": project.name,
-                "Version": project.version,
-                "Build-Date": dateTimeFormat.format(buildDate)
-        )
+    group = 'ch.frostnova.mimic'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        jcenter()
+    }
+
+    jar { duplicatesStrategy = 'exclude' }
+
+    compileJava.options.encoding = 'UTF-8'
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+
+    def dateTimeFormat = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+    def buildDate = java.time.LocalDateTime.now()
+
+    plugins.withType(JavaPlugin) {
+        jar {
+            manifest {
+                attributes(
+                        "Name": project.name,
+                        "Version": project.version,
+                        "Build-Date": dateTimeFormat.format(buildDate),
+                        "Implementation-Title": appTitle,
+                        "Implementation-Version": project.version,
+                        "Implementation-Vendor": appVendor
+                )
+            }
+        }
+    }
+}
+
+dependencyUpdates.resolutionStrategy = {
+    componentSelection { rules ->
+        rules.all { ComponentSelection selection ->
+            boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm'].any { qualifier ->
+                selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
+            }
+            if (rejected) {
+                selection.reject('Release candidate')
+            }
+        }
     }
 }
 
 ext.libs = [
+        jee          : "javax:javaee-api:7.0",
         testbase      : [
                 "junit:junit:4.12",
                 "org.mockito:mockito-core:2.12.0"
         ],
         springBoot    : [
+                "org.springframework.boot:spring-boot-starter-jersey:1.5.8.RELEASE",
                 "org.springframework.boot:spring-boot-starter-data-jpa:1.5.8.RELEASE",
-                "org.springframework.boot:spring-boot-starter-jersey:1.5.8.RELEASE"
+                'javax.el:javax.el-api:2.2.4',
+                'org.glassfish.web:javax.el:2.2.4'
         ],
         springBootTest: [
                 "org.springframework.boot:spring-boot-starter-test:1.5.8.RELEASE"
@@ -69,15 +99,6 @@ ext.libs = [
         ]
 ]
 
-dependencies {
-    compile libs.springBoot
-    compile libs.swagger
-    compile libs.frostnova.check
-    testCompile libs.testbase
-    testCompile libs.springBootTest
-    runtime libs.hsqldb
-}
-
-task run(dependsOn: bootRun) {
+task run(dependsOn: ':mimic-web:bootRun') {
 }
 

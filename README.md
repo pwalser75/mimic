@@ -76,13 +76,14 @@ purpose. You find the CA cert in `src/main/resources` as well (`test-ca-001.cer`
 
     gradlew
 
-**Run** (Spring Boot, `HTTPS` only, base URL: `https://localhost`)
+**Run** (Spring Boot, base URL: `https://localhost`)
 
-    gradlew bootRun
+    gradlew run
 	
-or just execute the JAR once you built it:
+or execute the JAR once you built it:
 
-	java -jar build/libs/mimic-1.0.0-SNAPSHOT.jar
+	cd mimic-web
+	java -jar build/libs/mimic-web-1.0.0-SNAPSHOT.jar
 	
 By default, Mimic uses port 80 for HTTP (redirect to HTTPS) and port 443 for HTTPS (standard ports for both protocols).
 If you want to **reconfigure the ports**, you can pass the specific ports using arguments:
