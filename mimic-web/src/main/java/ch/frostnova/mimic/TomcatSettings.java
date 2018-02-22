@@ -32,21 +32,22 @@ public class TomcatSettings {
 
     @Bean
     public EmbeddedServletContainerFactory servletContainer() {
-        TomcatEmbeddedServletContainerFactory tomcat =
-                new TomcatEmbeddedServletContainerFactory() {
-
-                    @Override
-                    protected void postProcessContext(Context context) {
-                        SecurityConstraint securityConstraint = new SecurityConstraint();
-                        securityConstraint.setUserConstraint("CONFIDENTIAL");
-                        SecurityCollection collection = new SecurityCollection();
-                        collection.addPattern("/*");
-                        securityConstraint.addCollection(collection);
-                        context.addConstraint(securityConstraint);
-                    }
-                };
+        TomcatEmbeddedServletContainerFactory tomcat = new TomcatFactory();
         tomcat.addAdditionalTomcatConnectors(createHttpConnector());
         return tomcat;
+    }
+
+
+    static class TomcatFactory extends TomcatEmbeddedServletContainerFactory {
+        @Override
+        protected void postProcessContext(Context context) {
+            SecurityConstraint securityConstraint = new SecurityConstraint();
+            securityConstraint.setUserConstraint("CONFIDENTIAL");
+            SecurityCollection collection = new SecurityCollection();
+            collection.addPattern("/*");
+            securityConstraint.addCollection(collection);
+            context.addConstraint(securityConstraint);
+        }
     }
 
     private Connector createHttpConnector() {

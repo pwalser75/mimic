@@ -73,31 +73,39 @@ dependencyUpdates.resolutionStrategy = {
     }
 }
 
-ext.libs = [
-        jee          : "javax:javaee-api:7.0",
-        testbase      : [
-                "junit:junit:4.12",
-                "org.mockito:mockito-core:2.12.0"
-        ],
-        springBoot    : [
-                "org.springframework.boot:spring-boot-starter-jersey:1.5.8.RELEASE",
-                "org.springframework.boot:spring-boot-starter-data-jpa:1.5.8.RELEASE",
-                'javax.el:javax.el-api:2.2.4',
-                'org.glassfish.web:javax.el:2.2.4'
-        ],
-        springBootTest: [
-                "org.springframework.boot:spring-boot-starter-test:1.5.8.RELEASE"
-        ],
-        hsqldb        : [
-                "org.hsqldb:hsqldb:2.4.0"
-        ],
-        swagger       : [
-                'io.swagger:swagger-jersey2-jaxrs:1.5.17'
-        ],
-        frostnova     : [
-                check: "ch.frostnova:check:1.0.0-RC1"
-        ]
-]
+ext {
+    springVersion = '1.5.10.RELEASE'
+
+    libs = [
+            jee               : "javax:javaee-api:7.0",
+            testbase          : [
+                    "junit:junit:4.12",
+                    "org.mockito:mockito-core:2.12.0"
+            ],
+            springBoot        : [
+                    "org.springframework.boot:spring-boot-starter-jersey:${springVersion}",
+                    "org.springframework.boot:spring-boot-starter-data-jpa:${springVersion}",
+                    'javax.el:javax.el-api:2.2.4',
+                    'org.glassfish.web:javax.el:2.2.4'
+            ],
+            springBootActuator: [
+                    "org.springframework.boot:spring-boot-starter-actuator:${springVersion}",
+                    "org.springframework.boot:spring-boot-starter-web:${springVersion}"
+            ],
+            springBootTest    : [
+                    "org.springframework.boot:spring-boot-starter-test:${springVersion}"
+            ],
+            hsqldb            : [
+                    "org.hsqldb:hsqldb:2.4.0"
+            ],
+            swagger           : [
+                    'io.swagger:swagger-jersey2-jaxrs:1.5.17'
+            ],
+            frostnova         : [
+                    check: "ch.frostnova:check:1.0.0-RC1"
+            ]
+    ]
+}
 
 task run(dependsOn: ':mimic-web:bootRun') {
 }

@@ -8,6 +8,7 @@ dependencies {
 
     compile libs.jee
     compile libs.springBoot
+    compile libs.springBootActuator
     compile libs.swagger
     compile libs.frostnova.check
 	

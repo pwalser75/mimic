@@ -106,3 +106,11 @@ Mimic includes a Docker build file (`Dockerfile`) as well as a Docker Compose co
 **Stop the docker container** (optionally use the `--rmi local` option to remove the local image afterwards):
 
 	docker-compose down
+
+## Sysops
+
+Mimic uses **Spring Boot Actuator** to expose live information on the running server. Following endpoints are exposed over HTTPS, on **management port** `9000` on localhost:
+- `/info`: get application information (name, description, version)
+- `/health`: health information (system state, disk space, db connection)
+- `/metrics`: runtime metrics information (CPU, memory, threads, sessions, ...)
+- `/error`: errors
