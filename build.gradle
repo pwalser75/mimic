@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.8.RELEASE")
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.5.8.RELEASE'
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
         classpath 'com.netflix.nebula:gradle-aggregate-javadocs-plugin:2.2.+'
     }
@@ -105,6 +105,11 @@ ext {
                     check: "ch.frostnova:check:1.0.0-RC1"
             ]
     ]
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.5.1'
+    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
 }
 
 task run(dependsOn: ':mimic-web:bootRun') {
