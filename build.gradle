@@ -112,6 +112,8 @@ task wrapper(type: Wrapper) {
     distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
 }
 
-task run(dependsOn: ':mimic-web:bootRun') {
+task start(dependsOn: ':mimic-web:bootRun') {
+    group = 'Start/Run'
+    description = 'Start the Mimic server'
 }
 

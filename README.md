@@ -78,7 +78,7 @@ purpose. You find the CA cert in `src/main/resources` as well (`test-ca-001.cer`
 
 **Run** (Spring Boot, base URL: `https://localhost`)
 
-    gradlew run
+    gradlew start
 	
 or execute the JAR once you built it:
 
