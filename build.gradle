@@ -95,6 +95,14 @@ ext {
             springBootTest    : [
                     "org.springframework.boot:spring-boot-starter-test:${springVersion}"
             ],
+            liquibase    : [
+                    "org.hsqldb:hsqldb:2.4.0",
+                    dependencies.create("org.liquibase:liquibase-gradle-plugin:1.2.4") {
+                        exclude module: 'liquibase-core'
+                    },
+                    "org.liquibase:liquibase-core:3.5.3",
+                    "org.yaml:snakeyaml:1.19"
+            ],
             hsqldb            : [
                     "org.hsqldb:hsqldb:2.4.0"
             ],

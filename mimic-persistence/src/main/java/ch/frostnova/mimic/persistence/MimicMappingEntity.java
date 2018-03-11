@@ -2,10 +2,7 @@ package ch.frostnova.mimic.persistence;
 
 import ch.frostnova.mimic.api.type.RequestMethod;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Lob;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Mimic Mapping Entity
@@ -16,6 +13,7 @@ public class MimicMappingEntity extends BaseEntity {
 
 
     @Column(name = "method", length = 16, nullable = false)
+    @Enumerated(EnumType.STRING)
     private RequestMethod requestMethod;
 
     @Column(name = "path", length = 2048, nullable = false)

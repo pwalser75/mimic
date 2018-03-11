@@ -1,11 +1,10 @@
 package ch.frostnova.mimic.persistence;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.PrePersist;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -21,14 +20,20 @@ public abstract class BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "id", unique = true, nullable = false)
+    @GeneratedValue(generator = "generated-id")
+    @GenericGenerator(name = "generated-id", strategy = "ch.frostnova.mimic.persistence.generator.IdGenerator")
+    @Column(name = "id", length = 48, unique = true, nullable = false)
     private String id;
 
+    @Version
+    @Column(name = "version", nullable = false)
+    private int version;
+
     @Column(name = "created_at", nullable = false)
-    private ZonedDateTime createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "last_modified_at", nullable = false)
-    private ZonedDateTime lastModifiedAt;
+    private LocalDateTime lastModifiedAt;
 
     public BaseEntity() {
         id = UUID.randomUUID().toString();
@@ -38,19 +43,19 @@ public abstract class BaseEntity implements Serializable {
         return id;
     }
 
-    public ZonedDateTime getLastModifiedAt() {
+    public LocalDateTime getLastModifiedAt() {
         return lastModifiedAt;
     }
 
-    public void setLastModifiedAt(ZonedDateTime lastModifiedAt) {
+    public void setLastModifiedAt(LocalDateTime lastModifiedAt) {
         this.lastModifiedAt = lastModifiedAt;
     }
 
-    public ZonedDateTime getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(ZonedDateTime createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -60,7 +65,7 @@ public abstract class BaseEntity implements Serializable {
 
     @PrePersist
     private void setAuditDates() {
-        lastModifiedAt = ZonedDateTime.now();
+        lastModifiedAt = LocalDateTime.now();
         if (createdAt == null) {
             createdAt = lastModifiedAt;
         }

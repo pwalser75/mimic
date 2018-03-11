@@ -1,12 +1,161 @@
+buildscript {
+    dependencies {
+        classpath libs.liquibase
+    }
+}
+plugins {
+    id 'org.liquibase.gradle' version '1.2.4'
+}
+
 description = 'Mimic Persistence'
+defaultTasks 'clean', 'build'
+
+configurations {
+    driver
+    testDatabase
+}
 
 dependencies {
     compile project(':mimic-api')
-
     compile libs.springBoot
 	
     testCompile libs.testbase
     testCompile libs.springBootTest
+    testCompile libs.hsqldb
 
-    runtime libs.hsqldb
+    driver libs.hsqldb
 }
+
+// liquibase tasks
+
+final liquibaseSource = "${projectDir}/src/liquibase"
+final sqlTarget = "${buildDir}/sql"
+final dbTarget = "${buildDir}/test-db"
+
+final databases = [
+        hsqldb: [
+                version: '2.4.0',
+                db: [
+                        testUrl: "jdbc:hsqldb:file:${dbTarget}/testDatabase;shutdown=true",
+                        username: 'test',
+                        password: 'test'
+                ]
+        ],
+        mysql: [
+                version: '5.1.38'
+        ],
+        oracle: [
+                version: '11.2.0.4'
+        ],
+        postgresql: [
+                version: '9.3.9'
+        ]
+]
+
+def dbTasks=[]
+
+liquibase {
+
+    def dir = file(liquibaseSource)
+
+    databases.each { database ->
+
+        // create SQL/DDL scripts for all liquibase changelogs and supported databases
+
+        def db = database.key
+        def version = database.value.version
+        def query = '&' + database.value.get('parameters', [:]).collect { it }.join('&')
+        def filenamePattern = /(.+)\.([^\.]+)$/;
+
+        dir.eachFile { f ->
+            if (f.isFile() && f.name.endsWith(".xml")) {
+
+                def matcher = f.name =~ filenamePattern
+                if (matcher.matches()) {
+                    def sourceName = matcher[0][1];
+                    def activityId = db + '#' + sourceName
+
+                    activities.create(activityId, {
+                        changeLogFile f
+                        url "offline:${db}?version=${version}&outputLiquibaseSql=none&changeLogFile=${sqlTarget}/${db}/changelog.csv${query}"
+                        outputFile "${sqlTarget}/${db}/${db}-${sourceName}.sql"
+                        changeLogParameters parameters
+                    })
+
+                    dbTasks.add(activityId)
+                }
+            }
+        }
+    }.findAll { it.value.containsKey('db') }.each { database ->
+
+        // create HSQL test database
+
+        def db = database.key
+        activities.create(db + 'TestDatabase', {
+            changeLogFile "${dir}/test-database.xml"
+            url database.value.db.testUrl
+            username database.value.db.username
+            password database.value.db.password
+            changeLogParameters parameters
+        })
+    }
+
+}
+
+task createSql(dependsOn: clean) {
+    group = 'Database Scripts'
+    description= 'Create DDL/SQL scripts for each supported database'
+
+    doLast {
+        databases.each { database ->
+            def db = database.key
+            def dbDir=new File("${sqlTarget}/${db}")
+            dbDir.mkdirs()
+        }
+        liquibase {
+            runList = dbTasks.join(',')
+        }
+        tasks.updateSQL.execute()
+    }
+}
+
+task createTestDB(dependsOn: clean) {
+    group = 'Database Scripts'
+    description= 'Create HSQLDB test database'
+
+    doLast {
+        liquibase {
+            runList = 'hsqldbTestDatabase'
+        }
+        tasks.update.execute()
+    }
+}
+
+task createSqlZip(type: Zip, dependsOn: createSql) {
+
+    group = 'Test Database'
+    description= 'Bundle database scripts as ZIP artefact'
+
+    classifier 'sql'
+    from file(sqlTarget)
+    destinationDir project.buildDir
+}
+
+task createTestDBZip(type: Zip, dependsOn: createTestDB) {
+
+    group = 'Test Database'
+    description= 'Bundle test database as ZIP artefact'
+
+    classifier 'sql'
+    from file(dbTarget)
+    destinationDir project.buildDir
+}
+
+artifacts {
+    archives createSqlZip
+    testDatabase createTestDBZip
+}
+
+test.dependsOn createTestDB
+assemble.dependsOn createSqlZip
+assemble.dependsOn createTestDBZip

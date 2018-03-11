@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="1" author="pwalser" runAlways="true">
+
+        <createTable schemaName="MIMIC" tableName="MAPPING">
+            <column name="ID" type="varchar(48)">
+                <constraints primaryKey="true" primaryKeyName="USER_ACCOUNT_ID" nullable="false"/>
+            </column>
+            <column name="VERSION" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_AT" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LAST_MODIFIED_AT" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="METHOD" type="varchar(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PATH" type="varchar(2048)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SCRIPT" type="${clob.type}">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex schemaName="MIMIC" tableName="MAPPING" indexName="MAPPING_METHOD_IDX">
+            <column name="METHOD"/>
+        </createIndex>
+
+    </changeSet>
+</databaseChangeLog>
