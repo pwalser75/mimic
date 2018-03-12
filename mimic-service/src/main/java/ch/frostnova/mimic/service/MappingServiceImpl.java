@@ -15,11 +15,11 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-@Service
-@EnableTransactionManagement
 /**
  * Implementation of the MappingService
  */
+@Service
+@EnableTransactionManagement
 @Transactional
 public class MappingServiceImpl implements MappingService {
 
