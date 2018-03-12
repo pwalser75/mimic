@@ -9,10 +9,10 @@ dependencies {
     compile libs.jee
     compile libs.springBoot
     compile libs.springBootActuator
-    compile libs.swagger
     compile libs.frostnova.check
+    compile libs.liquibase
+    compile libs.h2
 	
     testCompile libs.testbase
     testCompile libs.springBootTest
-    compile libs.hsqldb
 }

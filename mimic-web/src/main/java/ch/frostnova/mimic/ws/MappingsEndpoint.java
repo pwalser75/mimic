@@ -2,10 +2,6 @@ package ch.frostnova.mimic.ws;
 
 import ch.frostnova.mimic.api.MimicMapping;
 import ch.frostnova.mimic.api.service.MappingService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +16,6 @@ import java.util.NoSuchElementException;
  */
 @Component
 @Path("mappings")
-@Api(value = "Mimic Mapping resource", produces = "application/json")
 public class MappingsEndpoint {
 
     @Autowired
@@ -33,10 +28,6 @@ public class MappingsEndpoint {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Lists all mappings", response = MimicMapping.class)
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Successful")
-    })
     public List<MimicMapping> list() {
         return mappingService.list();
     }

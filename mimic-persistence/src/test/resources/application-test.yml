@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:h2:file:./build/test-db
+    username: test
+    password: test
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+      path: /h2

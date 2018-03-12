@@ -8,5 +8,5 @@ dependencies {
 	
     testCompile libs.testbase
     testCompile libs.springBootTest
-    runtime libs.hsqldb
+    runtime libs.h2
 }

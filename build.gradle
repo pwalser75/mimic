@@ -14,12 +14,11 @@ apply plugin: 'java'
 apply plugin: 'com.github.ben-manes.versions'
 apply plugin: 'nebula-aggregate-javadocs'
 
-defaultTasks 'clean', 'build'
-
 def appTitle = 'Mimic'
 def appVendor = 'frostnova.ch'
 
 allprojects {
+    defaultTasks 'clean', 'build'
 }
 
 subprojects {
@@ -95,20 +94,8 @@ ext {
             springBootTest    : [
                     "org.springframework.boot:spring-boot-starter-test:${springVersion}"
             ],
-            liquibase    : [
-                    "org.hsqldb:hsqldb:2.4.0",
-                    dependencies.create("org.liquibase:liquibase-gradle-plugin:1.2.4") {
-                        exclude module: 'liquibase-core'
-                    },
-                    "org.liquibase:liquibase-core:3.5.3",
-                    "org.yaml:snakeyaml:1.19"
-            ],
-            hsqldb            : [
-                    "org.hsqldb:hsqldb:2.4.0"
-            ],
-            swagger           : [
-                    'io.swagger:swagger-jersey2-jaxrs:1.5.17'
-            ],
+            liquibase         : "org.liquibase:liquibase-core:3.5.3",
+            h2                : "com.h2database:h2:1.4.196",
             frostnova         : [
                     check: "ch.frostnova:check:1.0.0-RC1"
             ]

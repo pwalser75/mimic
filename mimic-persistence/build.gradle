@@ -8,7 +8,6 @@ plugins {
 }
 
 description = 'Mimic Persistence'
-defaultTasks 'clean', 'build'
 
 configurations {
     driver
@@ -18,29 +17,19 @@ configurations {
 dependencies {
     compile project(':mimic-api')
     compile libs.springBoot
+    compile libs.liquibase
 	
     testCompile libs.testbase
     testCompile libs.springBootTest
-    testCompile libs.hsqldb
-
-    driver libs.hsqldb
+    testCompile libs.h2
 }
 
 // liquibase tasks
 
-final liquibaseSource = "${projectDir}/src/liquibase"
+final liquibaseSource = "${projectDir}/src/main/resources/db"
 final sqlTarget = "${buildDir}/sql"
-final dbTarget = "${buildDir}/test-db"
 
 final databases = [
-        hsqldb: [
-                version: '2.4.0',
-                db: [
-                        testUrl: "jdbc:hsqldb:file:${dbTarget}/testDatabase;shutdown=true",
-                        username: 'test',
-                        password: 'test'
-                ]
-        ],
         mysql: [
                 version: '5.1.38'
         ],
@@ -65,7 +54,7 @@ liquibase {
         def db = database.key
         def version = database.value.version
         def query = '&' + database.value.get('parameters', [:]).collect { it }.join('&')
-        def filenamePattern = /(.+)\.([^\.]+)$/;
+        def filenamePattern = /(.+)\.([^\.]+)$/
 
         dir.eachFile { f ->
             if (f.isFile() && f.name.endsWith(".xml")) {
@@ -86,20 +75,7 @@ liquibase {
                 }
             }
         }
-    }.findAll { it.value.containsKey('db') }.each { database ->
-
-        // create HSQL test database
-
-        def db = database.key
-        activities.create(db + 'TestDatabase', {
-            changeLogFile "${dir}/test-database.xml"
-            url database.value.db.testUrl
-            username database.value.db.username
-            password database.value.db.password
-            changeLogParameters parameters
-        })
     }
-
 }
 
 task createSql(dependsOn: clean) {
@@ -119,18 +95,6 @@ task createSql(dependsOn: clean) {
     }
 }
 
-task createTestDB(dependsOn: clean) {
-    group = 'Database Scripts'
-    description= 'Create HSQLDB test database'
-
-    doLast {
-        liquibase {
-            runList = 'hsqldbTestDatabase'
-        }
-        tasks.update.execute()
-    }
-}
-
 task createSqlZip(type: Zip, dependsOn: createSql) {
 
     group = 'Test Database'
@@ -141,21 +105,8 @@ task createSqlZip(type: Zip, dependsOn: createSql) {
     destinationDir project.buildDir
 }
 
-task createTestDBZip(type: Zip, dependsOn: createTestDB) {
-
-    group = 'Test Database'
-    description= 'Bundle test database as ZIP artefact'
-
-    classifier 'sql'
-    from file(dbTarget)
-    destinationDir project.buildDir
-}
-
 artifacts {
     archives createSqlZip
-    testDatabase createTestDBZip
 }
 
-test.dependsOn createTestDB
 assemble.dependsOn createSqlZip
-assemble.dependsOn createTestDBZip
