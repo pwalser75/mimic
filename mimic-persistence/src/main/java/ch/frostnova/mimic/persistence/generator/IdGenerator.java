@@ -1,11 +1,14 @@
 package ch.frostnova.mimic.persistence.generator;
 
+import ch.frostnova.keygen.KeyGenerator;
+import ch.frostnova.keygen.model.KeyLengthUnit;
+import ch.frostnova.keygen.model.KeySpec;
+import ch.frostnova.keygen.model.KeyType;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.id.IdentifierGenerator;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 /**
  * Identity generator (UUID strings)
@@ -15,10 +18,10 @@ import java.util.UUID;
  */
 public class IdGenerator implements IdentifierGenerator {
 
+    private final static KeySpec KEY_SPEC = new KeySpec(KeyType.AlphaNumeric, 128, KeyLengthUnit.Bits);
+
     @Override
     public Serializable generate(SessionImplementor session, Object object) throws HibernateException {
-        String generatedId = UUID.randomUUID().toString();
-        System.out.println("ID: " + generatedId);
-        return generatedId;
+        return KeyGenerator.generate(KEY_SPEC);
     }
 }

@@ -97,7 +97,8 @@ ext {
             liquibase         : "org.liquibase:liquibase-core:3.5.3",
             h2                : "com.h2database:h2:1.4.196",
             frostnova         : [
-                    check: "ch.frostnova:check:1.0.0-RC1"
+                    check: "ch.frostnova:check:1.0.0-RC2",
+                    keygen: "ch.frostnova:keygen:1.0.0-RC1"
             ]
     ]
 }
