@@ -1,11 +1,11 @@
-package ch.frostnova.mimic.service.strategy;
+package ch.frostnova.mimic.api.provider;
 
 import ch.frostnova.mimic.api.KeyValueStore;
 import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Tests for {@link ch.frostnova.mimic.api.KeyValueStore}s.
+ * Tests for {@link KeyValueStore}s.
  *
  * @author pwalser
  * @since 29.01.2018.

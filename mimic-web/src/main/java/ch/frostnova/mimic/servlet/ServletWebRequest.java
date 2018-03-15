@@ -2,11 +2,14 @@ package ch.frostnova.mimic.servlet;
 
 import ch.frostnova.mimic.api.KeyValueStore;
 import ch.frostnova.mimic.api.WebRequest;
+import ch.frostnova.mimic.api.converter.KeyValueStoreConverter;
+import ch.frostnova.mimic.api.converter.LocalDateTimeConverter;
 import ch.frostnova.mimic.api.type.RequestMethod;
 import ch.frostnova.mimic.api.type.TemplateExpression;
-import ch.frostnova.mimic.service.util.JsonUtil;
 import ch.frostnova.mimic.strategy.HttpSessionKeyValueStore;
 import ch.frostnova.util.check.Check;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,6 +56,8 @@ public class ServletWebRequest implements WebRequest {
     }
 
     @Override
+    @JsonSerialize(using = KeyValueStoreConverter.Serializer.class)
+    @JsonDeserialize(using = KeyValueStoreConverter.Deserializer.class)
     public KeyValueStore getSession() {
         return sessionKeyValueStore;
     }
@@ -189,11 +194,6 @@ public class ServletWebRequest implements WebRequest {
             }
         }
         return parts;
-    }
-
-    @Override
-    public String toJSON() {
-        return JsonUtil.stringify(this);
     }
 
     public static class ServletRequestPart implements RequestPart {

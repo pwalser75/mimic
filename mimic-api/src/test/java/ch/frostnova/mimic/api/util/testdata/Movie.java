@@ -1,4 +1,4 @@
-package ch.frostnova.mimic.service.testdata;
+package ch.frostnova.mimic.api.util.testdata;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

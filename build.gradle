@@ -77,6 +77,10 @@ ext {
 
     libs = [
             jee               : "javax:javaee-api:7.0",
+            json              : [
+                    "com.fasterxml.jackson.core:jackson-annotations:2.9.4",
+                    "com.fasterxml.jackson.core:jackson-databind:2.9.4"
+            ],
             testbase          : [
                     "junit:junit:4.12",
                     "org.mockito:mockito-core:2.12.0"
@@ -97,7 +101,7 @@ ext {
             liquibase         : "org.liquibase:liquibase-core:3.5.3",
             h2                : "com.h2database:h2:1.4.196",
             frostnova         : [
-                    check: "ch.frostnova:check:1.0.0-RC2",
+                    check : "ch.frostnova:check:1.0.0-RC2",
                     keygen: "ch.frostnova:keygen:1.0.0-RC1"
             ]
     ]

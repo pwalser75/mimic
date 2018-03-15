@@ -1,6 +1,6 @@
-package ch.frostnova.mimic.service.util;
+package ch.frostnova.mimic.api.util;
 
-import ch.frostnova.mimic.service.testdata.Movie;
+import ch.frostnova.mimic.api.util.testdata.Movie;
 import org.junit.Assert;
 import org.junit.Test;
 

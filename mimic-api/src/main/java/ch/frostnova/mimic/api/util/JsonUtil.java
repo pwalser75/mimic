@@ -1,9 +1,7 @@
-package ch.frostnova.mimic.service.util;
+package ch.frostnova.mimic.api.util;
 
-import com.fasterxml.jackson.databind.AnnotationIntrospector;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
-import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -25,7 +23,7 @@ public final class JsonUtil {
      * Convert the given object to JSON using JAXB.
      *
      * @param value value
-     * @param <T>  type
+     * @param <T>   type
      * @return json json
      */
     public static <T> String stringify(T value) {
@@ -34,15 +32,7 @@ public final class JsonUtil {
         }
         try {
             StringWriter buffer = new StringWriter();
-            ObjectMapper mapper = new ObjectMapper();
-
-            mapper.setAnnotationIntrospector(
-                    AnnotationIntrospector.pair(
-                            new JacksonAnnotationIntrospector(),
-                            new JaxbAnnotationIntrospector(mapper.getTypeFactory())
-                    )
-            );
-            mapper.writeValue(buffer, value);
+            objectMapper().writeValue(buffer, value);
             return buffer.toString();
         } catch (IOException ex) {
             throw new RuntimeException(ex);
@@ -62,17 +52,15 @@ public final class JsonUtil {
             return null;
         }
         try {
-            ObjectMapper mapper = new ObjectMapper();
-
-            mapper.setAnnotationIntrospector(
-                    AnnotationIntrospector.pair(
-                            new JacksonAnnotationIntrospector(),
-                            new JaxbAnnotationIntrospector(mapper.getTypeFactory())
-                    )
-            );
-            return mapper.readValue(json.getBytes(StandardCharsets.UTF_8), type);
+            return objectMapper().readValue(json.getBytes(StandardCharsets.UTF_8), type);
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    private static ObjectMapper objectMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setAnnotationIntrospector(new JacksonAnnotationIntrospector());
+        return mapper;
     }
 }

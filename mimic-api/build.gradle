@@ -1,7 +1,8 @@
 description = 'Mimic API'
 
 dependencies {
-    compile libs.jee
     compile libs.frostnova.check
+    compile libs.json
+
     testCompile libs.testbase
 }

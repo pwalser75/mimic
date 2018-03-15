@@ -1,4 +1,4 @@
-package ch.frostnova.mimic.service.strategy;
+package ch.frostnova.mimic.api.provider;
 
 import ch.frostnova.mimic.api.KeyValueStore;
 import ch.frostnova.util.check.Check;

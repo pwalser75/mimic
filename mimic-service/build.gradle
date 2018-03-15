@@ -8,5 +8,6 @@ dependencies {
 	
     testCompile libs.testbase
     testCompile libs.springBootTest
+
     runtime libs.h2
 }
