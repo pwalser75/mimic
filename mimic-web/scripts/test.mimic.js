@@ -11,7 +11,7 @@ var result = {
         "IMDB": 8.2,
         "Metacritic": 89.0
     }
-}
+};
 
 response.setStatus(200);
 response.setContentType('application/json');

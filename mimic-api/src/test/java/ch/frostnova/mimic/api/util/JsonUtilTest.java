@@ -52,7 +52,7 @@ public class JsonUtilTest {
         // maps
         HashMap<?, ?> map = JsonUtil.parse(HashMap.class, "{\"a\":true,\"b\":123,\"c\":\"456\",\"d\":true,\"e\":[1,2,3]}");
         Assert.assertEquals(true, map.get("a"));
-        Assert.assertEquals(Integer.valueOf(123), map.get("b"));
+        Assert.assertEquals(123, map.get("b"));
         Assert.assertEquals("456", map.get("c"));
         Assert.assertEquals(Boolean.TRUE, map.get("d"));
         Assert.assertEquals(Arrays.asList(1, 2, 3), map.get("e"));

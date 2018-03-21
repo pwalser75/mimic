@@ -38,7 +38,10 @@ public class ScriptsLoaderTest {
         ScriptsLoader loader = new ScriptsLoader();
         StringBuilder builder = new StringBuilder();
 
-        builder.append("// " + requestMethod + " " + path);
+        builder.append("// ");
+        builder.append(requestMethod);
+        builder.append(" ");
+        builder.append(path);
         builder.append("\n");
         while (Math.random() > 0.5) {
             builder.append("\n");

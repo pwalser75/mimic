@@ -11,7 +11,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardWatchEventKinds;
+import java.nio.file.WatchKey;
+import java.nio.file.WatchService;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -106,7 +112,7 @@ public class FileSystemMappingProvider implements MappingProvider, InitializingB
     }
 
     @Override
-    public void destroy() throws Exception {
+    public void destroy() {
         if (watch != null) {
             watch.cancel();
             watch = null;

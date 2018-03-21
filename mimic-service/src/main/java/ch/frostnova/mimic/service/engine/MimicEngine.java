@@ -38,7 +38,7 @@ public class MimicEngine implements InitializingBean {
     private List<MappingProvider> mappingProviders;
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         logger.info("Initialized with providers: " +
                 mappingProviders.stream()
                         .map(Object::getClass).map(Class::getSimpleName)

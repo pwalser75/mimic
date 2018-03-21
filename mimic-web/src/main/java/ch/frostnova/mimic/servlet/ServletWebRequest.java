@@ -3,7 +3,6 @@ package ch.frostnova.mimic.servlet;
 import ch.frostnova.mimic.api.KeyValueStore;
 import ch.frostnova.mimic.api.WebRequest;
 import ch.frostnova.mimic.api.converter.KeyValueStoreConverter;
-import ch.frostnova.mimic.api.converter.LocalDateTimeConverter;
 import ch.frostnova.mimic.api.type.RequestMethod;
 import ch.frostnova.mimic.api.type.TemplateExpression;
 import ch.frostnova.mimic.strategy.HttpSessionKeyValueStore;
@@ -22,7 +21,11 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -81,9 +84,9 @@ public class ServletWebRequest implements WebRequest {
     public Map<String, String> getHeaders() {
 
         Map<String, String> result = new HashMap<>();
-        Collections.list(request.getHeaderNames()).forEach(header -> {
-            result.put(header, Collections.list(request.getHeaders(header)).stream().collect(Collectors.joining(",")));
-        });
+        Collections.list(request.getHeaderNames()).forEach(header ->
+                result.put(header, Collections.list(request.getHeaders(header)).stream().collect(Collectors.joining(",")))
+        );
         return result;
     }
 
@@ -209,9 +212,9 @@ public class ServletWebRequest implements WebRequest {
             name = part.getName();
             size = part.getSize();
 
-            part.getHeaderNames().forEach(header -> {
-                headers.put(header, part.getHeader(header));
-            });
+            part.getHeaderNames().forEach(header ->
+                    headers.put(header, part.getHeader(header))
+            );
 
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             try (BufferedInputStream in = new BufferedInputStream(part.getInputStream())) {

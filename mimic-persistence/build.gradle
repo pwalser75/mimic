@@ -62,7 +62,7 @@ liquibase {
 
                 def matcher = f.name =~ filenamePattern
                 if (matcher.matches()) {
-                    def sourceName = matcher[0][1];
+                    def sourceName = matcher[0][1]
                     def activityId = db + '#' + sourceName
 
                     activities.create(activityId, {

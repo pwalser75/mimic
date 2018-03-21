@@ -21,7 +21,7 @@ public abstract class FunctionalDeserializer<T> extends JsonDeserializer<T> {
     /**
      * Constructor, expects a converter function.
      *
-     * @param converter
+     * @param converter converter
      */
     protected FunctionalDeserializer(Function<String, T> converter) {
         if (converter == null) {

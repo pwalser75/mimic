@@ -2,7 +2,11 @@ package ch.frostnova.mimic.api.util;
 
 import org.junit.Assert;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * JUnit assert utility methods
@@ -35,10 +39,7 @@ public final class AssertUtils {
         if (a.size() != b.size()) {
             return false;
         }
-        if (!a.containsAll(b) || !b.containsAll(a)) {
-            return false;
-        }
-        return true;
+        return a.containsAll(b) && b.containsAll(a);
     }
 
     public static <T> void assertEquals(List<? extends T> a, List<? extends T> b) {
@@ -148,7 +149,7 @@ public final class AssertUtils {
             return checkEquals((List<?>) a, (List<?>) b);
         }
         if (a instanceof Map && b instanceof Map) {
-            return checkEquals((Map<?, ?>) a, (Map<?, ?>) b);
+            return checkEquals(a, b);
         }
         return Objects.equals(a, b);
     }

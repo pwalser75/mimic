@@ -1,6 +1,12 @@
 package ch.frostnova.mimic.api.type;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -145,9 +151,9 @@ public class TemplateExpression implements Comparable<TemplateExpression> {
         if (other == null) {
             return -1;
         }
-        int order = new Integer(literalCharacterLength).compareTo(other.literalCharacterLength);
+        int order = Integer.compare(literalCharacterLength, other.literalCharacterLength);
         if (order == 0) {
-            order = new Integer(keys.size()).compareTo(other.keys.size());
+            order = Integer.compare(keys.size(), other.keys.size());
         }
         return -order;
     }

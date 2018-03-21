@@ -3,7 +3,13 @@ package ch.frostnova.mimic.api.type;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
@@ -66,8 +72,8 @@ public class TemplateExpressionTest {
         };
 
         test.accept("{Hello}, {World}!", Arrays.asList("Hello", "World"));
-        test.accept("{Hello World}", Arrays.asList("Hello World"));
-        test.accept("{{{curly} }}", Arrays.asList("{{curly"));
+        test.accept("{Hello World}", Collections.singletonList("Hello World"));
+        test.accept("{{{curly} }}", Collections.singletonList("{{curly"));
         test.accept("{a}, b {{c}} {}", Arrays.asList("a", "{c"));
     }
 

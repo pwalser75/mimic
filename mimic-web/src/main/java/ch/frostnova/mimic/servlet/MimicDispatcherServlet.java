@@ -35,7 +35,7 @@ public class MimicDispatcherServlet extends HttpServlet {
     private MimicEngine mimicEngine;
 
     private void dispatch(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+            throws IOException {
 
         req.getSession().setAttribute("time", LocalDateTime.now());
 
@@ -53,7 +53,7 @@ public class MimicDispatcherServlet extends HttpServlet {
 
         Map<String, String> headers = webResponse.getHeaders();
         if (headers != null) {
-            headers.forEach((k, v) -> resp.setHeader(k, v));
+            headers.forEach(resp::setHeader);
         }
 
         byte[] body = webResponse.getBody();
