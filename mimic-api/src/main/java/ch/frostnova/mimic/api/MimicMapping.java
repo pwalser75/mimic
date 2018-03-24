@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.time.LocalDateTime;
 
 /**
- * A mimic rule, with method/path mapping and javascript script (ECMASCRIPT 5.1) for processing requests.
+ * A mimic mapping, with method/path mapping and javascript script (ECMASCRIPT 5.1) for processing requests.
  *
  * @author pwalser
  * @since 23.01.2018.

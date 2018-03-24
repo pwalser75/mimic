@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 /**
- * Mimic dispatcher servlet, dispatches requests to matching mimic rules.
+ * Mimic dispatcher servlet, dispatches requests to matching mimic mappings.
  *
  * @author pwalser
  * @since 23.01.2018.

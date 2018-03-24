@@ -18,7 +18,7 @@ The mappings consist of:
 - a **request path** (can contain placeholders for path parameters)
 - **JavaScript (ECMASCRIPT 5.1) script** which evaluates requests and returns responses.
 
-Mappings are configurable at runtime. Rules are evaluated using the *Nashorn JavaScript Engine*, 
+Mappings are configurable at runtime, and contain scripts that are evaluated using the *Nashorn JavaScript Engine*, 
 and have access to the *request* and *response* on evaluation.
 
 Planned extensions:

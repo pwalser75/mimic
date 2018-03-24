@@ -19,10 +19,11 @@ import javax.script.ScriptException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * Rule engine for processing requests.
+ * Engine for processing requests using Mimic mappings
  *
  * @author pwalser
  * @since 23.01.2018.
@@ -49,18 +50,18 @@ public class MimicEngine implements InitializingBean {
         Check.required(request, "request");
 
         // find best matching mapping
-        MimicMapping rule = resolveMapping(request);
-        if (rule == null) {
-            return WebResponse.error(404, "MIMIC: no matching rule found for " + request.getMethod() + " " + request.getPath());
+        Optional<MimicMapping> mapping = resolveMapping(request);
+        if (!mapping.isPresent()) {
+            return WebResponse.error(404, "MIMIC: no matching mapping found for " + request.getMethod() + " " + request.getPath());
         }
-        request.bind(new TemplateExpression(rule.getPath()));
+        request.bind(new TemplateExpression(mapping.get().getPath()));
 
         try {
             WebResponse response = new WebResponse();
             ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
             engine.put("request", request);
             engine.put("response", response);
-            engine.eval(rule.getScript());
+            engine.eval(mapping.get().getScript());
             return response;
         } catch (ScriptException ex) {
             String errorMessage = "MIMIC: script evaluation failed:\n" + ex.getColumnNumber() + ":" + ex.getLineNumber() + ": " + ex.getMessage();
@@ -73,7 +74,7 @@ public class MimicEngine implements InitializingBean {
         }
     }
 
-    private MimicMapping resolveMapping(WebRequest request) {
+    private Optional<MimicMapping> resolveMapping(WebRequest request) {
 
         List<MimicMapping> mimicMappings = new ArrayList<>();
         for (MappingProvider provider : mappingProviders) {
@@ -83,7 +84,7 @@ public class MimicEngine implements InitializingBean {
         return mimicMappings.stream()
                 .filter(m -> request.getMethod() == m.getMethod())
                 .filter(m -> new TemplateExpression(m.getPath()).matches(request.getPath()))
-                .sorted(Comparator.comparing(m -> new TemplateExpression(m.getPath()))).findFirst().orElse(null);
+                .sorted(Comparator.comparing(m -> new TemplateExpression(m.getPath()))).findFirst();
 
     }
 }
