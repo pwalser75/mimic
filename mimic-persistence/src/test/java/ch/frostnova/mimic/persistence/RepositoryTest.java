@@ -8,12 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
 /**
  * Test JPA repository
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class RepositoryTest {
+public class RepositoryTest extends BaseRepositoryTest {
 
     @Autowired
     private MimicMappingRepository repository;
@@ -29,40 +33,28 @@ public class RepositoryTest {
     }
 
     @Test
-    public void testCRUD() {
+    public void testCRUD() throws Exception {
 
-        // create
-        MimicMappingEntity entity = new MimicMappingEntity();
-        entity.setRequestMethod(RequestMethod.values()[(int) (RequestMethod.values().length * Math.random())]);
-        entity.setPath("/api/{tenant}/resource/{id}");
-        entity.setScript("console.log('Just a test')");
 
-        Assert.assertFalse(entity.isPersistent());
-        entity = repository.save(entity);
-        Assert.assertTrue(entity.isPersistent());
-        Assert.assertNotNull(entity.getId());
+        Supplier<MimicMappingEntity> create = () -> {
+            MimicMappingEntity entity = new MimicMappingEntity();
+            entity.setRequestMethod(RequestMethod.values()[(int) (RequestMethod.values().length * Math.random())]);
+            entity.setPath("/api/{tenant}/resource/{id}");
+            entity.setScript("console.log('Just a test')");
+            return entity;
+        };
+        Consumer<MimicMappingEntity> modify = entity -> {
+            entity.setRequestMethod(RequestMethod.values()[(int) (RequestMethod.values().length * Math.random())]);
+            entity.setPath("/api/{tenant}/resource/{id}");
+            entity.setScript("console.log('Just a test')");
+        };
+        BiConsumer<MimicMappingEntity, MimicMappingEntity> compare = (expected, actual) -> {
+            Assert.assertEquals(expected.getRequestMethod(), actual.getRequestMethod());
+            Assert.assertEquals(expected.getPath(), actual.getPath());
+            Assert.assertEquals(expected.getScript(), actual.getScript());
 
-        // read
-        MimicMappingEntity read = repository.findOne(entity.getId());
-        Assert.assertEquals(entity.getId(), read.getId());
-        Assert.assertEquals(entity.getRequestMethod(), read.getRequestMethod());
-        Assert.assertEquals(entity.getPath(), read.getPath());
-        Assert.assertEquals(entity.getScript(), read.getScript());
+        };
 
-        // update
-        entity.setPath("/something/else");
-        entity.setRequestMethod(RequestMethod.values()[(int) (RequestMethod.values().length * Math.random())]);
-        entity.setScript("console.log('lol')");
-        entity = repository.save(entity);
-        read = repository.findOne(entity.getId());
-        Assert.assertEquals(entity.getId(), read.getId());
-        Assert.assertEquals(entity.getRequestMethod(), read.getRequestMethod());
-        Assert.assertEquals(entity.getPath(), read.getPath());
-        Assert.assertEquals(entity.getScript(), read.getScript());
-
-        // delete
-        repository.delete(entity.getId());
-        entity = repository.findOne(entity.getId());
-        Assert.assertNull(entity);
+        testCRUD(repository, create, modify, compare);
     }
 }

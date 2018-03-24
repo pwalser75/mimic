@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.UUID;
 
 /**
  * Base Entity, uses a UUID id, and includes audit metadata (creation and last modification date).
@@ -35,10 +34,6 @@ public abstract class BaseEntity implements Serializable {
     @Column(name = "last_modified_at", nullable = false)
     private LocalDateTime lastModifiedAt;
 
-    public BaseEntity() {
-        id = UUID.randomUUID().toString();
-    }
-
     public String getId() {
         return id;
     }
@@ -59,11 +54,20 @@ public abstract class BaseEntity implements Serializable {
         this.createdAt = createdAt;
     }
 
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
     public boolean isPersistent() {
         return createdAt != null;
     }
 
     @PrePersist
+    @PreUpdate
     private void setAuditDates() {
         lastModifiedAt = LocalDateTime.now();
         if (createdAt == null) {
