@@ -1,4 +1,4 @@
-package ch.frostnova.mimic.persistence;
+package ch.frostnova.mimic.persistence.entity;
 
 import ch.frostnova.mimic.api.type.RequestMethod;
 
@@ -9,8 +9,13 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "mapping")
-public class MimicMappingEntity extends BaseEntity {
+public class MappingEntity extends BaseEntity {
 
+    @Column(name = "display_name", length = 512, nullable = false)
+    private String displayName;
+
+    @Column(name = "description", length = 2048)
+    private String description;
 
     @Column(name = "method", length = 16, nullable = false)
     @Enumerated(EnumType.STRING)
@@ -23,6 +28,21 @@ public class MimicMappingEntity extends BaseEntity {
     @Column(name = "script", nullable = false)
     private String script;
 
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public RequestMethod getRequestMethod() {
         return requestMethod;

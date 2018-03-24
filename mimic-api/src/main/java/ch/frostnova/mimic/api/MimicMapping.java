@@ -19,6 +19,12 @@ public class MimicMapping {
     @JsonProperty("id")
     private String id;
 
+    @JsonProperty("displayName")
+    private String displayName;
+
+    @JsonProperty("description")
+    private String description;
+
     @JsonProperty("createdAt")
     @JsonSerialize(using = LocalDateTimeConverter.Serializer.class)
     @JsonDeserialize(using = LocalDateTimeConverter.Deserializer.class)
@@ -44,6 +50,22 @@ public class MimicMapping {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public LocalDateTime getCreatedAt() {

@@ -10,6 +10,10 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -36,10 +40,22 @@ public class ScriptsLoader {
         // read mapping: first line is the mapping, the rest of the lines are the script (ECMAScript 5.1)
 
         try (BufferedReader reader = Files.newBufferedReader(path)) {
-            return load(reader);
+            MimicMapping mapping = load(reader);
+            mapping.setDisplayName(path.toString());
+            BasicFileAttributes fileAttributes = Files.readAttributes(path, BasicFileAttributes.class);
+            mapping.setCreatedAt(toLocalDateTime(fileAttributes.creationTime()));
+            mapping.setLastModifiedAt(toLocalDateTime(fileAttributes.lastModifiedTime()));
+            return mapping;
         } catch (IOException ex) {
             throw new IOException(path.getFileName() + " does not contain a mimic mapping");
         }
+    }
+
+    private static LocalDateTime toLocalDateTime(FileTime fileTime) {
+        if (fileTime == null) {
+            return null;
+        }
+        return LocalDateTime.ofInstant(fileTime.toInstant(), ZoneId.systemDefault());
     }
 
     public MimicMapping load(Reader reader) throws IOException {

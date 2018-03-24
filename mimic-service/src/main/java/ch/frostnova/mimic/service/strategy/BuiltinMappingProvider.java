@@ -31,6 +31,8 @@ public class BuiltinMappingProvider implements MappingProvider, InitializingBean
         String banner = getBanner().replace("\\", "\\\\").replace("'", "\\'").replace("\n", "\\n");
 
         MimicMapping mapping = new MimicMapping();
+        mapping.setDisplayName("Mimic Banner");
+        mapping.setDescription("Built-in request mapping");
         mapping.setMethod(RequestMethod.GET);
         mapping.setPath("/");
         mapping.setScript("response.setStatus(200);\n" +

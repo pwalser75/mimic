@@ -12,6 +12,8 @@
             <column name="VERSION" valueNumeric="1"/>
             <column name="CREATED_AT" valueComputed="CURRENT_TIMESTAMP"/>
             <column name="LAST_MODIFIED_AT" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="DISPLAY_NAME" value="Debug"/>
+            <column name="DESCRIPTION" value="Mirrors the incoming request as JSON, for debugging purpose"/>
             <column name="METHOD" value="GET"/>
             <column name="PATH" value="/mimic/debug"/>
             <column name="SCRIPT"

@@ -35,6 +35,8 @@ public class MimicEndpointTest {
             // create
 
             MimicMapping mapping = new MimicMapping();
+            mapping.setDisplayName("Test-Mapping");
+            mapping.setDescription("Integration Test");
             mapping.setMethod(RequestMethod.values()[(int) (RequestMethod.values().length * Math.random())]);
             mapping.setPath("/api/{tenant}/resource/{id}");
             mapping.setScript("console.log('Just a test')");

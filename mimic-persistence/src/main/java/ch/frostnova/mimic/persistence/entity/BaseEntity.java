@@ -1,4 +1,4 @@
-package ch.frostnova.mimic.persistence;
+package ch.frostnova.mimic.persistence.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 

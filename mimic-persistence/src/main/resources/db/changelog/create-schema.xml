@@ -9,7 +9,7 @@
 
         <createTable schemaName="MIMIC" tableName="MAPPING">
             <column name="ID" type="varchar(48)">
-                <constraints primaryKey="true" primaryKeyName="USER_ACCOUNT_ID" nullable="false"/>
+                <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="VERSION" type="bigint">
                 <constraints nullable="false"/>
@@ -20,6 +20,10 @@
             <column name="LAST_MODIFIED_AT" type="datetime">
                 <constraints nullable="false"/>
             </column>
+            <column name="DISPLAY_NAME" type="varchar(512)" defaultValue="-">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DESCRIPTION" type="varchar(2048)"/>
             <column name="METHOD" type="varchar(16)">
                 <constraints nullable="false"/>
             </column>

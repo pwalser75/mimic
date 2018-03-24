@@ -1,6 +1,8 @@
 package ch.frostnova.mimic.persistence;
 
 import ch.frostnova.mimic.api.type.RequestMethod;
+import ch.frostnova.mimic.persistence.entity.MappingEntity;
+import ch.frostnova.mimic.persistence.repository.MappingRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,13 +18,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class InitialDataTest {
 
     @Autowired
-    private MimicMappingRepository repository;
+    private MappingRepository repository;
 
     @Test
     public void testInitialDataAvailable() {
 
         String id = "nzghNv4StIDFqBXaxqDZnWd4kMFfpWfq";
-        MimicMappingEntity entity = repository.findOne(id);
+        MappingEntity entity = repository.findOne(id);
         Assert.assertNotNull(entity);
         Assert.assertEquals(RequestMethod.GET, entity.getRequestMethod());
         Assert.assertEquals("/mimic/debug", entity.getPath());

@@ -9,7 +9,7 @@ http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/persistence/persistence_2
 
         <description>Test Persistence Unit</description>
 
-        <class>ch.frostnova.mimic.persistence.MimicMappingEntity</class>
+        <class>ch.frostnova.mimic.persistence.entity.MappingEntity</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver"/>

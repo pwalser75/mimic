@@ -1,5 +1,6 @@
 package ch.frostnova.mimic.persistence;
 
+import ch.frostnova.mimic.persistence.entity.BaseEntity;
 import org.junit.Assert;
 import org.springframework.data.repository.CrudRepository;
 
