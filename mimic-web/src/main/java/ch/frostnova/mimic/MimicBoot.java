@@ -18,9 +18,9 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @ServletComponentScan
 @ComponentScan
 @EnableAspectJAutoProxy
-public class SpringBootProject {
+public class MimicBoot {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringBootProject.class, args);
+        SpringApplication.run(MimicBoot.class, args);
     }
 }
