@@ -1,0 +1,9 @@
+<div class="input-field"
+     [class.info]="errorKey=='required'"
+     [class.error]="(control.dirty || control.submitted) && errorMessage && errorKey!='required'">
+    <label *ngIf="label">{{label|translate}}:</label>
+    <ng-content></ng-content>
+    <span class="input-message" *ngIf="(control.dirty || control.submitted) && errorMessage">
+		<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> {{errorMessage}}
+	</span>
+</div>

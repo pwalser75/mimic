@@ -1,0 +1,28 @@
+plugins {
+  id "com.moowork.node" version "1.2.0"
+}
+
+description = 'Mimic UI'
+jar.enabled = false
+
+defaultTasks 'clean', 'build'
+
+node {
+	version = '8.9.4'
+	download = true
+	workDir = file("${project.projectDir}/node")
+	nodeModulesDir = file("${project.projectDir}")
+}
+
+task cleanDist(type: Delete) {
+	delete 'dist'
+}
+
+task cleanNode(type: Delete) {
+	delete 'node'
+	delete 'node_modules'
+}
+
+clean.dependsOn cleanDist
+yarn_build.dependsOn yarn_install
+build.dependsOn yarn_build

@@ -1,0 +1,38 @@
+<div class="content-wrapper">
+    <div class="content">
+        <div *ngIf="movie">
+            <div class="grid gutter">
+                <div class="col-3 col-md-3 col-sm-4 col-xs-12">
+                    <div class="content">
+                        <div class="image-border zoom low media aspect27to40">
+                            <img class="image-contain" [src]="movie.image">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-9 col-md-9 col-sm-8 col-xs-12">
+                    <div class="content">
+                        <h1>{{movie.title}}</h1>
+                        <b>{{movie.year}}</b> | {{movie.genres | commaSeparated}}<br>
+                        <rating value="{{movie.rating}}" max="10"></rating>
+                        &nbsp;<b>{{movie.rating}}</b>/10
+                        <p>
+                        <div class="text-columns-2">
+                            {{movie.plot}}
+                        </div>
+                        <div *ngIf="movie.youtubeTrailerId">
+                            <p>
+                            <div class="media aspect16to9">
+                                <iframe [src]="'https://www.youtube.com/embed/'+movie.youtubeTrailerId | saveURL">
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="!movie">
+            no such movie
+        </div>
+    </div>
+</div>

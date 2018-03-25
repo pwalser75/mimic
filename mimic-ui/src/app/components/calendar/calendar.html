@@ -1,0 +1,53 @@
+<div class="content-wrapper">
+    <div class="content">
+
+        <h1>{{'calendar.title'|translate}}</h1>
+
+        <div *ngIf="!authService.userName">
+            {{'calendar.authRequired'|translate}}
+        </div>
+        <button class="button-primary" (click)="refresh()"><i class="fa fa-refresh"></i>
+            <span *ngIf="authService.isAuthenticated()">
+                        {{'general.refresh'|translate}}
+                    </span>
+            <span *ngIf="!authService.isAuthenticated()">
+                        {{'calendar.googleSignIn'|translate}}
+                    </span>
+        </button>
+        <p>
+        <div *ngIf="authService.isAuthenticated()">
+            <div class="grid gutter">
+
+                <div class="col-2 col-sm-4 col-xs-12">
+                    <div class="image-border">
+                        <img class="image-contain" *ngIf="authService.userImageUrl"
+                             [src]="authService.userImageUrl">
+                    </div>
+                    <div class="inset-base">
+                        <div class="text-large text-bold text-center">{{authService.userName}}</div>
+                        <div class="text-small text-center">{{authService.userOccupation}}<br>
+                            {{authService.userLocation}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-10 col-sm-8 col-xs-12">
+                    <table>
+                        <tr *ngFor="let day of getNextDays()">
+                            <td width="50" class="background-light">
+                                <div class="text-large">{{day|date:'dd'}}</div>
+                                <div class="text-small text-bold">{{day|date:'MMMM'}}</div>
+                            </td>
+                            <td>
+                                <div *ngFor="let event of getEventsOn(day)">
+                                    <strong class="foreground-dark">{{event.start | date:'HH:mm'}}</strong>
+                                    &nbsp;-&nbsp;
+                                    <strong>{{event.subject}}</strong> - {{event.calendar.name}}
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

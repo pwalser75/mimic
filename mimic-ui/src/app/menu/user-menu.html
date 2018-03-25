@@ -1,0 +1,24 @@
+<div class="nav-item popup popup-bottom-left" *ngIf="applicationService.getUser()">
+    <i class="fa fa-user" aria-hidden="true"></i> {{applicationService.getUser().name}}
+    <i class="fa fa-caret-down" aria-hidden="true"></i>
+    <ul class="popup-content list">
+        <div *ngIf="applicationService.getUser().profilePictureURL">
+            <img [src]="applicationService.getUser().profilePictureURL">
+        </div>
+        <a href="#">
+            <li>{{'menu.account-settings'|translate}}</li>
+        </a>
+        <a (click)="loginService.logout()">
+            <li>{{'menu.logout'|translate}}</li>
+        </a>
+    </ul>
+</div>
+<a class="nav-item" *ngIf="!applicationService.getUser()" href="javascript:void(0)"
+   (click)="loginService.login('Test User','secret007')">
+    <i class="fa fa-user" aria-hidden="true"></i>
+    <span class="hide-md-down"> {{'menu.register'|translate}} </span>
+</a>
+<a class="nav-item" *ngIf="!applicationService.getUser()" href="javascript:void(0)" [routerLink]="['/login']">
+    <i class="fa fa-sign-in" aria-hidden="true"></i>
+    <span class="hide-md-down"> {{'menu.login'|translate}} </span>
+</a>

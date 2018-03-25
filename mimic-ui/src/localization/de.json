@@ -1,0 +1,78 @@
+{
+  "general": {
+    "loading": "Wird geladen",
+    "submit": "Absenden",
+    "ok": "OK",
+    "cancel": "Abbrechen",
+    "yes": "Ja",
+    "no": "Nein",
+    "yes-nice": "Ja, gerne",
+    "no-nice": "Nein, danke",
+    "create": "Erstellen",
+    "save": "Speichern",
+    "edit": "Bearbeiten",
+    "refresh": "Aktualisieren",
+    "delete": "Löschen",
+    "print": "Drucken",
+    "share": "Teilen",
+    "login": "Anmelden",
+    "logout": "Abmelden"
+  },
+  "error": {
+    "required": "Wert muss angegeben werden",
+    "minlength": "Wert muss aus mindestens ${requiredLength} Zeichen bestehen (aktuell: ${actualLength})",
+    "maxlength": "Wert darf aus höchstens ${requiredLength} Zeichen bestehen (aktuell: ${actualLength})",
+    "pattern": "Wert entspricht nicht dem erwarteten Format (${requiredPattern})"
+  },
+  "app": {
+    "title": "Angular Demo",
+    "description": "Hallo Angular"
+  },
+  "search": {
+    "quicksearch-title": "Schnellsuche",
+    "quicksearch-hint": "Tipp: Filme nach Titel, Jahr oder Genre (Action, Adventure, ..) suchen. Als kleines Extra wird auch in Bildern gesucht."
+  },
+  "menu": {
+    "welcome": "-> welcome.title",
+    "movies": "->movies.title  ",
+    "changes": "->changes.title",
+    "calendar": "-> calendar.title",
+    "protected": "Geschützt",
+    "register": "Registrieren",
+    "account-settings": "Konto-Einstellungen",
+    "login": "-> general.login",
+    "logout": "-> general.logout"
+  },
+  "login": {
+    "title": "-> general.login",
+    "description": "Bitte melden Sie sich mit ihrem Benutzernamen und Passwort an",
+    "user": "Benutzername",
+    "user-hint": "Bitte geben Sie ihren Benutzernamen an",
+    "password": "Passwort",
+    "password-hint": "Bitte geben Sie ihr Passwort ein",
+    "remember": "Eingeloggt bleiben",
+    "hint": "Hinweis: einloggen mit beliebigen Benutzernamen/Passwort möglich."
+  },
+  "welcome": {
+    "title": "Willkommen",
+    "greeting-user": "Hallo",
+    "greeting-guest": "Willkommen, lieber Besucher",
+    "welcome-back": "schön, dich wiederzusehen!",
+    "login-hint": "Benutze die Menufunktion, um dich anzumelden."
+  },
+  "movies": {
+    "title": "Filme"
+  },
+  "changes": {
+    "title": "Änderungen",
+    "subtitle": "Änderungen in diesem Projekt (Github)"
+  },
+  "messages": {
+    "clear": "Benachrichtigungen löschen"
+  },
+  "calendar": {
+    "title": "Kalender",
+    "authRequired": "Anmeldung erforderlich, um die Kalendereinträge (aus Google Calendar) anzuzeigen.",
+    "googleSignIn": "Anmelden mit Google-Account"
+  }
+}

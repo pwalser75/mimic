@@ -1,0 +1,41 @@
+<div class="content-wrapper">
+    <div class="content">
+        <h1>{{'movies.title'|translate}}</h1>
+
+        <div class="grid gutter">
+
+            <div *ngFor="let movie of movies" class="col-3 col-lg-3 col-sm-6 col-xs-12">
+                <a class="undecorated" href="javascript:void(0)" [routerLink]="['/movie', movie.id]">
+                    <div class="card card-primary full-height">
+                        <section class="grid gutter">
+                            <div class="col-12 col-xs-4">
+                                <div class="hide-xs-down media aspectSquare">
+                                    <div class="zoom-inside">
+                                        <img class="image-contain" [src]="movie.image">
+                                    </div>
+                                </div>
+                                <div class="display-xs-down media aspect27to40">
+                                    <img class="image-contain" [src]="movie.image">
+                                </div>
+                            </div>
+                            <div class="col-12 col-xs-8 content">
+                                <h4>{{movie.title}}</h4>
+                                <div class="hide-xs">
+                                    <rating value="{{movie.rating}}" max="10"></rating>
+                                </div>
+                                <div class="display-xs-down">
+                                    <b>{{movie.year}}</b> <br class="visible-xs">
+                                    {{movie.genres | commaSeparated}}
+                                </div>
+                            </div>
+                        </section>
+                        <footer>
+                            <b>{{movie.year}}</b>
+                            - {{movie.genres | commaSeparated}}
+                        </footer>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

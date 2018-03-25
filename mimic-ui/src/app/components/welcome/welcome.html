@@ -1,0 +1,69 @@
+<div id="title" class="wallpaper shadow-inner" style="background-image: url(images/wallpaper.jpg)">
+    <div class="content-wrapper">
+        <div class="page-title content">
+            <h2>{{'app.title'|translate}}</h2>
+            <h5>{{'app.description'|translate}}</h5>
+        </div>
+    </div>
+</div>
+
+<div class="content-wrapper">
+    <div class="content">
+
+        <p>
+        <div *ngIf="getUser()">
+            <h1>{{'welcome.greeting-user'|translate}} {{getUser().name}}</h1>
+            {{'welcome.welcome-back'|translate}}
+        </div>
+        <div *ngIf="!getUser()">
+            <h1>{{'welcome.greeting-guest'|translate}}</h1>
+            {{'welcome.login-hint'|translate}}
+        </div>
+
+        <h3>{{'search.quicksearch-title'|translate}}</h3>
+        {{'search.quicksearch-hint'|translate}}
+        <p>
+            <quicksearch></quicksearch>
+        </p>
+
+        <h3>Features</h3>
+        <ul>
+            <li>
+                <strong>Angular</strong> (5.x) with <strong>Typescript</strong></li>
+            <li>
+                <strong>Build</strong>: <strong>Angular CLI / NPM</strong> build, with supplemental <strong>Gradle</strong> and
+                <strong>Maven</strong> build files (build a Java WAR, standalone, don't require a global Node.js
+                installation)
+            </li>
+            <li>
+                <strong>Bootstrap UI</strong> with <strong>FontAwesome</strong> icons
+            </li>
+            <li>
+                <strong>Single page application</strong> with menu and <strong>routing</strong></li>
+            <li>
+                <strong>Reactive forms</strong> with <strong>validation</strong></li>
+            <li>
+                <strong>Title service</strong> support: each route has its own window title
+            </li>
+            <li>
+                <strong>Components</strong>: welcome, login, movie-list, movie-detail, changes (Github), menus
+                (app-menu, user-menu, lang-menu)
+            </li>
+            <li>
+                <strong>Services</strong>: application-service, translate-service, movie-service, github-service
+            </li>
+            <li>
+                <strong>Pipes</strong>: comma-separated, translate
+            </li>
+            <li>
+                <strong>Widgets</strong> (components): input-component, input-errors, rating
+            </li>
+            <li>
+                <strong>Localization</strong> in EN and DE with JSON files, additional languages can be added easily
+            </li>
+            <li>
+                <strong>Extension Strategies</strong>: <code>SearchService</code> with <code>SearchStrategy</code> extensions
+            </li>
+        </ul>
+    </div>
+</div>

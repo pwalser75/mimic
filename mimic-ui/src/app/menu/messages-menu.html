@@ -1,0 +1,40 @@
+<div class="nav-item popup popup-menu-left">
+    <i class="fa fa-envelope" aria-hidden="true"></i>
+    <label *ngIf="getNumberOfMessages()>0" class="label-green">{{getNumberOfMessages()}}</label>
+    <i *ngIf="getNumberOfMessages()>0" class="fa fa-caret-down" aria-hidden="true"></i>
+    <div *ngIf="getNumberOfMessages()>0" class="popup-content" style="width: 40vw; min-width: 300px; max-width: 100vw">
+        <div class="card">
+            <div class="list list-icons">
+                <div class="message" *ngFor="let message of messagesService.getMessages()">
+                <span class="list-icon">
+                    <span *ngIf="message.severityName=='info'">
+                        <i class="fa fa-exclamation-circle foreground-info"></i>
+                    </span>
+                    <span *ngIf="message.severityName=='success'">
+                        <i class="fa fa-check-circle foreground-success"></i>
+                    </span>
+                    <span *ngIf="message.severityName=='warning'">
+                        <i class="fa fa-warning foreground-warning"></i>
+                    </span>
+                    <span *ngIf="message.severityName=='error'">
+                        <i class="fa fa-times-circle foreground-error"></i>
+                    </span>
+                </span>
+                    <div>
+                        {{message.timestamp|date:'HH:mm:ss'}}
+                        <strong>{{message.title}}</strong>
+                        {{message.content}}
+                        <div class="pull-right">
+                            <a (click)="messagesService.remove(message)"><i class="fa fa-remove"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer *ngIf="messagesService.getMessages()">
+                <small class="pull-right">
+                    <a (click)="messagesService.clear()">{{'messages.clear'|translate}}</a>
+                </small>
+            </footer>
+        </div>
+    </div>
+</div>

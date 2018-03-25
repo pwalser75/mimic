@@ -1,0 +1,32 @@
+<div class="content-wrapper">
+    <div class="content">
+        <h1>{{'login.title'|translate}}</h1>
+        {{'login.description'|translate}}
+        <p>
+        <label class="label-green border material-shadow-1"><i class="fa fa-magic"></i> {{'login.hint'|translate}}</label>
+        <p>
+
+        <form [formGroup]="form" novalidate (ngSubmit)="login()">
+            <input-component label="login.user" [errors]="form.controls.user.errors"
+                             [control]="form.controls.user">
+                <input type="text" formControlName="user"
+                       placeholder="{{'login.user-hint'|translate}}">
+            </input-component>
+            <input-component label="login.password" [errors]="form.controls.password.errors"
+                             [control]="form.controls.password">
+                <input type="password" formControlName="password"
+                       placeholder="{{'login.password-hint'|translate}}">
+            </input-component>
+            <input-component [errors]="form.controls.remember.errors"
+                             [control]="form.controls.remember">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" formControlName="remember">
+                        {{'login.remember'|translate}}
+                    </label>
+                </div>
+            </input-component>
+            <button class="btn button-primary" [disabled]="!form.valid">{{'general.submit'|translate}}</button>
+        </form>
+    </div>
+</div>
