@@ -28,7 +28,7 @@ public class MimicEndpointTest {
     @Test
     public void testCRUD() {
 
-        final String baseURL = "https://localhost:" + port + "/mimic/mappings";
+        final String baseURL = "https://localhost:" + port + "/mimic/api";
         log.info("BASE URL: " + baseURL);
         try (final MimicClient mimicClient = new MimicClient(baseURL)) {
 

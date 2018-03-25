@@ -2,6 +2,10 @@ apply plugin: 'org.springframework.boot'
 
 description = 'Mimic Web (Spring Boot)'
 
+configurations {
+    mimicUI
+}
+
 dependencies {
     compile project(':mimic-api')
     compile project(':mimic-service')
@@ -12,7 +16,29 @@ dependencies {
     compile libs.frostnova.check
     compile libs.liquibase
     compile libs.h2
-	
+
     testCompile libs.testbase
     testCompile libs.springBootTest
+
+    mimicUI project(path: ':mimic-ui', configuration: 'appBundle')
 }
+
+task importAppUI(type: Copy) {
+    from configurations.mimicUI
+    into "${buildDir}"
+}
+
+task includeAppUI(type: Copy, dependsOn: importAppUI) {
+    configurations.mimicUI.filter { it.toString().endsWith(".zip") }.each {
+        from zipTree(it)
+    }
+    into "${buildDir}/ui"
+}
+
+processResources {
+    from("${buildDir}/ui/") {
+        into 'static/'
+    }
+}
+
+processResources.dependsOn includeAppUI

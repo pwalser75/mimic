@@ -20,10 +20,12 @@ import java.util.List;
 public class MimicClient implements AutoCloseable {
 
     private final String baseURL;
+    private final String mappingsURL;
     private final Client client;
 
     public MimicClient(String baseURL) {
         this.baseURL = baseURL;
+        mappingsURL = baseURL + "/mappings";
         ClientBuilder clientBuilder = createClientBuilder();
         client = clientBuilder.build();
     }
@@ -57,7 +59,7 @@ public class MimicClient implements AutoCloseable {
      */
     public List<MimicMapping> list() {
         Invocation invocation = client
-                .target(baseURL)
+                .target(mappingsURL)
                 .request()
                 .buildGet();
 
@@ -74,7 +76,7 @@ public class MimicClient implements AutoCloseable {
      */
     public MimicMapping get(String id) {
         Invocation invocation = client
-                .target(baseURL + "/" + id)
+                .target(mappingsURL + "/" + id)
                 .request()
                 .buildGet();
 
@@ -90,7 +92,7 @@ public class MimicClient implements AutoCloseable {
      */
     public MimicMapping create(MimicMapping mapping) {
         Invocation invocation = client
-                .target(baseURL)
+                .target(mappingsURL)
                 .request()
                 .buildPost(Entity.json(mapping));
 
@@ -110,7 +112,7 @@ public class MimicClient implements AutoCloseable {
         }
 
         Invocation invocation = client
-                .target(baseURL + "/" + mapping.getId())
+                .target(mappingsURL + "/" + mapping.getId())
                 .request()
                 .buildPut(Entity.json(mapping));
 
@@ -125,7 +127,7 @@ public class MimicClient implements AutoCloseable {
     public void delete(String id) {
 
         Invocation invocation = client
-                .target(baseURL + "/" + id)
+                .target(mappingsURL + "/" + id)
                 .request()
                 .buildDelete();
 

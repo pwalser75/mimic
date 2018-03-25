@@ -24,7 +24,7 @@ import java.util.Map;
  * @author pwalser
  * @since 23.01.2018.
  */
-@WebServlet(urlPatterns = "/*", loadOnStartup = 1)
+@WebServlet(urlPatterns = "/*", loadOnStartup = 1, displayName = "Mimic Dispatcher")
 @MultipartConfig
 public class MimicDispatcherServlet extends HttpServlet {
 

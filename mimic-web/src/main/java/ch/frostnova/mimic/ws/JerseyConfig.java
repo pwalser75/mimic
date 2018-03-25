@@ -11,7 +11,7 @@ import javax.ws.rs.ApplicationPath;
  * JAX-RS configuration
  */
 @Configuration
-@ApplicationPath("mimic")
+@ApplicationPath("/mimic/api")
 public class JerseyConfig extends ResourceConfig {
 
     public JerseyConfig() {

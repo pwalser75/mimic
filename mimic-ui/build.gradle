@@ -23,6 +23,23 @@ task cleanNode(type: Delete) {
 	delete 'node_modules'
 }
 
+task createAppBundleZip(type: Zip, dependsOn: yarn_build) {
+
+    description= 'Bundle app distribution as ZIP artefact'
+
+	from file('/dist')
+	destinationDir project.buildDir
+	
+	inputs.dir file("/dist")
+}
+
+configurations {
+	appBundle
+}
+
+artifacts {
+	appBundle createAppBundleZip
+}
+
 clean.dependsOn cleanDist
 yarn_build.dependsOn yarn_install
-build.dependsOn yarn_build
