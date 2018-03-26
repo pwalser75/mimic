@@ -1,4 +1,8 @@
 {
+  "app": {
+    "title": "MIMIC",
+    "description": "Mimic Server"
+  },
   "general": {
     "loading": "Wird geladen",
     "submit": "Absenden",
@@ -24,19 +28,9 @@
     "maxlength": "Wert darf aus höchstens ${requiredLength} Zeichen bestehen (aktuell: ${actualLength})",
     "pattern": "Wert entspricht nicht dem erwarteten Format (${requiredPattern})"
   },
-  "app": {
-    "title": "Angular Demo",
-    "description": "Hallo Angular"
-  },
-  "search": {
-    "quicksearch-title": "Schnellsuche",
-    "quicksearch-hint": "Tipp: Filme nach Titel, Jahr oder Genre (Action, Adventure, ..) suchen. Als kleines Extra wird auch in Bildern gesucht."
-  },
   "menu": {
     "welcome": "-> welcome.title",
-    "movies": "->movies.title  ",
-    "changes": "->changes.title",
-    "calendar": "-> calendar.title",
+    "mappings": "-> mappings.title",
     "protected": "Geschützt",
     "register": "Registrieren",
     "account-settings": "Konto-Einstellungen",
@@ -60,19 +54,8 @@
     "welcome-back": "schön, dich wiederzusehen!",
     "login-hint": "Benutze die Menufunktion, um dich anzumelden."
   },
-  "movies": {
-    "title": "Filme"
-  },
-  "changes": {
-    "title": "Änderungen",
-    "subtitle": "Änderungen in diesem Projekt (Github)"
-  },
-  "messages": {
-    "clear": "Benachrichtigungen löschen"
-  },
-  "calendar": {
-    "title": "Kalender",
-    "authRequired": "Anmeldung erforderlich, um die Kalendereinträge (aus Google Calendar) anzuzeigen.",
-    "googleSignIn": "Anmelden mit Google-Account"
+  "mappings": {
+    "title": "Mappings",
+    "subtitle": "Liste aller definierten Mappings"
   }
 }
