@@ -2,7 +2,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {LoginComponent} from "./components/login/login.component";
 import {MappingsComponent} from "./components/mappings/mappings-component";
 
-const APP_NAME = "Angular2 Demo";
+const APP_NAME = "MIMIC Admin UI";
 
 const ROUTES: Routes = [
     {

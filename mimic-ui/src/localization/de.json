@@ -47,12 +47,8 @@
     "remember": "Eingeloggt bleiben",
     "hint": "Hinweis: einloggen mit beliebigen Benutzernamen/Passwort möglich."
   },
-  "welcome": {
-    "title": "Willkommen",
-    "greeting-user": "Hallo",
-    "greeting-guest": "Willkommen, lieber Besucher",
-    "welcome-back": "schön, dich wiederzusehen!",
-    "login-hint": "Benutze die Menufunktion, um dich anzumelden."
+  "messages": {
+    "clear": "Nachrichten löschen"
   },
   "mappings": {
     "title": "Mappings",

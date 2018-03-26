@@ -14,7 +14,7 @@ import {CommaSeparatedPipe} from "./pipes/comma-separated.pipe";
 import {TranslatePipe} from "./pipes/translate.pipe";
 import {InputErrorsComponent} from "./widgets/input.errors.component";
 import {InputComponent} from "./widgets/input-component.component";
-import {GithubService} from "./services/github.service";
+import {MappingsService} from "./services/mappings.service";
 import {MessagesService} from "./services/messages.service";
 import {MessagesMenuComponent} from "./menu/messages-menu.component";
 import {LimitPipe} from "./pipes/limit.pipe";
@@ -46,7 +46,7 @@ import {ROUTING} from "./app.routes";
         ApplicationService,
         MessagesService,
         TranslateService,
-        GithubService,
+        MappingsService,
         LoginService,
         LoadingBarService
     ],

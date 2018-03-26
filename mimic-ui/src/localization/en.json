@@ -47,12 +47,8 @@
     "remember": "Stay logged in",
     "hint": "Hint: login possible with any user name and password."
   },
-  "welcome": {
-    "title": "Welcome",
-    "greeting-user": "Welcome, ",
-    "greeting-guest": "Welcome, dear visitor",
-    "welcome-back": "nice to have you back!",
-    "login-hint": "please use the menu action to login."
+  "messages": {
+    "clear": "clear messages"
   },
   "mappings": {
     "title": "Mappings",

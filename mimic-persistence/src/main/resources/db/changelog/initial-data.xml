@@ -19,6 +19,36 @@
             <column name="SCRIPT"
                     value="response.setStatus(200); response.setContentType('application/json'); response.setBody(request.toJSON());"/>
         </insert>
+    </changeSet>
+    <changeSet id="2" author="pwalser">
+
+        <insert schemaName="MIMIC" tableName="MAPPING">
+            <column name="ID" value="OWIcFVcGJJQNj26xL0bb7NSjfYy1kLgs"/>
+            <column name="VERSION" valueNumeric="1"/>
+            <column name="CREATED_AT" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="LAST_MODIFIED_AT" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="DISPLAY_NAME" value="Movie Example"/>
+            <column name="DESCRIPTION" value="Movie data, JSON"/>
+            <column name="METHOD" value="GET"/>
+            <column name="PATH" value="/movie"/>
+            <column name="SCRIPT"><![CDATA[var result = {
+    title: "Blade Runner",
+    year: 1982,
+    genres: [
+        "Sci-Fi",
+        "Thriller"
+    ],
+    ratings: {
+        "IMDB": 8.2,
+        "Metacritic": 89.0
+    }
+};
+
+response.setStatus(200);
+response.setContentType('application/json');
+response.setBody(JSON.stringify(result));
+]]></column>
+        </insert>
 
     </changeSet>
 </databaseChangeLog>
