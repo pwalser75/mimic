@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URLConnection;
 
 /**
  * Serve static resources.
@@ -55,25 +57,25 @@ public class StaticResourcesServlet extends HttpServlet {
                 return;
             }
 
-            //TODO: cache response
-            byte[] data = readResource(in);
+            String contentType = URLConnection.guessContentTypeFromName(relativePath);
+
             resp.setStatus(200);
-            resp.setContentLength(data.length);
-            resp.getOutputStream().write(data);
+            if (contentType != null) {
+                resp.setContentType(contentType);
+            }
+            transfer(in, resp.getOutputStream());
         }
     }
 
-    private byte[] readResource(InputStream source) throws IOException {
+    private void transfer(InputStream source, OutputStream target) throws IOException {
 
-        try (BufferedInputStream in = new BufferedInputStream(source)) {
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            byte[] buffer = new byte[0xFFF];
-            int read;
-            while ((read = in.read(buffer)) >= 0) {
-                out.write(buffer, 0, read);
-            }
-            out.flush();
-            return out.toByteArray();
+        BufferedInputStream in = new BufferedInputStream(source);
+        BufferedOutputStream out = new BufferedOutputStream(target);
+        byte[] buffer = new byte[0xFFF];
+        int read;
+        while ((read = in.read(buffer)) >= 0) {
+            out.write(buffer, 0, read);
         }
+        out.flush();
     }
 }
