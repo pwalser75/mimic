@@ -1,8 +1,8 @@
 import {RouterModule, Routes} from "@angular/router";
 import {LoginComponent} from "./components/login/login.component";
-import {MappingsComponent} from "./components/mappings/mappings-component";
-
-const APP_NAME = "MIMIC Admin UI";
+import {MappingsListComponent} from "./components/mappings/mappings-list-component";
+import {MappingDetailComponent} from "./components/mappings/mapping-detail-component";
+import {APP_NAME} from './constants';
 
 const ROUTES: Routes = [
     {
@@ -18,19 +18,14 @@ const ROUTES: Routes = [
     },
     {
         path: 'mappings',
-        component: MappingsComponent,
+        component: MappingsListComponent,
         data: {title: APP_NAME + ' | Mappings'}
+    },
+    {
+        path: 'mappings/:id',
+        component: MappingDetailComponent,
+        data: {title: APP_NAME + ' | Mapping Detail'}
     }
-    /*   {
-           path: 'movies',
-           component: MovieListComponent,
-           data: {title: APP_NAME + ' | Movies'}
-       },
-       {
-           path: 'movie/:id',
-           component: MovieDetailComponent,
-           data: {title: APP_NAME + ' | Movie Detail'}
-       },*/
 ];
 
 export const ROUTING = RouterModule.forRoot(ROUTES, {useHash: true});

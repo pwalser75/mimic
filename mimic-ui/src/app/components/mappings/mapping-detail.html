@@ -1,0 +1,36 @@
+<div class="content-wrapper">
+    <div class="content">
+
+        <div class="card card-red" *ngIf="error">
+            <div class="content background-red box">
+                <div class="box-content-stretch">
+                    <i class="fa fa-exclamation-triangle fa-3x"></i>
+                </div>
+                <div>
+                    <div class="text-large">ERROR</div>
+                    {{error}}
+                </div>
+            </div>
+        </div>
+
+        <div class="card" *ngIf="mapping && !error">
+            <section class="inset-small">
+                <label class="label-green"> {{mapping.method}}</label>
+                <code>{{mapping.path}}</code><br>
+
+                <h1>{{mapping.displayName}}</h1>
+                <p></p>
+
+                {{mapping.description}}
+                <br>
+                <br>
+                <pre><code>{{mapping.script}}</code></pre>
+                <hr>
+                <!--
+                                <codemirror [(ngModel)]="content" [config]="config"
+                                            placeholder="Here is the code placeholder"></codemirror>
+                -->
+            </section>
+        </div>
+    </div>
+</div>

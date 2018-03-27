@@ -6,6 +6,8 @@ const baseURL = 'https://localhost/mimic/api';
 
 export interface Mapping {
     id: number;
+    displayName: string;
+    description: string;
     method: string;
     path: string;
     script: string;

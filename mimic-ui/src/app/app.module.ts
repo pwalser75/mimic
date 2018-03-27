@@ -2,12 +2,13 @@ import {NgModule} from "@angular/core";
 import {HttpModule} from "@angular/http";
 import {ReactiveFormsModule} from "@angular/forms";
 import {BrowserModule} from "@angular/platform-browser";
+import {CodemirrorModule} from 'ng2-codemirror';
+import 'codemirror';
 import {AppComponent} from "./app.component";
 import {AppMenuComponent} from "./menu/app-menu.component";
 import {LanguageMenuComponent} from "./menu/lang-menu.component";
 import {UserMenuComponent} from "./menu/user-menu.component";
 import {LoginComponent} from "./components/login/login.component";
-import {MappingsComponent} from "./components/mappings/mappings-component";
 import {ApplicationService} from "./services/application.service";
 import {TranslateService} from "./services/translate.service";
 import {CommaSeparatedPipe} from "./pipes/comma-separated.pipe";
@@ -22,10 +23,13 @@ import {SaveURLPipe} from "./pipes/save-url.pipe";
 import {LoginService} from "./services/login.service";
 import {LoadingBarService} from "./services/loading-bar.service";
 import {LoadingBarComponent} from "./widgets/loading-bar.component";
+import {MappingsListComponent} from "./components/mappings/mappings-list-component";
+import {MappingDetailComponent} from "./components/mappings/mapping-detail-component";
 import {ROUTING} from "./app.routes";
 
+
 @NgModule({
-    imports: [BrowserModule, HttpModule, ReactiveFormsModule, ROUTING],
+    imports: [BrowserModule, HttpModule, ReactiveFormsModule, CodemirrorModule, ROUTING],
     declarations: [
         AppComponent,
         AppMenuComponent,
@@ -33,7 +37,8 @@ import {ROUTING} from "./app.routes";
         UserMenuComponent,
         MessagesMenuComponent,
         LoginComponent,
-        MappingsComponent,
+        MappingsListComponent,
+        MappingDetailComponent,
         InputComponent,
         InputErrorsComponent,
         LoadingBarComponent,

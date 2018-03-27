@@ -18,7 +18,7 @@ export class LoadingBarService {
     private updateTimer: any;
     private fadeoutTimer: any;
 
-    private fadeoutTimeMs: number = 500;
+    private fadeoutTimeMs: number = 250;
     private intervalMs: number = 50;
 
     private progress: number = 0;

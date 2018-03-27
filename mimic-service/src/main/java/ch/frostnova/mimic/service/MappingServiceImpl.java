@@ -80,7 +80,7 @@ public class MappingServiceImpl implements MappingService {
         entity.setDescription(dto.getDescription());
         entity.setPath(dto.getPath());
         entity.setRequestMethod(dto.getMethod());
-        entity.setScript(dto.getScript());
+        entity.setScript(dto.getScript() != null ? dto.getScript().trim() : null);
         return entity;
     }
 }
