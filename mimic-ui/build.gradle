@@ -43,3 +43,10 @@ artifacts {
 
 clean.dependsOn cleanDist
 yarn_build.dependsOn yarn_install
+
+yarn_install.inputs.file file("package.json")
+yarn_install.outputs.dir file("/node_modules")
+yarn_build.inputs.files file("package.json")
+yarn_build.inputs.files file("tsconfig.json")
+yarn_build.inputs.dir file("/src")
+yarn_build.outputs.dir file("/dist")
