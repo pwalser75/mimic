@@ -78,7 +78,7 @@ public class MimicEngine implements InitializingBean {
 
         List<MimicMapping> mimicMappings = new ArrayList<>();
         for (MappingProvider provider : mappingProviders) {
-            mimicMappings.addAll(provider.getMappings());
+            mimicMappings.addAll(provider.getMappings(request.getMethod(), request.getPath()));
         }
 
         return mimicMappings.stream()

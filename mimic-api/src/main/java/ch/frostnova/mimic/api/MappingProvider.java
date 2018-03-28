@@ -1,5 +1,7 @@
 package ch.frostnova.mimic.api;
 
+import ch.frostnova.mimic.api.type.RequestMethod;
+
 import java.util.Set;
 
 /**
@@ -11,9 +13,9 @@ import java.util.Set;
 public interface MappingProvider {
 
     /**
-     * Return the list of mappings for this provider
+     * Return mappings matching the given request method and path
      *
-     * @return list of mappings, must not be null, but can be empty.
+     * @return set of matching mappings, must not be null, but can be empty.
      */
-    Set<MimicMapping> getMappings();
+    Set<MimicMapping> getMappings(RequestMethod method, String path);
 }

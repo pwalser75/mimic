@@ -3,6 +3,7 @@ package ch.frostnova.mimic.service.strategy;
 import ch.frostnova.mimic.api.MappingProvider;
 import ch.frostnova.mimic.api.MimicMapping;
 import ch.frostnova.mimic.api.type.RequestMethod;
+import ch.frostnova.mimic.api.type.TemplateExpression;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
@@ -54,7 +55,10 @@ public class BuiltinMappingProvider implements MappingProvider, InitializingBean
     }
 
     @Override
-    public Set<MimicMapping> getMappings() {
-        return mappings;
+    public Set<MimicMapping> getMappings(RequestMethod method, String path) {
+        return mappings.stream()
+                .filter(m -> method == m.getMethod())
+                .filter(m -> new TemplateExpression(m.getPath()).matches(path))
+                .collect(Collectors.toSet());
     }
 }

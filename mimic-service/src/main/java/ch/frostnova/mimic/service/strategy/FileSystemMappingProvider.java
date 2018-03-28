@@ -2,6 +2,8 @@ package ch.frostnova.mimic.service.strategy;
 
 import ch.frostnova.mimic.api.MappingProvider;
 import ch.frostnova.mimic.api.MimicMapping;
+import ch.frostnova.mimic.api.type.RequestMethod;
+import ch.frostnova.mimic.api.type.TemplateExpression;
 import ch.frostnova.mimic.service.io.ScriptsLoader;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.DisposableBean;
@@ -15,6 +17,7 @@ import java.nio.file.*;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * Mapping provider reading mappings for a configured scripts dir.
@@ -43,8 +46,11 @@ public class FileSystemMappingProvider implements MappingProvider, InitializingB
     }
 
     @Override
-    public Set<MimicMapping> getMappings() {
-        return mappings;
+    public Set<MimicMapping> getMappings(RequestMethod method, String path) {
+        return mappings.stream()
+                .filter(m -> method == m.getMethod())
+                .filter(m -> new TemplateExpression(m.getPath()).matches(path))
+                .collect(Collectors.toSet());
     }
 
     @Override

@@ -15,9 +15,11 @@
             <column name="DISPLAY_NAME" value="Debug"/>
             <column name="DESCRIPTION" value="Mirrors the incoming request as JSON, for debugging purpose"/>
             <column name="METHOD" value="GET"/>
-            <column name="PATH" value="/mimic/debug"/>
-            <column name="SCRIPT"
-                    value="response.setStatus(200); response.setContentType('application/json'); response.setBody(request.toJSON());"/>
+            <column name="PATH" value="/debug"/>
+            <column name="SCRIPT"><![CDATA[response.setStatus(200);
+response.setContentType('application/json');
+response.setBody(request.toJSON());"/>]]>"
+            </column>
         </insert>
     </changeSet>
     <changeSet id="2" author="pwalser">

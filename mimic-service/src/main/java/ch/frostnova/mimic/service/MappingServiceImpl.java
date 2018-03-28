@@ -46,7 +46,7 @@ public class MappingServiceImpl implements MappingService {
     public List<MimicMapping> list() {
         Spliterator<MappingEntity> spliterator = repository.findAll().spliterator();
         Stream<MappingEntity> stream = StreamSupport.stream(spliterator, false);
-        return stream.map(this::convert).collect(Collectors.toList());
+        return stream.map(MappingServiceImpl::convert).collect(Collectors.toList());
     }
 
     @Override
@@ -56,7 +56,7 @@ public class MappingServiceImpl implements MappingService {
         }
     }
 
-    private MimicMapping convert(MappingEntity entity) {
+    public static MimicMapping convert(MappingEntity entity) {
         if (entity == null) {
             return null;
         }
