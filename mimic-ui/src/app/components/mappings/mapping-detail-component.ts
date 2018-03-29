@@ -2,8 +2,8 @@ import {Component, OnDestroy, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 import {Mapping, MappingsService} from "../../services/mappings.service";
-import {APP_NAME} from '../../constants';
 import 'codemirror/mode/javascript/javascript'
+import {environment} from "../../../environments/environment";
 
 @Component({
     selector: 'mapping-detail',
@@ -42,7 +42,7 @@ func generate(ch chan<- int) {
                 data => {
                     this.mapping = data;
                     this.error = null;
-                    this.titleService.setTitle(APP_NAME + ' | ' + (this.mapping ? this.mapping.displayName : '-'));
+                    this.titleService.setTitle(environment.appName + ' | ' + (this.mapping ? this.mapping.displayName : '-'));
                 },
                 error => {
                     this.mapping = null;

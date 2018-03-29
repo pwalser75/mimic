@@ -2,29 +2,31 @@ import {RouterModule, Routes} from "@angular/router";
 import {LoginComponent} from "./components/login/login.component";
 import {MappingsListComponent} from "./components/mappings/mappings-list-component";
 import {MappingDetailComponent} from "./components/mappings/mapping-detail-component";
-import {APP_NAME} from './constants';
+import {environment} from '../environments/environment';
+
+const TITLE = environment.appName;
 
 const ROUTES: Routes = [
     {
         path: '',
         redirectTo: '/mappings',
         pathMatch: 'full',
-        data: {title: APP_NAME}
+        data: {title: TITLE}
     },
     {
         path: 'login',
         component: LoginComponent,
-        data: {title: APP_NAME + ' | Login'}
+        data: {title: TITLE + ' | Login'}
     },
     {
         path: 'mappings',
         component: MappingsListComponent,
-        data: {title: APP_NAME + ' | Mappings'}
+        data: {title: TITLE + ' | Mappings'}
     },
     {
         path: 'mappings/:id',
         component: MappingDetailComponent,
-        data: {title: APP_NAME + ' | Mapping Detail'}
+        data: {title: TITLE + ' | Mapping Detail'}
     }
 ];
 

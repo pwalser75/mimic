@@ -2,9 +2,13 @@
     <div class="content-wrapper">
         <nav class="navbar-dark navbar">
             <img src="images/computer.png" style="height:40px; margin: 0 10px; padding:0">
-            <a class="navbar-brand" href="javascript:void(0)" [routerLink]="['/']">
-                <b>{{'app.title'|translate}}</b>
-            </a>
+            <div>
+                <a class="navbar-brand" href="javascript:void(0)" [routerLink]="['/']">
+                    <b>{{'app.title'|translate}}
+                    </b>
+                </a>
+                <sup>{{environmentName}}</sup>
+            </div>
 
             <a class="nav-item" [routerLink]="['/mappings']">
                 <i class=" fa fa-tags" aria-hidden="true"></i>
