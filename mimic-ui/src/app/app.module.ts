@@ -4,6 +4,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {BrowserModule} from "@angular/platform-browser";
 import {CodemirrorModule} from 'ng2-codemirror';
 import 'codemirror';
+import {ROUTING} from "./app.routes";
 import {AppComponent} from "./app.component";
 import {AppMenuComponent} from "./menu/app-menu.component";
 import {LanguageMenuComponent} from "./menu/lang-menu.component";
@@ -25,7 +26,7 @@ import {LoadingBarService} from "./services/loading-bar.service";
 import {LoadingBarComponent} from "./widgets/loading-bar.component";
 import {MappingsListComponent} from "./components/mappings/mappings-list-component";
 import {MappingDetailComponent} from "./components/mappings/mapping-detail-component";
-import {ROUTING} from "./app.routes";
+import {MappingEditComponent} from "./components/mappings/mapping-edit-component";
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import {ROUTING} from "./app.routes";
         LoginComponent,
         MappingsListComponent,
         MappingDetailComponent,
+        MappingEditComponent,
         InputComponent,
         InputErrorsComponent,
         LoadingBarComponent,

@@ -27,7 +27,6 @@ export class InputErrorsComponent implements OnChanges {
         } else {
             this.errorMessage = null;
         }
-        // console.log("CHANGES: " + JSON.stringify(changes.source.currentValue));
     }
 
     getFirstErrorMessageKey(errors: any): string {

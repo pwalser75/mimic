@@ -52,6 +52,13 @@
   },
   "mappings": {
     "title": "Mappings",
-    "subtitle": "Liste aller definierten Mappings"
+    "subtitle": "Liste aller definierten Mappings",
+    "method": "HTTP Methode",
+    "path": "URL-Pfad",
+    "path-hint": "URL-Pfad, mit optionalen Platzhaltern für Pfad-Parameter, z.B. '/{tenant}/products/{id}'",
+    "script": "Servlet-Script",
+    "script-hint": "Javascript (ECMAScript5.1)",
+    "displayName": "Anzeigename",
+    "description": "Beschreibung"
   }
 }

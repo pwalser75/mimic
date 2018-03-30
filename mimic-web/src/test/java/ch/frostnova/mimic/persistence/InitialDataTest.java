@@ -27,6 +27,6 @@ public class InitialDataTest {
         MappingEntity entity = repository.findOne(id);
         Assert.assertNotNull(entity);
         Assert.assertEquals(RequestMethod.GET, entity.getRequestMethod());
-        Assert.assertEquals("/mimic/debug", entity.getPath());
+        Assert.assertEquals("/debug", entity.getPath());
     }
 }

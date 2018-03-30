@@ -52,6 +52,13 @@
   },
   "mappings": {
     "title": "Mappings",
-    "subtitle": "List of all defined mappings"
+    "subtitle": "List of all defined mappings",
+    "method": "HTTP method",
+    "path": "URL path",
+    "path-hint": "URL path, with optional placeholders for path parameters, e.g. '/{tenant}/products/{id}'",
+    "script": "Servlet script",
+    "script-hint": "Javascript (ECMAScript5.1)",
+    "displayName": "Display name",
+    "description": "Description"
   }
 }

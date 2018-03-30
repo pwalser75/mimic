@@ -18,8 +18,7 @@
             <column name="PATH" value="/debug"/>
             <column name="SCRIPT"><![CDATA[response.setStatus(200);
 response.setContentType('application/json');
-response.setBody(request.toJSON());"/>]]>"
-            </column>
+response.setBody(request.toJSON());"/>]]></column>
         </insert>
     </changeSet>
     <changeSet id="2" author="pwalser">

@@ -8,7 +8,7 @@ import {environment} from "../../environments/environment";
 })
 export class AppMenuComponent {
 
-    private environmentName: String = environment.name;
+    environmentName: String = environment.name;
 
     constructor(public applicationService: ApplicationService) {
     }
