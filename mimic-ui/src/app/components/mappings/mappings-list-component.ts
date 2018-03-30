@@ -13,7 +13,7 @@ export class MappingsListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.mappingsService.getMappings().then(
+        this.mappingsService.list().then(
             data => {
                 this.mappings = data;
             },

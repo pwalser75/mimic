@@ -27,6 +27,8 @@ import {LoadingBarComponent} from "./widgets/loading-bar.component";
 import {MappingsListComponent} from "./components/mappings/mappings-list-component";
 import {MappingDetailComponent} from "./components/mappings/mapping-detail-component";
 import {MappingEditComponent} from "./components/mappings/mapping-edit-component";
+import {MappingCreateComponent} from "./components/mappings/mapping-create-component";
+import {MappingDeleteComponent} from "./components/mappings/mapping-delete-component";
 
 
 @NgModule({
@@ -40,6 +42,8 @@ import {MappingEditComponent} from "./components/mappings/mapping-edit-component
         LoginComponent,
         MappingsListComponent,
         MappingDetailComponent,
+        MappingCreateComponent,
+        MappingDeleteComponent,
         MappingEditComponent,
         InputComponent,
         InputErrorsComponent,

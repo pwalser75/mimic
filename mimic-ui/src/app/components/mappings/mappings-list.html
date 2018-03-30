@@ -4,9 +4,16 @@
         {{'mappings.subtitle'|translate}}
         <p></p>
 
+        <nav class="navbar navbar-light navbar-small">
+            <a class="nav-item" [routerLink]="['/mappings/create']">
+                <i class="fa fa-magic"></i> {{'mappings.create'|translate}}
+            </a>
+        </nav>
+        <br>
+
         <div class="grid gutter">
             <div class="col-6 col-sm-12" *ngFor="let mapping of mappings">
-                <a class="undecorated" href="javascript:void(0)" [routerLink]="['/mappings', mapping.id]">
+                <a class="undecorated" href="javascript:void(0)" [routerLink]="['/mapping', mapping.id]">
                     <div class="card full-height card-green">
                         <section class="inset-small">
                             <label class="label-green"> {{mapping.method}}</label>

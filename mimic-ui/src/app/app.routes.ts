@@ -4,6 +4,8 @@ import {MappingsListComponent} from "./components/mappings/mappings-list-compone
 import {MappingDetailComponent} from "./components/mappings/mapping-detail-component";
 import {environment} from '../environments/environment';
 import {MappingEditComponent} from "./components/mappings/mapping-edit-component";
+import {MappingCreateComponent} from "./components/mappings/mapping-create-component";
+import {MappingDeleteComponent} from "./components/mappings/mapping-delete-component";
 
 const TITLE = environment.appName;
 
@@ -25,14 +27,24 @@ const ROUTES: Routes = [
         data: {title: TITLE + ' | Mappings'}
     },
     {
-        path: 'mappings/:id',
+        path: 'mapping/:id',
         component: MappingDetailComponent,
         data: {title: TITLE + ' | Mapping Detail'}
+    },
+    {
+        path: 'mappings/create',
+        component: MappingCreateComponent,
+        data: {title: TITLE + ' | New Mapping'}
     },
     {
         path: 'mappings/edit/:id',
         component: MappingEditComponent,
         data: {title: TITLE + ' | Edit Mapping'}
+    },
+    {
+        path: 'mappings/delete/:id',
+        component: MappingDeleteComponent,
+        data: {title: TITLE + ' | Delete Mapping'}
     }
 ];
 

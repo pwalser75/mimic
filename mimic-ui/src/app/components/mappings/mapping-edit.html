@@ -1,22 +1,21 @@
 <div class="content-wrapper">
     <div class="content">
 
-        <div class="card" *ngIf="mapping">
+        <div class="card">
             <section class="inset-small">
 
-                <h6>{{mapping.id}}</h6>
-                <h1>{{'general.edit'|translate}}</h1>
+                <h1 *ngIf="loaded && !mappingId">{{'general.create'|translate}}</h1>
+                <h1 *ngIf="loaded && mappingId">{{'general.edit'|translate}}</h1>
 
-
-                <form [formGroup]="form" novalidate (ngSubmit)="save()">
+                <form [formGroup]="form" novalidate *ngIf="loaded">
                     <div class="grid gutter">
-                        <div class="col-4 col-sm-12">
+                        <div class="col-6 col-sm-12">
                             <input-component label="mappings.displayName" [errors]="form.controls.displayName.errors"
                                              [control]="form.controls.displayName">
                                 <input type="text" formControlName="displayName">
                             </input-component>
                         </div>
-                        <div class="col-8 col-sm-12">
+                        <div class="col-6 col-sm-12">
                             <input-component label="mappings.description" [errors]="form.controls.description.errors"
                                              [control]="form.controls.description">
                                 <textarea formControlName="description" rows="1">
@@ -28,7 +27,7 @@
                                              [control]="form.controls.method">
 
                                 <select formControlName="method">
-                                    <option disabled selected value>{{'mappings.method-hint'|translate}}</option>
+                                    <option disabled selected value></option>
                                     <option value="GET">GET</option>
                                     <option value="POST">POST</option>
                                     <option value="PUT">PUT</option>
@@ -64,12 +63,13 @@
                             </input-component>
                         </div>
                         <div class="col-12">
-                            <button class="btn button-primary" [disabled]="!form.valid">{{'general.save'|translate}}
+                            <button class="btn button-primary" (click)="save()" [disabled]="!form.valid">
+                                {{'general.save'|translate}}
+                            </button>
+                            <button class="btn button-light" (click)="cancel()">{{'general.cancel'|translate}}
                             </button>
                         </div>
-
                     </div>
-
                 </form>
             </section>
         </div>

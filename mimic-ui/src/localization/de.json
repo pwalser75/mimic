@@ -59,6 +59,7 @@
     "script": "Servlet-Script",
     "script-hint": "Javascript (ECMAScript5.1)",
     "displayName": "Anzeigename",
-    "description": "Beschreibung"
+    "description": "Beschreibung",
+    "create": "Neues Mapping erstellen"
   }
 }

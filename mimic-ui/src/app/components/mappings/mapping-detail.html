@@ -31,6 +31,16 @@
                                             placeholder="Here is the code placeholder"></codemirror>
                 -->
             </section>
+            <footer>
+                <nav class="navbar navbar-light navbar-small">
+                    <a class="nav-item" [routerLink]="['/mappings/edit/', mapping.id]">
+                        <i class="fa fa-edit"></i> {{'general.edit'|translate}}
+                    </a>
+                    <a class="nav-item" [routerLink]="['/mappings/delete/', mapping.id]">
+                        <i class="fa fa-remove"></i> {{'general.delete'|translate}}
+                    </a>
+                </nav>
+            </footer>
         </div>
     </div>
 </div>
