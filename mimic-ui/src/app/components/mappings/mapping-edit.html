@@ -18,15 +18,14 @@
                         <div class="col-6 col-sm-12">
                             <input-component label="mappings.description" [errors]="form.controls.description.errors"
                                              [control]="form.controls.description">
-                                <textarea formControlName="description" rows="1">
-                                </textarea>
+                                <textarea formControlName="description" rows="1"></textarea>
                             </input-component>
                         </div>
                         <div class="col-2 col-sm-12">
                             <input-component label="mappings.method" [errors]="form.controls.method.errors"
                                              [control]="form.controls.method">
 
-                                <select formControlName="method">
+                                <select class="text-code" formControlName="method">
                                     <option disabled selected value></option>
                                     <option value="GET">GET</option>
                                     <option value="POST">POST</option>
@@ -50,14 +49,14 @@
                         <div class="col-10 col-sm-12">
                             <input-component label="mappings.path" [errors]="form.controls.path.errors"
                                              [control]="form.controls.path">
-                                <input type="text" formControlName="path"
+                                <input type="text" class="text-code" formControlName="path"
                                        placeholder="{{'mappings.path-hint'|translate}}">
                             </input-component>
                         </div>
                         <div class="col-12">
                             <input-component label="mappings.script" [errors]="form.controls.script.errors"
                                              [control]="form.controls.script">
-                                <textarea formControlName="script" rows="10"
+                                <textarea class="text-code" formControlName="script" rows="10"
                                           placeholder="{{'mappings.script-hint'|translate}}">
                                 </textarea>
                             </input-component>

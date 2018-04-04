@@ -74,3 +74,10 @@ endpoints:
   auditevents.enabled: false
   heapdump.enabled: false
   error.enabled: false
+
+logging:
+  level:
+    org.springframework: WARN
+    org.hibernate: WARN
+    liquibase: WARN
+#  org.springframework.boot.autoconfigure: DEBUG

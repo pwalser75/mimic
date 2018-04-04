@@ -37,7 +37,7 @@ export class MappingEditComponent implements OnInit, OnDestroy {
                     [Validators.required]
                 )],
                 path: ['', Validators.compose(
-                    [Validators.required, Validators.maxLength(2048)]
+                    [Validators.required, Validators.maxLength(2048), Validators.pattern("(?:\/[^\\/]+)*")]
                 )],
                 script: ['', Validators.compose(
                     [Validators.required]

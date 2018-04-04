@@ -35,7 +35,7 @@ export class MappingCreateComponent implements OnInit {
                     [Validators.required]
                 )],
                 path: ['', Validators.compose(
-                    [Validators.required, Validators.maxLength(2048)]
+                    [Validators.required, Validators.maxLength(2048), Validators.pattern("(?:\/[^\/]+)*")]
                 )],
                 script: ['', Validators.compose(
                     [Validators.required]

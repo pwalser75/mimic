@@ -42,7 +42,7 @@ public class FileSystemMappingProvider implements MappingProvider, InitializingB
 
     @Autowired
     public FileSystemMappingProvider(@Value("${mimic.scripts.dir}") String scriptsDir) {
-        path = scriptsDir != null ? Paths.get(scriptsDir) : null;
+        path = scriptsDir != null ? Paths.get(scriptsDir).toAbsolutePath().normalize() : null;
     }
 
     @Override
@@ -56,13 +56,18 @@ public class FileSystemMappingProvider implements MappingProvider, InitializingB
     @Override
     public void afterPropertiesSet() throws Exception {
 
-        if (path == null || !Files.exists(path)) {
-            logger.error("Path does not exist: " + path);
-        } else if (!Files.isDirectory(path)) {
+        if (path == null) {
+            return;
+        }
+        if (!Files.exists(path)) {
+            Files.createDirectories(path);
+        }
+        if (!Files.isDirectory(path)) {
             logger.error("Cannot load scripts, path is not a directory: " + path);
         } else if (!Files.isReadable(path)) {
             logger.error("Cannot load scripts, path is not readable: " + path);
         } else {
+            logger.info("Using scripts path: " + path);
             loadScripts();
             WatchService watchService = FileSystems.getDefault().newWatchService();
             watch = path.register(watchService, StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_DELETE, StandardWatchEventKinds.ENTRY_MODIFY);

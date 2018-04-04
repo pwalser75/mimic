@@ -4,7 +4,7 @@ import {Title} from "@angular/platform-browser";
 import "rxjs/add/operator/filter";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/mergeMap";
-import {Message, MessagesService, Severity} from "./services/messages.service";
+import {MessagesService} from "./services/messages.service";
 
 @Component({
     selector: 'app-component',
@@ -41,7 +41,5 @@ export class AppComponent implements OnInit {
                 }
             }
         );
-
-        this.messagesService.publish(new Message(Severity.SUCCESS, "Angular Demo", "Application started"));
     }
 }
