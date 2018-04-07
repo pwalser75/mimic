@@ -16,11 +16,11 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
- * Test JPA repository
+ * Mapping repository JPA test
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class RepositoryTest extends BaseRepositoryTest {
+public class MappingRepositoryTest extends BaseRepositoryTest {
 
     @Autowired
     private MappingRepository repository;

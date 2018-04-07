@@ -40,4 +40,47 @@
         </createIndex>
 
     </changeSet>
+
+    <changeSet id="2" author="pwalser">
+
+        <createTable schemaName="MIMIC" tableName="STORAGE">
+            <column name="ID" type="varchar(48)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="REPOSITORY_ID" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="RESOURCE_ID" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VERSION" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_AT" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LAST_MODIFIED_AT" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CONTENT_TYPE" type="varchar(64)" defaultValue="application/octet-stream">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CONTENT_LENGTH" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CONTENT" type="blob">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint schemaName="MIMIC" tableName="STORAGE" constraintName="UNIQUE_RESOURCE_ID"
+                             columnNames="REPOSITORY_ID,RESOURCE_ID"/>
+        <createIndex schemaName="MIMIC" tableName="STORAGE" indexName="STORAGE_REPOSITORY_ID_IDX">
+            <column name="REPOSITORY_ID"/>
+        </createIndex>
+        <createIndex schemaName="MIMIC" tableName="STORAGE" indexName="STORAGE_RESOURCE_ID_IDX">
+            <column name="RESOURCE_ID"/>
+        </createIndex>
+
+    </changeSet>
 </databaseChangeLog>
