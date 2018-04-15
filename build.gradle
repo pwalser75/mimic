@@ -7,9 +7,9 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.5.8.RELEASE'
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.0.1.RELEASE'
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
-        classpath 'com.netflix.nebula:gradle-aggregate-javadocs-plugin:2.2.+'
+        classpath 'com.netflix.nebula:gradle-aggregate-javadocs-plugin:3.0.1'
     }
 }
 
@@ -76,33 +76,32 @@ dependencyUpdates.resolutionStrategy = {
 }
 
 ext {
-    springVersion = '1.5.10.RELEASE'
+    springBootVersion = '2.0.1.RELEASE'
 
     libs = [
-            jee               : "javax:javaee-api:7.0",
             json              : [
-                    "com.fasterxml.jackson.core:jackson-annotations:2.9.4",
-                    "com.fasterxml.jackson.core:jackson-databind:2.9.4"
+                    "com.fasterxml.jackson.core:jackson-annotations:2.9.5",
+                    "com.fasterxml.jackson.core:jackson-databind:2.9.5"
             ],
             testbase          : [
                     "junit:junit:4.12",
-                    "org.mockito:mockito-core:2.12.0"
+                    "org.mockito:mockito-core:2.18.0"
             ],
             springBoot        : [
-                    "org.springframework.boot:spring-boot-starter-jersey:${springVersion}",
-                    "org.springframework.boot:spring-boot-starter-data-jpa:${springVersion}",
-                    'javax.el:javax.el-api:2.2.4',
-                    'org.glassfish.web:javax.el:2.2.4'
+                    "org.springframework.boot:spring-boot-starter-jersey:${springBootVersion}",
+                    "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}",
+                    "javax.xml.bind:jaxb-api:2.2.11",
+					"javax.activation:activation:1.1.1"
             ],
             springBootActuator: [
-                    "org.springframework.boot:spring-boot-starter-actuator:${springVersion}",
-                    "org.springframework.boot:spring-boot-starter-web:${springVersion}"
+                    "org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}",
+                    "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
             ],
             springBootTest    : [
-                    "org.springframework.boot:spring-boot-starter-test:${springVersion}"
+                    "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
             ],
-            liquibase         : "org.liquibase:liquibase-core:3.5.3",
-            h2                : "com.h2database:h2:1.4.196",
+            liquibase         : "org.liquibase:liquibase-core:3.6.1",
+            h2                : "com.h2database:h2:1.4.197",
             frostnova         : [
                     check : "ch.frostnova:check:1.0.0-RC2",
                     keygen: "ch.frostnova:keygen:1.0.0-RC1"
@@ -111,7 +110,7 @@ ext {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.5.1'
+    gradleVersion = '4.6.0'
     distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
 }
 

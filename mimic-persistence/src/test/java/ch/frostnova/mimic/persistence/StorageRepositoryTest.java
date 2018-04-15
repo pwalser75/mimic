@@ -79,7 +79,7 @@ public class StorageRepositoryTest extends BaseRepositoryTest {
         e3.setResourceId(e1.getResourceId());
 
         List<StorageEntity> entities = Arrays.asList(e1, e2, e3);
-        repository.save(entities);
+        repository.saveAll(entities);
 
         for (StorageEntity entity : entities) {
             StorageEntity found = repository.findByRepositoryIdAndResourceId(entity.getRepositoryId(), entity.getResourceId());

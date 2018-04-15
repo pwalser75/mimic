@@ -10,7 +10,6 @@ dependencies {
     compile project(':mimic-api')
     compile project(':mimic-service')
 
-    compile libs.jee
     compile libs.springBoot
     compile libs.springBootActuator
     compile libs.frostnova.check

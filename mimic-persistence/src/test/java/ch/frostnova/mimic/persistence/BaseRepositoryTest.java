@@ -46,12 +46,12 @@ public abstract class BaseRepositoryTest {
 
         // read
 
-        final T read = repository.findOne(saved.getId());
+        final T read = repository.findById(saved.getId()).orElseThrow(AssertionError::new);
         Assert.assertEquals(saved.getId(), read.getId());
         Assert.assertNotNull(read.getCreatedAt());
         Assert.assertNotNull(read.getLastModifiedAt());
-        Assert.assertEquals(createdAt, read.getCreatedAt());
-        Assert.assertEquals(read.getCreatedAt(), read.getLastModifiedAt());
+        Assert.assertEquals(createdAt.withNano(0), read.getCreatedAt().withNano(0));
+        Assert.assertEquals(read.getCreatedAt().withNano(0), read.getLastModifiedAt().withNano(0));
         Assert.assertEquals(0, entity.getVersion());
         Assert.assertEquals(entity, read);
 
@@ -63,17 +63,17 @@ public abstract class BaseRepositoryTest {
         }
         modify.accept(read);
         repository.save(read);
-        final T updated = repository.findOne(read.getId());
+        final T updated = repository.findById(read.getId()).orElseThrow(AssertionError::new);
         Assert.assertEquals(read.getId(), updated.getId());
-        Assert.assertEquals(createdAt, updated.getCreatedAt());
+        Assert.assertEquals(createdAt.withNano(0), updated.getCreatedAt().withNano(0));
         Assert.assertTrue(updated.getLastModifiedAt().isAfter(read.getCreatedAt()));
         Assert.assertEquals(1, updated.getVersion());
         Assert.assertEquals(entity, updated);
         compare.accept(read, updated);
 
         // delete
-        repository.delete(saved.getId());
-        final T deleted = repository.findOne(saved.getId());
+        repository.deleteById(saved.getId());
+        final T deleted = repository.findById(saved.getId()).orElse(null);
         Assert.assertNull(deleted);
     }
 

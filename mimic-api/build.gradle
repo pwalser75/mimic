@@ -1,8 +1,8 @@
 description = 'Mimic API'
 
 dependencies {
-    compile libs.frostnova.check
     compile libs.json
+    compile libs.frostnova.check
 
     testCompile libs.testbase
 }

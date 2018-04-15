@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Spliterator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -29,14 +30,14 @@ public class MappingServiceImpl implements MappingService {
     @Override
     @Transactional(readOnly = true)
     public MimicMapping get(String id) {
-        return convert(repository.findOne(id));
+        return repository.findById(id).map(MappingServiceImpl::convert).orElse(null);
     }
 
     @Override
     public MimicMapping save(MimicMapping mapping) {
         MappingEntity entity = new MappingEntity();
         if (mapping.getId() != null) {
-            entity = repository.findOne(mapping.getId());
+            entity = repository.findById(mapping.getId()).orElseThrow(NoSuchElementException::new);
         }
         return convert(repository.save(update(entity, mapping)));
     }
@@ -51,8 +52,8 @@ public class MappingServiceImpl implements MappingService {
 
     @Override
     public void delete(String id) {
-        if (repository.exists(id)) {
-            repository.delete(id);
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
         }
     }
 

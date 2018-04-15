@@ -1,11 +1,12 @@
 buildscript {
+    repositories {
+        mavenCentral()
+    }
     dependencies {
-        classpath libs.liquibase
+        classpath "org.liquibase:liquibase-gradle-plugin:1.2.4"
     }
 }
-plugins {
-    id 'org.liquibase.gradle' version '1.2.4'
-}
+apply plugin: 'org.liquibase.gradle'
 
 description = 'Mimic Persistence'
 
@@ -36,10 +37,11 @@ final databases = [
         ],
         oracle: [
                 version: '11.2.0.4'
-        ],
-        postgresql: [
-                version: '9.3.9'
         ]
+//        ,
+//        postgresql: [
+//                version: '9.3.9'
+//        ]
 ]
 
 def dbTasks=[]

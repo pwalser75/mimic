@@ -5,7 +5,7 @@ import ch.frostnova.keygen.model.KeyLengthUnit;
 import ch.frostnova.keygen.model.KeySpec;
 import ch.frostnova.keygen.model.KeyType;
 import org.hibernate.HibernateException;
-import org.hibernate.engine.spi.SessionImplementor;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
 
 import java.io.Serializable;
@@ -21,7 +21,7 @@ public class IdGenerator implements IdentifierGenerator {
     private final static KeySpec KEY_SPEC = new KeySpec(KeyType.AlphaNumeric, 128, KeyLengthUnit.Bits);
 
     @Override
-    public Serializable generate(SessionImplementor session, Object object) throws HibernateException {
+    public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
         return KeyGenerator.generate(KEY_SPEC);
     }
 }

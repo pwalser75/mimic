@@ -24,8 +24,7 @@ public class InitialDataTest {
     public void testInitialDataAvailable() {
 
         String id = "nzghNv4StIDFqBXaxqDZnWd4kMFfpWfq";
-        MappingEntity entity = repository.findOne(id);
-        Assert.assertNotNull(entity);
+        MappingEntity entity = repository.findById(id).orElseThrow(AssertionError::new);
         Assert.assertEquals(RequestMethod.GET, entity.getRequestMethod());
         Assert.assertEquals("/debug", entity.getPath());
     }
