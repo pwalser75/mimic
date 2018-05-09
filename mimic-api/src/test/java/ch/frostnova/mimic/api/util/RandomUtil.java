@@ -5,7 +5,13 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.temporal.TemporalUnit;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -13,17 +19,22 @@ import java.util.stream.Stream;
 /**
  * Random utility functions.
  *
- * @author pwalser
+ * @author wap
  * @since 02.06.2017
  */
 public final class RandomUtil {
 
-    /**
-     * No instances allowed (static access only).
-     */
+    private final static String[] LOREM_IPSUM = ("a accumsan accusam ad adipiscing aliquam aliquip aliquyam amet assum at augue autem blandit " +
+            "clita commodo congue consectetuer consequat consetetur cum delenit diam dignissim dolor dolore dolores doming duis duo " +
+            "e eirmod eleifend elit elitr enim eos erat eros esse est et eu euismod eum ex exerci facer facilisi facilisis feugait " +
+            "feugiat gubergren hendrerit id illum imperdiet i in invidunt ipsum iriure iusto justo kasd labore laoreet liber lobortis " +
+            "lorem luptatum magna mazim minim molestie nam nibh nihil nisl no nobis nonummy nonumy nostrud nulla odio option placerat " +
+            "possim praesent qui quis quod rebum sadipscing sanctus sea sed sit soluta stet suscipit takimata tation te tempor " +
+            "tincidunt ullamcorper ut vel velit veniam vero voluptua volutpat vulputate wisi zzril").split("\\s");
+
     private RandomUtil() {
-        // no instances allowed
     }
+
 
     /**
      * Provides the {@link Random} class for the functions.
@@ -250,5 +261,70 @@ public final class RandomUtil {
         }
 
         return builder.toString();
+    }
+
+    public static String rndText(int maxLength, boolean withInterpunctation) {
+        if (maxLength < 0) {
+            throw new IllegalArgumentException("Max length must be positive");
+        }
+        if (maxLength == 0) {
+            return "";
+        }
+        if (maxLength == 1) {
+            return Character.toString((char) rnd('A', 'Z'));
+        }
+
+        int totalLength = 0;
+        List<String> words = new LinkedList<>();
+        int spacingReserve = withInterpunctation ? 2 : 1;
+        while (true) {
+
+            String nextWord = rnd(LOREM_IPSUM);
+            if (totalLength + nextWord.length() + 1 <= maxLength) {
+                words.add(nextWord);
+                totalLength += nextWord.length() + spacingReserve;
+            } else if (!words.isEmpty()) {
+                if (withInterpunctation) {
+                    return createSentence(words);
+                }
+                return firstCharUpperCase(words.stream().collect(Collectors.joining(" ")));
+            }
+        }
+    }
+
+    private static String createSentence(List<String> words) {
+        if (words.isEmpty()) {
+            return "";
+        }
+        if (words.size() > 4) {
+            int split = words.size() / 2 + rnd(-1, 1);
+            List<String> first = new LinkedList<>();
+            List<String> second = new LinkedList<>();
+            int i = 0;
+            for (String word : words) {
+                if (i++ < split) {
+                    first.add(word);
+                } else {
+                    second.add(word);
+                }
+            }
+            if (words.size() > 7) {
+                return createSentence(first) + " " + createSentence(second);
+            }
+            if (rndBoolean()) {
+                return firstCharUpperCase(words.stream().collect(Collectors.joining(" "))) + ".";
+            }
+            return firstCharUpperCase(first.stream().collect(Collectors.joining(" "))) + ", "
+                    + second.stream().collect(Collectors.joining(" ")) + ".";
+
+        }
+        return firstCharUpperCase(words.stream().collect(Collectors.joining(" "))) + ".";
+    }
+
+    private static String firstCharUpperCase(String s) {
+        if (s.length() == 0) {
+            return s;
+        }
+        return Character.toUpperCase(s.charAt(0)) + s.substring(1);
     }
 }
