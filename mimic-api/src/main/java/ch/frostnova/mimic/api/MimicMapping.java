@@ -1,10 +1,7 @@
 package ch.frostnova.mimic.api;
 
-import ch.frostnova.mimic.api.converter.LocalDateTimeConverter;
 import ch.frostnova.mimic.api.type.RequestMethod;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.time.LocalDateTime;
 
@@ -26,13 +23,9 @@ public class MimicMapping {
     private String description;
 
     @JsonProperty("createdAt")
-    @JsonSerialize(using = LocalDateTimeConverter.Serializer.class)
-    @JsonDeserialize(using = LocalDateTimeConverter.Deserializer.class)
     private LocalDateTime createdAt;
 
     @JsonProperty("lastModifiedAt")
-    @JsonSerialize(using = LocalDateTimeConverter.Serializer.class)
-    @JsonDeserialize(using = LocalDateTimeConverter.Deserializer.class)
     private LocalDateTime lastModifiedAt;
 
     @JsonProperty("method")
