@@ -81,7 +81,8 @@ ext {
     libs = [
             json              : [
                     "com.fasterxml.jackson.core:jackson-annotations:2.9.5",
-                    "com.fasterxml.jackson.core:jackson-databind:2.9.5"
+                    "com.fasterxml.jackson.core:jackson-databind:2.9.5",
+                    "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.5"
             ],
             testbase          : [
                     "junit:junit:4.12",
@@ -91,7 +92,7 @@ ext {
                     "org.springframework.boot:spring-boot-starter-jersey:${springBootVersion}",
                     "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}",
                     "javax.xml.bind:jaxb-api:2.3.0",
-					"javax.activation:activation:1.1.1"
+                    "javax.activation:activation:1.1.1"
             ],
             springBootActuator: [
                     "org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}",
