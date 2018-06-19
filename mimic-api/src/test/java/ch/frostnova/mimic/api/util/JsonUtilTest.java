@@ -26,7 +26,7 @@ public class JsonUtilTest {
         Assert.assertEquals("\"\"", JsonUtil.stringify(""));
 
         // arrays
-        Assert.assertEquals("[1,2,3,4,5]", JsonUtil.stringify(Arrays.asList(1, 2, 3, 4, 5)));
+        Assert.assertEquals("[1,2,3,4,5]", JsonUtil.stringify(Arrays.asList(1, 2, 3, 4, 5)).replaceAll("\\s", ""));
 
         // maps
         Map<String, Object> map = new HashMap<>();
@@ -35,7 +35,7 @@ public class JsonUtilTest {
         map.put("c", "456");
         map.put("d", true);
         map.put("e", Arrays.asList(1, 2, 3));
-        Assert.assertEquals("{\"a\":true,\"b\":123,\"c\":\"456\",\"d\":true,\"e\":[1,2,3]}", JsonUtil.stringify(map));
+        Assert.assertEquals("{\"a\":true,\"b\":123,\"c\":\"456\",\"d\":true,\"e\":[1,2,3]}", JsonUtil.stringify(map).replaceAll("\\s", ""));
     }
 
     @Test
