@@ -48,35 +48,22 @@ mimic:
 
 # Spring boot actuator configuration
 
-management:
+management.server:
   port: 9000
   address: "127.0.0.1"
   ssl: *serverssl
   security:
     enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
 
 info:
   app:
     name: "Mimic"
     description: "Mimic Server"
     version: "1.0.0-SNAPSHOT"
-
-endpoints:
-  health.enabled: true
-  info.enabled: true
-  metrics.enabled: true
-  autoconfig.enabled: false
-  beans.enabled: false
-  configprops.enabled: false
-  dump.enabled: false
-  env.enabled: false
-  mappings.enabled: false
-  shutdown.enabled: false
-  trace.enabled: false
-  loggers.enabled: false
-  auditevents.enabled: false
-  heapdump.enabled: false
-  error.enabled: false
 
 logging:
   level:

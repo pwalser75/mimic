@@ -5,7 +5,7 @@ dependencies {
     compile project(':mimic-persistence')
 
     compile libs.frostnova.check
-	
+
     testCompile libs.testbase
     testCompile libs.springBootTest
 

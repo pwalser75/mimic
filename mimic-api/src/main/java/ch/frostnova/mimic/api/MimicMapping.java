@@ -4,6 +4,7 @@ import ch.frostnova.mimic.api.type.RequestMethod;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 
 /**
  * A mimic mapping, with method/path mapping and javascript script (ECMASCRIPT 5.1) for processing requests.
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
  * @author pwalser
  * @since 23.01.2018.
  */
-public class MimicMapping {
+public class MimicMapping implements Comparable<MimicMapping> {
 
     @JsonProperty("id")
     private String id;
@@ -99,5 +100,10 @@ public class MimicMapping {
 
     public void setScript(String script) {
         this.script = script;
+    }
+
+    @Override
+    public int compareTo(MimicMapping o) {
+        return Comparator.comparing(MimicMapping::getCreatedAt).compare(this, o);
     }
 }

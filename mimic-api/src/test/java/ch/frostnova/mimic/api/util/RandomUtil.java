@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 /**
  * Random utility functions.
  *
- * @author wap
+ * @author pwalser
  * @since 02.06.2017
  */
 public final class RandomUtil {
@@ -34,7 +34,6 @@ public final class RandomUtil {
 
     private RandomUtil() {
     }
-
 
     /**
      * Provides the {@link Random} class for the functions.
@@ -241,8 +240,7 @@ public final class RandomUtil {
      * @param numSubPackages number of sub packages that compose the package
      * @param packageLength  length of each sub-package name
      * @param separator      separator to use between the sub-packages
-     * @return an empty string (which represents the default package) if the separator is blank or one of the 2 int
-     * values is less or equal to 0
+     * @return an empty string (which represents the default package) if the separator is blank or one of the 2 int values is less or equal to 0
      */
     public static String rndPackage(int numSubPackages, int packageLength, String separator) {
         if (separator == null || separator.trim().isEmpty() || numSubPackages <= 0 || packageLength <= 0) { //default package

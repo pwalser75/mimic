@@ -1,0 +1,6 @@
+http:
+  server:
+    port: ${random.int[10000,19999]}
+
+management.server:
+  port: ${random.int[20000,29999]}
