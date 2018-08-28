@@ -19,7 +19,6 @@ dependencies {
     compile project(':mimic-api')
     compile libs.springBoot
     compile libs.liquibase
-    compile libs.frostnova.keygen
 	
     testCompile libs.testbase
     testCompile libs.springBootTest

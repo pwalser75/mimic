@@ -1,14 +1,12 @@
 package ch.frostnova.mimic.persistence.generator;
 
-import ch.frostnova.keygen.KeyGenerator;
-import ch.frostnova.keygen.model.KeyLengthUnit;
-import ch.frostnova.keygen.model.KeySpec;
-import ch.frostnova.keygen.model.KeyType;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
 
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Identity generator (UUID strings)
@@ -18,10 +16,31 @@ import java.io.Serializable;
  */
 public class IdGenerator implements IdentifierGenerator {
 
-    private final static KeySpec KEY_SPEC = new KeySpec(KeyType.AlphaNumeric, 128, KeyLengthUnit.Bits);
+    private final static String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    private final static int ID_BIT_LENGTH = 128;
+
 
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
-        return KeyGenerator.generate(KEY_SPEC);
+        return generateAlphaNumericKey(ID_BIT_LENGTH);
+    }
+
+    private String generateAlphaNumericKey(int bits) {
+
+        BigInteger value = new BigInteger(bits, ThreadLocalRandom.current());
+
+        if (value.equals(BigInteger.ZERO)) {
+            return String.valueOf(ALPHABET.charAt(0));
+        }
+        BigInteger len = BigInteger.valueOf(ALPHABET.length());
+
+        StringBuilder builder = new StringBuilder();
+        while (!value.equals(BigInteger.ZERO)) {
+            int index = value.mod(len).intValue();
+            builder.insert(0, ALPHABET.charAt(index));
+            value = value.divide(len);
+        }
+
+        return builder.toString();
     }
 }

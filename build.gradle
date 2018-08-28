@@ -7,8 +7,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.0.2.RELEASE'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.0.4.RELEASE'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.20.0'
         classpath 'com.netflix.nebula:gradle-aggregate-javadocs-plugin:3.0.1'
     }
 }
@@ -76,17 +76,18 @@ dependencyUpdates.resolutionStrategy = {
 }
 
 ext {
-    springBootVersion = '2.0.2.RELEASE'
+    springBootVersion = '2.0.4.RELEASE'
+    jacksonVersion = '2.9.6'
 
     libs = [
             json              : [
-                    "com.fasterxml.jackson.core:jackson-annotations:2.9.5",
-                    "com.fasterxml.jackson.core:jackson-databind:2.9.5",
-                    "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.5"
+                    "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}",
+                    "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
+                    "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
             ],
             testbase          : [
                     "junit:junit:4.12",
-                    "org.mockito:mockito-core:2.18.3"
+                    "org.mockito:mockito-core:2.21.0"
             ],
             springBoot        : [
                     "org.springframework.boot:spring-boot-starter-jersey:${springBootVersion}",
@@ -101,11 +102,10 @@ ext {
             springBootTest    : [
                     "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
             ],
-            liquibase         : "org.liquibase:liquibase-core:3.6.1",
+            liquibase         : "org.liquibase:liquibase-core:3.6.2",
             h2                : "com.h2database:h2:1.4.197",
             frostnova         : [
-                    check : "ch.frostnova:check:1.0.0-RC2",
-                    keygen: "ch.frostnova:keygen:1.0.0-RC1"
+                    check : "ch.frostnova:check:1.0.0"
             ]
     ]
 }

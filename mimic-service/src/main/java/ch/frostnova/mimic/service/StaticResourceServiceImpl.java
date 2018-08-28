@@ -6,6 +6,7 @@ import ch.frostnova.mimic.persistence.entity.StorageEntity;
 import ch.frostnova.mimic.persistence.repository.StorageRepository;
 import ch.frostnova.util.check.Check;
 import ch.frostnova.util.check.CheckString;
+import ch.frostnova.util.check.Verify;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -45,7 +46,7 @@ public class StaticResourceServiceImpl implements StaticResourceService {
         Check.required(resource, "resource");
         Check.required(resource.getRepositoryId(), "resource.repositoryId");
         Check.required(resource.getName(), "resource.name");
-        Check.required(resource.getContent(), "resource.content", Check.with(x -> x.length > 0, "not empty"));
+        Check.required(resource.getContent(), "resource.content", Verify.that(x -> x.length > 0, "not empty"));
 
         System.out.println("SAVING: " + resource);
 
