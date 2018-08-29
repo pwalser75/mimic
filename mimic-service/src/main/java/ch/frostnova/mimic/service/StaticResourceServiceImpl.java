@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import javax.ws.rs.NotFoundException;
 
 /**
  * Implementation of the {@link StaticResourceService}.
@@ -32,7 +32,7 @@ public class StaticResourceServiceImpl implements StaticResourceService {
     public StaticResource get(String repositoryId, String name) {
         Check.required(repositoryId, "repositoryId", CheckString.notBlank());
         Check.required(name, "name", CheckString.notBlank());
-        return convert(storageRepository.findByRepositoryIdAndResourceId(repositoryId, name));
+        return storageRepository.findByRepositoryIdAndResourceId(repositoryId, name).map(this::convert).orElse(null);
     }
 
     @Override
@@ -48,9 +48,12 @@ public class StaticResourceServiceImpl implements StaticResourceService {
         Check.required(resource.getName(), "resource.name");
         Check.required(resource.getContent(), "resource.content", Verify.that(x -> x.length > 0, "not empty"));
 
-        System.out.println("SAVING: " + resource);
-
-        StorageEntity storageEntity = Optional.ofNullable(resource.getId()).flatMap(storageRepository::findById).orElseGet(StorageEntity::new);
+        StorageEntity storageEntity;
+        if (resource.getId() != null) {
+            storageEntity = storageRepository.findById(resource.getId()).orElseThrow(NotFoundException::new);
+        } else {
+            storageEntity = storageRepository.findByRepositoryIdAndResourceId(resource.getRepositoryId(), resource.getName()).orElseGet(StorageEntity::new);
+        }
         storageEntity = storageRepository.save(update(storageEntity, resource));
         return convert(storageEntity);
     }

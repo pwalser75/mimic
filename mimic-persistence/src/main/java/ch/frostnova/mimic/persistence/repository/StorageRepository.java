@@ -3,6 +3,8 @@ package ch.frostnova.mimic.persistence.repository;
 import ch.frostnova.mimic.persistence.entity.StorageEntity;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.Optional;
+
 /**
  * Spring JPA repository for Mimic Storage
  */
@@ -13,7 +15,7 @@ public interface StorageRepository extends CrudRepository<StorageEntity, String>
      *
      * @param repositoryId repository id, required
      * @param resourceId   resource id, required
-     * @return storage entity, or null if not found
+     * @return optional storage entity
      */
-    StorageEntity findByRepositoryIdAndResourceId(String repositoryId, String resourceId);
+    Optional<StorageEntity> findByRepositoryIdAndResourceId(String repositoryId, String resourceId);
 }

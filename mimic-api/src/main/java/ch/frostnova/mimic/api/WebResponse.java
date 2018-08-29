@@ -6,6 +6,7 @@ import ch.frostnova.util.check.CheckNumber;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Model for a web response (HTTP)
@@ -76,5 +77,17 @@ public final class WebResponse {
     public void setHeader(String key, String value) {
         Check.required(key, "header key");
         headers.put(key, value);
+    }
+
+    /**
+     * Set a static resource as content
+     *
+     * @param staticResource resource
+     */
+    public void setContent(StaticResource staticResource) {
+        setStatus(staticResource != null ? 200 : 204);
+        setContentType(Optional.ofNullable(staticResource).map(StaticResource::getContentType).orElse("application/octet-stream"));
+        setBody(Optional.ofNullable(staticResource).map(StaticResource::getContent).orElse(new byte[0]));
+        setHeader("Content-Disposition", Optional.ofNullable(staticResource).map(StaticResource::getName).map(name -> "filename=\"" + name + "\"").orElse(null));
     }
 }

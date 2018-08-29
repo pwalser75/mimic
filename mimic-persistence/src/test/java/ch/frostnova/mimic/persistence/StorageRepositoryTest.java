@@ -82,7 +82,7 @@ public class StorageRepositoryTest extends BaseRepositoryTest {
         repository.saveAll(entities);
 
         for (StorageEntity entity : entities) {
-            StorageEntity found = repository.findByRepositoryIdAndResourceId(entity.getRepositoryId(), entity.getResourceId());
+            StorageEntity found = repository.findByRepositoryIdAndResourceId(entity.getRepositoryId(), entity.getResourceId()).orElse(null);
             Assert.assertNotNull(found);
             Assert.assertEquals(entity, found);
             Assert.assertEquals(entity.getRepositoryId(), found.getRepositoryId());
