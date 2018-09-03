@@ -3,9 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 import {MappingsService} from "../../services/mappings.service";
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/delay';
+import {delay, map, switchMap} from "rxjs/operators";
 
 @Component({
     selector: 'mapping-create',
@@ -55,7 +53,7 @@ export class MappingCreateComponent implements OnInit {
     save(): void {
         var data = this.form.value;
         console.log("CREATE: " + JSON.stringify(data));
-        this.mappingsService.save(data).then(result => {
+        this.mappingsService.save(data).subscribe(result => {
             this.router.navigate(['/mappings']);
         });
     }

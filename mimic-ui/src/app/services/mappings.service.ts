@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
-import {Http} from "@angular/http";
-import {Observable} from "rxjs/Rx";
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 
 const baseURL = environment.serverUrl + '/mimic/api';
@@ -19,65 +19,30 @@ export interface Mapping {
 @Injectable()
 export class MappingsService {
 
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
 
     }
 
-    list(): Promise<Mapping[]> {
-        return new Promise((resolve, reject) => {
-            return this.http.get(baseURL + '/mappings')
-                .map((res: any) => res.json())
-                .subscribe(
-                    data => resolve(data),
-                    error => reject(error)
-                );
-        });
+    list(): Observable<Mapping[]> {
+        return this.http.get<Mapping[]>(baseURL + '/mappings');
     }
 
-    get(id: String): Promise<Mapping> {
-        return new Promise((resolve, reject) => {
-            return this.http.get(baseURL + '/mappings/' + id)
-                .map((res: any) => res.json())
-                .subscribe(
-                    data => resolve(data),
-                    error => reject(error)
-                );
-        });
+    get(id: String): Observable<Mapping> {
+        return this.http.get<Mapping>(baseURL + '/mappings/' + id);
     }
 
-    save(mapping: Mapping): Promise<string> {
+    save(mapping: Mapping): Observable<string> {
         if (!mapping.id) {
             //create
-            return new Promise((resolve, reject) => {
-                return this.http.post(baseURL + '/mappings', mapping)
-                    .map((res: any) => res.json())
-                    .subscribe(
-                        data => resolve(data),
-                        error => reject(error)
-                    );
-            });
+            return this.http.post<string>(baseURL + '/mappings', mapping);
         } else {
             //update
-            return new Promise((resolve, reject) => {
-                return this.http.put(baseURL + '/mappings/' + mapping.id, mapping)
-                    .map((res: any) => res.json())
-                    .subscribe(
-                        data => resolve(data),
-                        error => reject(error)
-                    );
-            });
+            return this.http.put<string>(baseURL + '/mappings/' + mapping.id, mapping);
         }
 
     }
 
-    delete(id: String): Promise<string> {
-        return new Promise((resolve, reject) => {
-            return this.http.delete(baseURL + '/mappings/' + id)
-                .map((res: any) => res.json())
-                .subscribe(
-                    data => resolve(data),
-                    error => reject(error)
-                );
-        });
+    delete(id: String): Observable<string> {
+        return this.http.delete<string>(baseURL + '/mappings/' + id);
     }
 }

@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
-import {Http} from "@angular/http";
-import {Subject} from "rxjs/Subject";
-import {Observable} from "rxjs/Observable";
+import {HttpClient} from "@angular/common/http";
+import {Observable, Subject} from "rxjs";
+
 import {Message, MessagesService, Severity} from "./messages.service";
 
 export enum TranslateServiceEventType {
@@ -27,7 +27,7 @@ export class TranslateService {
     private eventSource: Subject<TranslateServiceEvent> = new Subject<TranslateServiceEvent>();
     public events: Observable<TranslateServiceEvent> = this.eventSource.asObservable();
 
-    constructor(private http: Http, private messagesService: MessagesService) {
+    constructor(private http: HttpClient, private messagesService: MessagesService) {
 
         // set initial language
         this.currentLanguage = 'en';
@@ -45,7 +45,6 @@ export class TranslateService {
         let resource: string = "localization/" + lang + ".json";
 
         this.http.get(resource)
-            .map((res: any) => res.json())
             .subscribe(
                 data => {
                     this.translations[lang] = data;

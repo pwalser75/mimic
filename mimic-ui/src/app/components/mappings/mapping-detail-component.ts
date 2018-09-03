@@ -38,7 +38,7 @@ func generate(ch chan<- int) {
     ngOnInit(): void {
         this.sub = this.route.params.subscribe(params => {
             var id = params['id'];
-            this.mappingsService.get(id).then(
+            this.mappingsService.get(id).subscribe(
                 data => {
                     this.mapping = data;
                     this.error = null;

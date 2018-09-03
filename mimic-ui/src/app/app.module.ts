@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
-import {HttpModule} from "@angular/http";
-import {ReactiveFormsModule} from "@angular/forms";
 import {BrowserModule} from "@angular/platform-browser";
+import {HttpClientModule} from "@angular/common/http";
+import {ReactiveFormsModule} from "@angular/forms";
 import {CodemirrorModule} from 'ng2-codemirror';
 import 'codemirror';
 import {ROUTING} from "./app.routes";
@@ -32,7 +32,7 @@ import {MappingDeleteComponent} from "./components/mappings/mapping-delete-compo
 
 
 @NgModule({
-    imports: [BrowserModule, HttpModule, ReactiveFormsModule, CodemirrorModule, ROUTING],
+    imports: [BrowserModule, HttpClientModule, ReactiveFormsModule, CodemirrorModule, ROUTING],
     declarations: [
         AppComponent,
         AppMenuComponent,

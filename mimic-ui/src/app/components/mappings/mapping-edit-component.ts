@@ -3,9 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 import {Mapping, MappingsService} from "../../services/mappings.service";
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/delay';
+import {delay, map, switchMap} from "rxjs/operators";
 
 @Component({
     selector: 'mapping-edit',
@@ -45,10 +43,10 @@ export class MappingEditComponent implements OnInit, OnDestroy {
             }
         );
 
-        this.sub = this.route.params
-            .map(params => params['id'])
-            .switchMap(id => this.mappingsService.get(id))
-            .subscribe((mapping: Mapping) => {
+        this.sub = this.route.params.pipe(
+            map(params => params['id']),
+            switchMap(id => this.mappingsService.get(id))
+        ).subscribe((mapping: Mapping) => {
                     this.mappingId = mapping.id;
                     this.loaded = true;
                     this.form.setValue({
@@ -69,7 +67,7 @@ export class MappingEditComponent implements OnInit, OnDestroy {
         var data = this.form.value;
         data.id = this.mappingId;
         console.log("UPDATE: " + JSON.stringify(data));
-        this.mappingsService.save(data).then(result => {
+        this.mappingsService.save(data).subscribe(result => {
             this.router.navigate(['/mappings']);
         });
     }

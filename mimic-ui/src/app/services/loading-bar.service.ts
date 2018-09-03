@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Subject} from "rxjs/Subject";
-import {Observable} from "rxjs/Observable";
+import {Observable, Subject} from "rxjs";
 import {NavigationEnd, NavigationStart, Router} from "@angular/router";
 
 export class LoadingBarEvent {
@@ -18,7 +17,7 @@ export class LoadingBarService {
     private updateTimer: any;
     private fadeoutTimer: any;
 
-    private fadeoutTimeMs: number = 250;
+    private fadeoutTimeMs: number = 500;
     private intervalMs: number = 50;
 
     private progress: number = 0;
