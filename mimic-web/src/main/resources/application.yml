@@ -48,16 +48,16 @@ mimic:
 
 # Spring boot actuator configuration
 
-management.server:
-  port: 9000
-  address: "127.0.0.1"
-  ssl: *serverssl
-  security:
-    enabled: false
+management:
+  server:
+    port: 9000
+    address: "127.0.0.1"
+    ssl: *serverssl
+    security:
+      enabled: false
   endpoints:
-    web:
-      exposure:
-        include: health,info,metrics
+    web.exposure.include: health,httptrace,info,loggers,metrics,mappings,scheduledtasks,sessions
+  endpoint.health.show-details: always
 
 info:
   app:
