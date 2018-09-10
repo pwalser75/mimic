@@ -46,6 +46,10 @@ subprojects {
     def dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
     def buildDate = LocalDateTime.now()
 
+    test {
+        reports.html.enabled = false
+    }
+
     plugins.withType(JavaPlugin) {
         jar {
             manifest {
@@ -74,6 +78,13 @@ dependencyUpdates.resolutionStrategy = {
         }
     }
 }
+
+task testReport(type: TestReport) {
+    destinationDir = file("$buildDir/reports/allTests")
+    reportOn subprojects*.test
+}
+
+build.dependsOn testReport
 
 ext {
     springBootVersion = '2.0.4.RELEASE'
