@@ -1,19 +1,7 @@
 rootProject.name = 'mimic'
 
-def addProject(path) {
-    def transPath = path.replaceAll(':', '/')
-    def projectDir = new File(new File("${rootDir}"), transPath)
-    def buildFile = new File(projectDir, 'build.gradle')
-    if (!buildFile.exists()) {
-        println "project(\"${path}\") does not exist (could not find ${buildFile})"
-    } else {
-        include "${path}"
-        project("${path}").projectDir = projectDir
-    }
-}
-
-addProject ':mimic-api'
-addProject ':mimic-persistence'
-addProject ':mimic-service'
-addProject ':mimic-web'
-addProject ':mimic-ui'
+include 'mimic-api'
+include 'mimic-persistence'
+include 'mimic-service'
+include 'mimic-web'
+include 'mimic-ui'
