@@ -121,11 +121,6 @@ ext {
     ]
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.6.0'
-    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
-}
-
 task start(dependsOn: ':mimic-web:bootRun') {
     group = 'Start/Run'
     description = 'Start the Mimic server'
